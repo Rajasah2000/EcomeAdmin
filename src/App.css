@@ -1,0 +1,185 @@
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.panel-default > .panel-heading a:after {
+  content: "";
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: "Glyphicons Halflings";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  float: right;
+  transition: transform 0.25s linear;
+  -webkit-transition: -webkit-transform 0.25s linear;
+}
+
+.panel-default > .panel-heading a[aria-expanded="true"]:after {
+  content: "\f106";
+  font-family: FontAwesome;
+}
+
+.panel-default > .panel-heading a[aria-expanded="false"]:after {
+  content: "\f107";
+  font-family: FontAwesome;
+}
+
+.test {
+  padding-left: 75px !important;
+}
+
+.test3 {
+  margin-left: 63px !important;
+}
+
+.closed-sidebar {
+  width: 66px !important;
+}
+
+.blink {
+  animation: blink-animation 0.5s steps(5, start) infinite;
+  -webkit-animation: blink-animation 0.5s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+.waitingForConnection {
+  animation: blinker 0.5s cubic-bezier(0.5, 0, 1, 1) infinite alternate;
+}
+
+@keyframes blinker {
+  to {
+    opacity: 0;
+  }
+}
+
+.waitingForConnection2 {
+  animation: blinker2 0.5s cubic-bezier(0.5, 0, 1, 1) infinite alternate;
+}
+
+@keyframes blinker2 {
+  to {
+    opacity: 0;
+  }
+}
+
+.waitingForConnection3 {
+  animation: blinker3 0.5s cubic-bezier(0.5, 0, 1, 1) infinite alternate;
+}
+
+@keyframes blinker3 {
+  to {
+    opacity: 0;
+  }
+}
+
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb {
+  width: 26px;
+  border-radius: 13px;
+  background-clip: padding-box;
+  border: 10px solid transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 0 10px;
+}
+
+@media (max-width: 1199px) {
+  .rightCntlogin {
+    padding: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+  .accountOverlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+}
+
+.logo_ {
+  font-style: oblique;
+  font-size: larger;
+  font-weight: 600;
+
+  /* margin-left: 17px; */
+}
+
+.addColBtn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.collectionList {
+  display: flex;
+  justify-content: space-between;
+}
+
+.collectionList span {
+  cursor: pointer;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.SlectableInput:focus {
+  outline: none;
+}
+
+/* Table   */
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
