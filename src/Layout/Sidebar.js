@@ -393,8 +393,6 @@ export default function Sidebar() {
                   aria-controls="collapseTwo"
                   style={{ fontWeight: "700", fontSize: "medium" }}
                 >
-                  {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
-                  {/* <TbCategory/> */}
                   Estore Partner
                 </a>
               </div>
@@ -1476,6 +1474,125 @@ export default function Sidebar() {
                   </div>
                 </div>
               </div>
+
+            </div>
+          </div>
+
+          <div className="panel panel-default metismenu vertical-nav-menu">
+            <div
+              className="panel-heading metismenu-container"
+              role="tab"
+              id="heading00"
+            >
+              <div className="panel-title metismenu-item">
+                <a
+                  className="collapsed metismenu-link"
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordionMenu"
+                  href="#collapseToo"
+                  aria-expanded="false"
+                  aria-controls="collapseToo"
+                  style={{ fontWeight: "700", fontSize: "medium" }}
+                >
+                  Commission for Partners
+                </a>
+              </div>
+            </div>
+            <div
+              id="collapseToo"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="heading00"
+            >
+              <div className="panel-body">
+                <ul className="metismenu-container">
+                  <li className="metismenu-item">
+                    <Link
+                      to="/add-and-manage-commission"
+                      className="metismenu-link"
+                    >
+                      Add And Manage Commission
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="panel panel-default metismenu vertical-nav-menu">
+            <div
+              className="panel-heading metismenu-container"
+              role="tab"
+              id="heading01"
+            >
+              <div className="panel-title metismenu-item">
+                <a
+                  className="collapsed metismenu-link"
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordionMenu"
+                  href="#collapse02"
+                  aria-expanded="false"
+                  aria-controls="collapse02"
+                  style={{ fontWeight: "700", fontSize: "medium" }}
+                >
+                  Event
+                </a>
+              </div>
+            </div>
+            <div
+              id="collapse02"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="heading01"
+            >
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse05"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse06"
+                        aria-expanded="false"
+                        aria-controls="collapse06"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Events
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse06"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse05"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-manage-events"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Events
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+      
 
             </div>
           </div>

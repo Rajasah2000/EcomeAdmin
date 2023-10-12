@@ -483,7 +483,79 @@ async function DeleteNewsCategory(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
+async function AddNews(data) {
+  let endpoind = "add-news";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllNews() {
+  let endpoind = "view-news";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateNews(id, data) {
+  let endpoind = `update-news/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteNews(id) {
+  let endpoind = `delete-news/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function AddCommission(data) {
+  let endpoind = "add-commission";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllCommission() {
+  let endpoind = "view-commission";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateCommission(id, data) {
+  let endpoind = `update-commission/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteCommission(id) {
+  let endpoind = `delete-commission/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function AddEvent(data) {
+  let endpoind = "add-event";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllEvent() {
+  let endpoind = "view-event";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateEvent(id, data) {
+  let endpoind = `update-event/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteEvent(id) {
+  let endpoind = `delete-event/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
 export default {
+  AddCommission,
+  AddEvent,
+  ViewAllEvent,
+  UpdateEvent,
+  DeleteEvent,
+  ViewAllCommission,
+  UpdateCommission,
+  DeleteCommission,
+  AddNews,
+  ViewAllNews,
+  UpdateNews,
+  DeleteNews,
   AddOttMainBanner,
   ViewAllNewsCategory,
   UpdateNewsCategory,

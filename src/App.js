@@ -42,6 +42,8 @@ import SocialWallet from "./View/BushidoWallet/SocialWallet"
 import TimeZone from "./View/BushidoWallet/TimeZone";
 import AndAndManageNewsCategory from "./View/News/AndAndManageNewsCategory";
 import AddAndManageNews from "./View/News/AddAndManageNews";
+import AddAndManageCommission from "./View/CommissionForPartner/AddAndManageCommission";
+import AddAndManageEvents from "./View/Event/Events/AddAndManageEvents";
 
 function App() {
   return (
@@ -170,6 +172,14 @@ function App() {
                 <Route
               path="/add-and-manage-news"
               element={<AddAndManageNews />}
+            />
+                            <Route
+              path="/add-and-manage-commission"
+              element={<AddAndManageCommission />}
+            />
+                                        <Route
+              path="/add-and-manage-events"
+              element={<AddAndManageEvents />}
             />
           </Route>
 
