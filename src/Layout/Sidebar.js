@@ -845,7 +845,7 @@ export default function Sidebar() {
                       to="/add-and-manage-ott-content-language"
                       className="metismenu-link"
                     >
-                      Add/Manage OTTContentLanguage
+                      Add/Manage ContentLanguage
                     </Link>
                   </li>
                 </ul>
@@ -1592,10 +1592,191 @@ export default function Sidebar() {
                 </div>
               </div>
 
-      
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse07"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse08"
+                        aria-expanded="false"
+                        aria-controls="collapse08"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Session
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse08"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse07"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-manage-session"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Session
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse09"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse10"
+                        aria-expanded="false"
+                        aria-controls="collapse10"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Speaker
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse10"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse09"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-manage-speaker"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Speaker
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse21"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapseab"
+                        aria-expanded="false"
+                        aria-controls="collapseab"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Sponser
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapseab"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse21"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-manage-sponser"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Sponser
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapseyz"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapsexy"
+                        aria-expanded="false"
+                        aria-controls="collapsexy"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Booth
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapsexy"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapseyz"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-manage-booth"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Booth
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>
+
+          
         </div>
       </div>
     </>

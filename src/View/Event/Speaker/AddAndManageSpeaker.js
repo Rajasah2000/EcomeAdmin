@@ -8,46 +8,60 @@ import PageLoader from "../../../Loader/PageLoader";
 import ImageLoader from "../../../Loader/ImageLoader";
 import HttpClientXml from "../../../Utils/HttpClientXml";
 import moment from "moment";
+import { Player } from "video-react";
 import { getDateInMMDDYYYY } from "../../../Utils/DateFunction";
 
 const INITIAL = {
-  eventName: "",
-  timezone: "",
-  startDate: "",
-  endDate: "",
-  startTime: "",
-  endTime: "",
-  eventDetails: "",
-  hostedBy: "",
-  floorNo: null,
-  tablePerFloor: null,
-  eventType: "",
-  eventRoom: "",
-  seatPrice: null,
-  venue: "",
-  priority: null,
-  color: "",
-  images: "",
+    eventID: "",
+    sessionID: "",
+    speakerType: "",
+    companyName:"",
+    speakerName: "",
+    designation: "",
+    description: "",
+    video:"",
+    priority: null,
+    images: "",
 };
 
-const AddAndManageEvents = () => {
+const AddAndManageSpeaker = () => {
   const [eventData, setEventData] = useState(INITIAL);
-  const [timeZoneData , setTimeZoneData] = useState([]);
-  const [AllEventData , setAllEventData] = useState([])
+  const [AllEventData , setAllEventData] = useState([]);
+  const [AllSpeakerData , setAllSpeakerData] = useState([]);
+    const [AllSessionData ,setAllSessionData] = useState([])
   const [loading, setLoading] = useState(false);
   const [imageLoader, setImageLoader] = useState(false);
+  const [videoLoader, setVideoLoder] = useState(false);
   const [hide, setHide] = useState(true);
   const [id, setId] = useState("");
 
+
+  console.log("VIDEO", eventData?.video);
+
   useEffect(() => {
+    fetchAllSpeakerData();
     fetchAllEventData();
-    fetchTimeZoneData()
+    // fetchAllSessionData();
   }, []);
 
-  const fetchTimeZoneData = async() => {
-    let res = await HomeService.ViewAllTimeZoneData();
+  const fetchAllEventData = async() => {
+    let res = await HomeService.ViewAllEvent();
     if(res && res?.status){
-        setTimeZoneData(res?.data);
+        setAllEventData(res?.data);
+    }else{
+        toast.error(res?.message)
+    }
+  }
+
+  const fetchAllSessionData = async(id) => {
+    let data ={
+        eventID: id
+    }
+
+    console.log("DATA", id);
+    let res = await HomeService.ViewEventWiseSession(data);
+    if(res && res?.status){
+        setAllSessionData(res?.data);
     }else{
         toast.error(res?.message)
     }
@@ -57,6 +71,14 @@ const AddAndManageEvents = () => {
     setEventData({
         ...eventData , [e.target.name]:e.target.value
     })
+  }
+
+  const HandleChanges = (e) => {
+    setEventData({
+        ...eventData , [e.target.name]:e.target.value
+    })
+
+    e.target.value !== "" ?  fetchAllSessionData(e.target.value) : setAllSessionData([]);
   }
 
 
@@ -89,26 +111,37 @@ const AddAndManageEvents = () => {
     }
   };
 
+  const HandleVideo = async (e) => {
+    setVideoLoder(true);
+    let file = e.target.files[0];
+    let data = new FormData();
+    data.append("video", file);
+    let res = await HttpClientXml.fileUplode("video-upload", "POST", data);
+    if (res && res.status) {
+      // console.log("UploadImage", res);
+      setEventData({
+        ...eventData , video:res?.originalUrl
+      })
+    //   setImage(res?.url);
+    setVideoLoder(false);
+    } else {
+      toast.error(res?.message);
+      setVideoLoder(false);
+    }
+  };
+
   const onEdit = (item) => {
-    console.log("STARTDATE" ,getDateInMMDDYYYY(item?.startDate));
     window.scroll(0, 0);
     setEventData({
-        ...eventData ,eventName:item?.eventName,
-        timezone:item?.timezone,
-        startDate:    moment(item?.startDate).format('YYYY-MM-DD'),  // getDateInMMDDYYYY(item?.startDate), // moment(item?.startDate).format('MM-DD-YYYY HH:mm:ss'),
-        endDate:moment(item?.endDate).format('YYYY-MM-DD'),
-        startTime:item?.startTime,
-        endTime:item?.endTime,
-        eventDetails:item?.eventDetails,
-        hostedBy:item?.hostedBy,
-        eventType:item?.eventType,
-        eventRoom:item?.eventRoom,
-        floorNo:item?.floorNo,
-        tablePerFloor:item?.tablePerFloor,
-        seatPrice:item?.seatPrice,
-        venue:item?.venue,
+        ...eventData ,eventID:item?.eventID,
+        sessionID:item?.sessionID,
+        speakerType: item?.speakerType,  // getDateInMMDDYYYY(item?.startDate), // moment(item?.startDate).format('MM-DD-YYYY HH:mm:ss'),
+        speakerName:item?.speakerName,
+        companyName:item?.companyName,
+        designation:item?.designation,
+        description:item?.description,
+        video:item?.video,
         priority:item?.priority,
-        color:item?.color,
         images:item?.images
     })
     setId(item?._id);
@@ -126,12 +159,12 @@ const AddAndManageEvents = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        HomeService.DeleteEvent(id)
+        HomeService.DeleteSpeaker(id)
           .then((res) => {
             if (res && res.status) {
               toast.success("Deleted Successfully");
 
-              fetchAllEventData();
+              fetchAllSpeakerData();
             } else {
               toast.error(res?.message);
             }
@@ -143,31 +176,23 @@ const AddAndManageEvents = () => {
     });
   };
 
-  const fetchAllEventData = () => {
+  const fetchAllSpeakerData = () => {
     setLoading(true);
-    HomeService.ViewAllEvent()
+    HomeService.ViewAllSpeaker()
       .then((res) => {
         if (res && res?.status) {
           setLoading(false);
           let arr = res?.data?.map((item, index) => {
             return {
               sl: index + 1,
-              eventName:item?.eventName,
-              timezone:item?.timezone,
-              startDate:item?.startDate,
-              endDate:item?.endDate,
-              startTime:item?.startTime,
-              endTime:item?.endTime,
-              eventDetails:item?.eventDetails,
-              hostedBy:item?.hostedBy,
-              eventType:item?.eventType,
-              eventRoom:item?.eventRoom,
-              floorNo:item?.floorNo,
-              tablePerFloor:item?.tablePerFloor,
-              seatPrice:item?.seatPrice,
-              venue:item?.venue,
+              eventName:item?.EventDetails?.eventName,
+              sessionName:item?.sessionDetails?.sessionName,
+              speakerType:item?.speakerType,
+              speakerName:item?.speakerName,
+              companyName:item?.companyName,
+              designation:item?.designation,
+              description:item?.description,
               priority:item?.priority,
-              color:item?.color,
               images: (
                 <>
                   {item?.images ? (
@@ -239,7 +264,7 @@ const AddAndManageEvents = () => {
               ),
             };
           });
-          setAllEventData(arr);
+          setAllSpeakerData(arr);
         }
         console.log("RESPONSE", res);
       })
@@ -249,18 +274,16 @@ const AddAndManageEvents = () => {
       });
   };
 
-    const AddEvent = () => {
+    const AddSession = () => {
       let data = eventData;
-      if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime&&
-        eventData?.endTime , eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
-        eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
-        eventData?.images ) {
-        HomeService.AddEvent(data)
+      if (eventData?.eventID && eventData?.sessionID && eventData?.speakerType && eventData?.speakerName && eventData?.companyName&&
+        eventData?.designation && eventData?.description && eventData?.priority && eventData?.images && eventData?.video ) {
+        HomeService.AddSpeaker(data)
           .then((res) => {
             if (res && res.status) {
               toast.success(res.message);
               setEventData(INITIAL)
-              fetchAllEventData();
+              fetchAllSpeakerData();
 
             } else {
               toast.error(res?.message);
@@ -297,136 +320,68 @@ const AddAndManageEvents = () => {
       width:"15rem"
     },
 
-    // {
-    //   name: (
-    //     <div
-    //       style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-    //     >
-    //       TimeZone
-    //     </div>
-    //   ),
-    //   selector: (row) => row.timeZone,
-    // },
     {
         name: (
           <div
             style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
           >
-            StartDate
+            SessionName
           </div>
         ),
-        selector: (row) => row.startDate,
+        selector: (row) => row.sessionName,
+      },
+      
+      {
+        name: (
+          <div
+            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+          >
+            SpeakerType
+          </div>
+        ),
+        selector: (row) => row.speakerType,
       },
       {
         name: (
           <div
             style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
           >
-            EndDate
+            SpeakerName
           </div>
         ),
-        selector: (row) => row.endDate,
+        selector: (row) => row.speakerName,
       },
       {
         name: (
           <div
             style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
           >
-            StartTime
+            CompanyName
           </div>
         ),
-        selector: (row) => row.startTime,
+        selector: (row) => row.companyName,
       },
       {
         name: (
           <div
             style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
           >
-            EndTime
+            Designation
           </div>
         ),
-        selector: (row) => row.endTime,
+        selector: (row) => row.designation,
       },
       {
         name: (
           <div
             style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
           >
-            EventDetails
+            Description
           </div>
         ),
-        selector: (row) => row.eventDetails,
+        selector: (row) => row.description,
       },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            HostedBy
-          </div>
-        ),
-        selector: (row) => row.hostedBy,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            EventType
-          </div>
-        ),
-        selector: (row) => row.eventType,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            EventRoom
-          </div>
-        ),
-        selector: (row) => row.eventRoom,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            FloorNo
-          </div>
-        ),
-        selector: (row) => row.floorNo,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            tablePerFloor
-          </div>
-        ),
-        selector: (row) => row.tablePerFloor,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            SeatPrice
-          </div>
-        ),
-        selector: (row) => row.seatPrice,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            Venue
-          </div>
-        ),
-        selector: (row) => row.venue,
-      },
+      
       {
         name: (
           <div
@@ -442,22 +397,11 @@ const AddAndManageEvents = () => {
           <div
             style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
           >
-            Color code
-          </div>
-        ),
-        selector: (row) => row.color,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            Images
+            Image
           </div>
         ),
         selector: (row) => row.images,
       },
-
     {
       name: (
         <div
@@ -475,18 +419,16 @@ const AddAndManageEvents = () => {
     },
   ];
 
-    const UpdateEvent = () => {
+    const UpdateSession = () => {
         let data = eventData;
-        if (eventData?.eventName && eventData?.timezone  && eventData?.startDate && eventData?.endDate && eventData?.startTime&&
-          eventData?.endTime , eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
-          eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
-          eventData?.images ) {
-          HomeService.UpdateEvent(id,data)
+        if (eventData?.eventID && eventData?.sessionID && eventData?.speakerType && eventData?.speakerName && eventData?.companyName&&
+            eventData?.designation && eventData?.description && eventData?.priority && eventData?.images && eventData?.video ) {
+          HomeService.UpdateSpeaker(id,data)
             .then((res) => {
               if (res && res.status) {
                 toast.success(res.message);
                 setEventData(INITIAL)
-                fetchAllEventData();
+                fetchAllSpeakerData();
                 setHide(true)
   
               } else {
@@ -500,6 +442,7 @@ const AddAndManageEvents = () => {
           toast.error("All fields are required");
         }
     };
+     
   return (
     <>
       {loading ? (
@@ -527,7 +470,7 @@ const AddAndManageEvents = () => {
                   }}
                   className="card-title"
                 >
-                  Add Event
+                  Add Speaker
                 </div>
               ) : (
                 <div
@@ -539,42 +482,52 @@ const AddAndManageEvents = () => {
                   }}
                   className="card-title"
                 >
-                  Edit Event
+                  Edit Speaker
                 </div>
               )}
 
               <div class="row" style={{ marginBottom: "1rem" }}>
                 <div class="col">
                   <label for="inputEmail4">
-                    EventName<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="eventName"
-                    value={eventData?.eventName}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter event name..."
-                  />
-                </div>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Time Zone<span style={{ color: "red" }}>*</span> :
+                    Event Name<span style={{ color: "red" }}>*</span> :
                   </label>
 
                   <select
                     style={{ marginBottom: "21px" }}
                     class="form-select"
                     aria-label="select category"
-                    name="timezone"
-                    value={eventData?.timezone}
-                    onChange={(e) => HandleChange(e)}
+                    name="eventID"
+                    value={eventData?.eventID}
+                    onChange={(e) => HandleChanges(e)}
                   >
-                    <option value={""}>Select a timezone.......</option>
-                    {timeZoneData?.map((item) => {
+                    <option value={""}>Select a event name.......</option>
+                    {AllEventData?.map((item) => {
                       return (
                         <option id={item?._id} value={item?._id}>
-                          {item?.value}
+                          {item?.eventName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="inputEmail4">
+                    Session Name<span style={{ color: "red" }}>*</span> :
+                  </label>
+
+                  <select
+                    style={{ marginBottom: "21px" }}
+                    class="form-select"
+                    aria-label="select category"
+                    name="sessionID"
+                    value={eventData?.sessionID}
+                    onChange={(e) => HandleChange(e)}
+                  >
+                    <option value={""}>Select a session name.......</option>
+                    {AllSessionData?.map((item) => {
+                      return (
+                        <option id={item?._id} value={item?._id}>
+                          {item?.sessionName}
                         </option>
                       );
                     })}
@@ -585,178 +538,59 @@ const AddAndManageEvents = () => {
               <div class="row" style={{ marginBottom: "1rem" }}>
                 <div class="col">
                   <label for="inputEmail4">
-                    StartDate<span style={{ color: "red" }}>*</span> :
+                  SpeakerType<span style={{ color: "red" }}>*</span> :
                   </label>
                   <input
-                    type="date"
+                    type="text"
                     class="form-control"
-                    name="startDate"
-                    value={eventData?.startDate}
+                    name="speakerType"
+                    value={eventData?.speakerType}
                     onChange={(e) => HandleChange(e)}
-                    placeholder="Enter start date..."
+                    placeholder="Enter speakerType..."
                   />
                 </div>
 
                 <div class="col">
                   <label for="inputEmail4">
-                    EndDate<span style={{ color: "red" }}>*</span> :
+                  SpeakerName<span style={{ color: "red" }}>*</span> :
                   </label>
                   <input
-                    type="date"
+                    type="text"
                     class="form-control"
-                    name="endDate"
-                    placeholder="Enter end date..."
-                    value={eventData?.endDate}
+                    name="speakerName"
+                    value={eventData?.speakerName}
                     onChange={(e) => HandleChange(e)}
+                    placeholder="Enter speakerName..."
                   />
                 </div>
               </div>
 
               <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
+              <div class="col">
                   <label for="inputEmail4">
-                    Start Time<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="time"
-                    class="form-control"
-                    name="startTime"
-                    value={eventData?.startTime}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter start time..."
-                  />
-                </div>
-
-                <div class="col">
-                  <label for="inputEmail4">
-                    End Time<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="time"
-                    name="endTime"
-                    class="form-control"
-                    placeholder="Enter end time..."
-                    value={eventData?.endTime}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
-              </div>
-
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Event Details<span style={{ color: "red" }}>*</span> :
+                  Designation<span style={{ color: "red" }}>*</span> :
                   </label>
                   <input
                     type="text"
                     class="form-control"
-                    name="eventDetails"
-                    value={eventData?.eventDetails}
+                    name="designation"
+                    value={eventData?.designation}
                     onChange={(e) => HandleChange(e)}
-                    placeholder="Enter event details..."
+                    placeholder="Enter designation..."
                   />
                 </div>
 
                 <div class="col">
                   <label for="inputEmail4">
-                    HostedBy<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    name="hostedBy"
-                    class="form-control"
-                    placeholder="Enter hostedBy..."
-                    value={eventData?.hostedBy}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
-              </div>
-
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    FloorNo<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="number"
-                    name="floorNo"
-                    class="form-control"
-                    value={eventData?.floorNo}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter floor no..."
-                  />
-                </div>
-
-                <div class="col">
-                  <label for="inputEmail4">
-                  TablePerFloor<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="number"
-                    name="tablePerFloor"
-                    class="form-control"
-                    placeholder="Enter tablePerFloor..."
-                    value={eventData?.tablePerFloor}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
-              </div>
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Event Type<span style={{ color: "red" }}>*</span> :
+                  Description<span style={{ color: "red" }}>*</span> :
                   </label>
                   <input
                     type="text"
                     class="form-control"
-                    name="eventType"
-                    value={eventData?.eventType}
+                    name="description"
+                    value={eventData?.description}
                     onChange={(e) => HandleChange(e)}
-                    placeholder="Enter event type..."
-                  />
-                </div>
-
-                <div class="col">
-                  <label for="inputEmail4">
-                    Event Room<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    name="eventRoom"
-                    class="form-control"
-                    placeholder="Enter event room..."
-                    value={eventData?.eventRoom}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
-              </div>
-
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Seat Price<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="number"
-                    name="seatPrice"
-                    class="form-control"
-                    value={eventData?.seatPrice}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter seatPrice..."
-                  />
-                </div>
-
-                <div class="col">
-                  <label for="inputEmail4">
-                    Venue<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    name="venue"
-                    class="form-control"
-                    placeholder="Enter venue..."
-                    value={eventData?.venue}
-                    onChange={(e) => HandleChange(e)}
+                    placeholder="Enter description..."
                   />
                 </div>
               </div>
@@ -775,17 +609,16 @@ const AddAndManageEvents = () => {
                     onChange={(e) => HandleChange(e)}
                   />
                 </div>
-
                 <div class="col">
                   <label for="inputEmail4">
-                    Color<span style={{ color: "red" }}>*</span> :
+                  CompanyName<span style={{ color: "red" }}>*</span> :
                   </label>
                   <input
-                    type="color"
-                    name="color"
+                    type="text"
                     class="form-control"
-                    placeholder="Enter color..."
-                    value={eventData?.color}
+                    name="companyName"
+                    placeholder="Enter companyName..."
+                    value={eventData?.companyName}
                     onChange={(e) => HandleChange(e)}
                   />
                 </div>
@@ -835,12 +668,54 @@ const AddAndManageEvents = () => {
                 </>
               )}
 
+            <div>
+                <label for="exampleInputEmail1">
+                video<span style={{ color: "red" }}>*</span> :
+                </label>
+
+                <input
+                  class="form-control"
+                  onChange={(e) => HandleVideo(e)}
+                  name="video"
+                  type="file"
+                  id="LearningCategory"
+                  accept="video/*"
+                />
+              </div>
+
+
+              {videoLoader ? (
+                <>
+                  <ImageLoader />{" "}
+                </>
+              ) : null}
+
+              {eventData?.video && (
+                <>
+                  <div style={{ marginTop : "12px"}}>
+                  <video width="400" height="200" controls>
+        <source src={eventData?.video} type="video/mp4"/>
+    </video>
+
+
+                    {/* <Player
+                        playsInline
+                        src={eventData?.video}
+                        fluid={true}
+                        width={180}
+                        height={120}
+                      /> */}
+
+                  </div>
+                </>
+              )}
+
               {hide ? (
-                <button class="btn btn-primary" style={{ marginTop:"1rem"}} onClick={AddEvent}>
+                <button class="btn btn-primary" style={{ marginTop:"1rem"}} onClick={AddSession}>
                   Submit
                 </button>
               ) : (
-                <button class="btn btn-primary"  style={{ marginTop:"1rem"}} onClick={UpdateEvent}>
+                <button class="btn btn-primary"  style={{ marginTop:"1rem"}} onClick={UpdateSession}>
                   Update
                 </button>
               )}
@@ -854,9 +729,9 @@ const AddAndManageEvents = () => {
                 }}
                 className="card-title"
               >
-                Manage Event
+                Manage Speaker
               </div>
-              <DataTable columns={columns} data={AllEventData} pagination />
+              <DataTable columns={columns} data={AllSpeakerData} pagination />
             </div>
           </div>
         </div>
@@ -864,4 +739,6 @@ const AddAndManageEvents = () => {
     </>
   );
 };
-export default AddAndManageEvents;
+
+
+export default AddAndManageSpeaker

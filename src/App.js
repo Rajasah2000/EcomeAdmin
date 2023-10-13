@@ -44,6 +44,10 @@ import AndAndManageNewsCategory from "./View/News/AndAndManageNewsCategory";
 import AddAndManageNews from "./View/News/AddAndManageNews";
 import AddAndManageCommission from "./View/CommissionForPartner/AddAndManageCommission";
 import AddAndManageEvents from "./View/Event/Events/AddAndManageEvents";
+import AddAndManageSession from "./View/Event/Session/AddAndManageSession";
+import AddAndManageSpeaker from "./View/Event/Speaker/AddAndManageSpeaker";
+import AddAndManageSponser from "./View/Event/Sponser/AddAndManageSponser";
+import AddAndManageBooth from "./View/Event/Booth/AddAndManageBooth";
 
 function App() {
   return (
@@ -181,6 +185,26 @@ function App() {
               path="/add-and-manage-events"
               element={<AddAndManageEvents />}
             />
+                                                    <Route
+              path="/add-and-manage-session"
+              element={<AddAndManageSession />}
+            />
+
+              <Route
+              path="/add-and-manage-speaker"
+              element={<AddAndManageSpeaker/>}
+            />
+
+            <Route
+              path="/add-and-manage-sponser"
+              element={<AddAndManageSponser/>}
+            />
+
+              <Route
+              path="/add-and-manage-booth"
+              element={<AddAndManageBooth/>}
+            />
+
           </Route>
 
 

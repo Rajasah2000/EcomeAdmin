@@ -543,8 +543,91 @@ async function DeleteEvent(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
+async function AddSession(data) {
+  let endpoind = "add-session";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllSession() {
+  let endpoind = "view-session";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateSession(id, data) {
+  let endpoind = `update-session/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteSession(id) {
+  let endpoind = `delete-session/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function ViewEventWiseSession(data) {
+  let endpoind = "event-wise-session";
+  return HttpClientXml.post(endpoind, data);
+}
+
+
+
+async function AddSpeaker(data) {
+  let endpoind = "add-speaker";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllSpeaker() {
+  let endpoind = "view-speaker";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateSpeaker(id, data) {
+  let endpoind = `update-speaker/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteSpeaker(id) {
+  let endpoind = `delete-speaker/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+
+async function AddSponser(data) {
+  let endpoind = "add-sponser";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllSponser() {
+  let endpoind = "view-sponser";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateSponser(id, data) {
+  let endpoind = `update-sponser/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteSponser(id) {
+  let endpoind = `delete-sponser/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+
+
 export default {
+  ViewEventWiseSession,
+  AddSponser,
+  ViewAllSponser,
+  DeleteSponser,
+  UpdateSponser,
+  AddSpeaker,
+  ViewAllSpeaker,
+  UpdateSpeaker,
+  DeleteSpeaker,
   AddCommission,
+  ViewAllSession,
+  UpdateSession,
+  DeleteSession,
+  AddSession,
   AddEvent,
   ViewAllEvent,
   UpdateEvent,
