@@ -23,21 +23,29 @@ const INITIAL = {
   tablePerFloor: null,
   eventType: "",
   eventRoom: "",
-  seatPrice: null,
+  seatPrice: "",
   venue: "",
   priority: null,
   color: "",
   images: "",
+  tableLogo:[]
 };
 
 const AddAndManageEvents = () => {
   const [eventData, setEventData] = useState(INITIAL);
   const [timeZoneData , setTimeZoneData] = useState([]);
-  const [AllEventData , setAllEventData] = useState([])
+  const [AllEventData , setAllEventData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [imageLoader, setImageLoader] = useState(false);
+  const [check , setChecked] = useState(false);
+  const [check1 ,setChecked1] = useState(false)
+  const [disable , setDisable] = useState(true)
   const [hide, setHide] = useState(true);
+  const [logoData , setLogoData] = useState([]);
   const [id, setId] = useState("");
+
+
+  // console.log("EventData" , eventData?.seatPrice);
 
   useEffect(() => {
     fetchAllEventData();
@@ -53,12 +61,35 @@ const AddAndManageEvents = () => {
     }
   }
 
-  const HandleChange = (e) => {
-    setEventData({
+  const HandleChange = (e ) => {
+    if(e.target.name  == "eventRoom"){
+      e.target.value ? setChecked1(true) : setChecked1(false)
+    }
+    if(e.target.name == "timezone"){
+      e.target.value ? setChecked(true) : setChecked(false)
+    }
+    else if(e.target.name == "eventType" && e.target.value == "Free" ){
+      setEventData({
+        ...eventData , seatPrice : "0" , eventType:e.target.value
+      })
+    }
+    else if(e.target.name == "eventType" && e.target.value == "Paid" ){
+      setEventData({
+        ...eventData , seatPrice : "" , eventType : e.target.value
+      });
+      setDisable(false)
+    }
+    else if(e.target.name == "eventType" && e.target.value == "" ){
+      setEventData({
+        ...eventData ,seatPrice : "" , eventType : e.target.value
+      });
+      setDisable(true)
+    }else{
+      setEventData({
         ...eventData , [e.target.name]:e.target.value
     })
+    }
   }
-
 
   const HandleCrossClick = () => {
     setEventData({
@@ -88,6 +119,33 @@ const AddAndManageEvents = () => {
       setImageLoader(false);
     }
   };
+
+  const HandleImages = async (e) => {
+    setImageLoader(true);
+    let arr = [];
+    let file = e.target.files;
+
+    for (let element of file) {
+      let data = new FormData();
+      data.append("image", element);
+      let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
+      if (res && res?.status) {
+        arr.push({
+          logo:res?.url
+        });
+      } else {
+        toast.error(res?.message);
+      }
+    }
+    setImageLoader(false);
+    file && setLogoData(arr);
+
+    setEventData({
+      ...eventData , tableLogo :arr
+    })
+  };
+
+
 
   const onEdit = (item) => {
     console.log("STARTDATE" ,getDateInMMDDYYYY(item?.startDate));
@@ -250,28 +308,30 @@ const AddAndManageEvents = () => {
   };
 
     const AddEvent = () => {
-      let data = eventData;
-      if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime&&
-        eventData?.endTime , eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
-        eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
-        eventData?.images ) {
-        HomeService.AddEvent(data)
-          .then((res) => {
-            if (res && res.status) {
-              toast.success(res.message);
-              setEventData(INITIAL)
-              fetchAllEventData();
+      // let data = eventData;
+      // if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime&&
+      //   eventData?.endTime , eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
+      //   eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
+      //   eventData?.images ) {
+      //   HomeService.AddEvent(data)
+      //     .then((res) => {
+      //       if (res && res.status) {
+      //         toast.success(res.message);
+      //         setEventData(INITIAL)
+      //         fetchAllEventData();
 
-            } else {
-              toast.error(res?.message);
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        toast.error("All fields are required");
-      }
+      //       } else {
+      //         toast.error(res?.message);
+      //       }
+      //     })
+      //     .catch((err) => {
+      //       console.log(err);
+      //     });
+      // } else {
+      //   toast.error("All fields are required");
+      // }
+
+      console.log("GHGDJAK" , eventData);
     };
 
   const columns = [
@@ -296,17 +356,6 @@ const AddAndManageEvents = () => {
       selector: (row) => row.eventName,
       width:"15rem"
     },
-
-    // {
-    //   name: (
-    //     <div
-    //       style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-    //     >
-    //       TimeZone
-    //     </div>
-    //   ),
-    //   selector: (row) => row.timeZone,
-    // },
     {
         name: (
           <div
@@ -502,7 +551,7 @@ const AddAndManageEvents = () => {
     };
   return (
     <>
-      {loading ? (
+      {/* {loading ? (
         <div
           style={{
             display: "flex",
@@ -513,7 +562,7 @@ const AddAndManageEvents = () => {
         >
           <PageLoader />
         </div>
-      ) : (
+      ) : ( */}
         <div component="div" className="TabsAnimation appear-done enter-done">
           <div className="main-card mb-3 card">
             <div className="card-body">
@@ -582,6 +631,10 @@ const AddAndManageEvents = () => {
                 </div>
               </div>
 
+
+              {
+                check ? <>
+                
               <div class="row" style={{ marginBottom: "1rem" }}>
                 <div class="col">
                   <label for="inputEmail4">
@@ -611,7 +664,6 @@ const AddAndManageEvents = () => {
                   />
                 </div>
               </div>
-
               <div class="row" style={{ marginBottom: "1rem" }}>
                 <div class="col">
                   <label for="inputEmail4">
@@ -640,7 +692,15 @@ const AddAndManageEvents = () => {
                     onChange={(e) => HandleChange(e)}
                   />
                 </div>
-              </div>
+              </div></>
+              :
+              null
+              }
+
+
+
+
+
 
               <div class="row" style={{ marginBottom: "1rem" }}>
                 <div class="col">
@@ -672,7 +732,70 @@ const AddAndManageEvents = () => {
                 </div>
               </div>
 
+
+             
+
+ 
               <div class="row" style={{ marginBottom: "1rem" }}>
+                <div class="col">
+                  <label for="inputEmail4">
+                    Event Type<span style={{ color: "red" }}>*</span> :
+                  </label>
+                  <select
+                    style={{ marginBottom: "21px" }}
+                    class="form-select"
+                    aria-label="select category"
+                    name="eventType"
+                    value={eventData?.eventType}
+                    onChange={(e) => HandleChange(e)}
+                  >
+                    <option value="">Select option...</option>
+                    <option value="Free">Free</option>
+                    <option value="Paid">Paid</option>
+
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="inputEmail4">
+                    Seat Price<span style={{ color: "red" }}>*</span> :
+                  </label>
+                  <input
+                    type="number"
+                    name="seatPrice"
+                    class="form-control"
+                    disabled={disable}
+                    value={eventData?.seatPrice}
+                    onChange={(e) => HandleChange(e)}
+                    placeholder="Enter seatPrice..."
+                  />
+                </div>
+
+              </div>
+
+
+              <div class="row" style={{ marginBottom: "1rem" }}>
+                <div class="col">
+                  <label for="inputEmail4">
+                    Event Room<span style={{ color: "red" }}>*</span> :
+                  </label>
+                  <select
+                    style={{ marginBottom: "21px" }}
+                    class="form-select"
+                    aria-label="select category"
+                    name="eventRoom"
+                    value={eventData?.eventRoom}
+                    onChange={(e) => HandleChange(e)}
+                  >
+                    <option value="">Select option...</option>
+                    <option value="table networking">table networking</option>
+
+
+                  </select>
+                </div>
+              </div>
+
+    {
+        check1 ?  <div class="row" style={{ marginBottom: "1rem" }}>
                 <div class="col">
                   <label for="inputEmail4">
                     FloorNo<span style={{ color: "red" }}>*</span> :
@@ -700,51 +823,58 @@ const AddAndManageEvents = () => {
                     onChange={(e) => HandleChange(e)}
                   />
                 </div>
-              </div>
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Event Type<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="eventType"
-                    value={eventData?.eventType}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter event type..."
-                  />
-                </div>
+              </div> : null
+}
 
-                <div class="col">
-                  <label for="inputEmail4">
-                    Event Room<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    name="eventRoom"
-                    class="form-control"
-                    placeholder="Enter event room..."
-                    value={eventData?.eventRoom}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
+
+<div>
+                <label for="exampleInputEmail1">
+                Table Logo<span style={{ color: "red" }}>*</span> :
+                </label>
+
+                <input
+                  class="form-control"
+                  onChange={(e) => HandleImages(e)}
+                  name="logo"
+                  type="file"
+                  multiple
+                  id="LearningCategory"
+                  accept="image/*"
+                />
               </div>
 
+              {imageLoader ? (
+                <>
+                  <ImageLoader />{" "}
+                </>
+              ) : null}
+
+              {eventData?.images && (
+                <>
+                  <div>
+                    <img
+                      style={{
+                        height: "10%",
+                        width: "10%",
+                        marginTop: "12px",
+                        borderRadius: "5px",
+                      }}
+                      src={eventData?.images}
+                    />
+                    <button
+                      onClick={() => HandleCrossClick()}
+                      style={{ color: "red" }}
+                      type="button"
+                      class="btn-close"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                </>
+              )}
+              
+
               <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Seat Price<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="number"
-                    name="seatPrice"
-                    class="form-control"
-                    value={eventData?.seatPrice}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter seatPrice..."
-                  />
-                </div>
+
 
                 <div class="col">
                   <label for="inputEmail4">
@@ -860,7 +990,7 @@ const AddAndManageEvents = () => {
             </div>
           </div>
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };

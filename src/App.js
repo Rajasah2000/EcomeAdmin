@@ -48,6 +48,7 @@ import AddAndManageSession from "./View/Event/Session/AddAndManageSession";
 import AddAndManageSpeaker from "./View/Event/Speaker/AddAndManageSpeaker";
 import AddAndManageSponser from "./View/Event/Sponser/AddAndManageSponser";
 import AddAndManageBooth from "./View/Event/Booth/AddAndManageBooth";
+import AddAndManageBoothProduct from "./View/Event/BoothProduct/AddAndManageBoothProduct";
 
 function App() {
   return (
@@ -151,7 +152,7 @@ function App() {
               path="/add-and-manage-main-banner"
               element={<AddAndManageMainBanner />}
             />
-                <Route
+            <Route
               path="/add-and-manage-points"
               element={<AddAndManagePoinsts />}
             />
@@ -160,11 +161,11 @@ function App() {
               path="/add-manage-social-wallet"
               element={<SocialWallet />}
             />
-                <Route
+            <Route
               path="/add-and-manage-donation"
               element={<Donation />}
             />
-                <Route
+            <Route
               path="/add-and-manage-time-zone"
               element={<TimeZone />}
             />
@@ -173,24 +174,24 @@ function App() {
               path="/add-manage-news-category"
               element={<AndAndManageNewsCategory />}
             />
-                <Route
+            <Route
               path="/add-and-manage-news"
               element={<AddAndManageNews />}
             />
-                            <Route
+            <Route
               path="/add-and-manage-commission"
               element={<AddAndManageCommission />}
             />
-                                        <Route
+            <Route
               path="/add-and-manage-events"
               element={<AddAndManageEvents />}
             />
-                                                    <Route
+            <Route
               path="/add-and-manage-session"
               element={<AddAndManageSession />}
             />
 
-              <Route
+            <Route
               path="/add-and-manage-speaker"
               element={<AddAndManageSpeaker/>}
             />
@@ -200,16 +201,18 @@ function App() {
               element={<AddAndManageSponser/>}
             />
 
-              <Route
+            <Route
               path="/add-and-manage-booth"
               element={<AddAndManageBooth/>}
             />
 
+
+              <Route
+              path="/add-and-manage-booth-product"
+              element={<AddAndManageBoothProduct/>}
+            />
+
           </Route>
-
-
-          
-
         </Route>
 
         <Route path="/login" element={<Login />} />

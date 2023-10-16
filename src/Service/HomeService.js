@@ -613,8 +613,64 @@ async function DeleteSponser(id) {
 
 
 
+async function AddBooth(data) {
+  let endpoind = "add-booth";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllBooth() {
+  let endpoind = "view-booth";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateBooth(id, data) {
+  let endpoind = `update-booth/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteBooth(id) {
+  let endpoind = `delete-booth/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function EventWiseBooth(data){
+  let endpoind = "event-wise-booth";
+  return HttpClientXml.post(endpoind, data);
+}
+
+
+async function AddBoothProduct(data) {
+  let endpoind = "add-booth-product";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllBoothProduct() {
+  let endpoind = "view-booth-product";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateBoothProduct(id, data) {
+  let endpoind = `update-booth-product/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteBoothProduct(id) {
+  let endpoind = `delete-booth-product/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+
 export default {
   ViewEventWiseSession,
+  ViewAllBoothProduct,
+  AddBoothProduct,
+  UpdateBoothProduct,
+  DeleteBoothProduct,
+  EventWiseBooth,
+  ViewAllBooth,
+  UpdateBooth,
+  DeleteBooth,
+  AddBooth,
   AddSponser,
   ViewAllSponser,
   DeleteSponser,

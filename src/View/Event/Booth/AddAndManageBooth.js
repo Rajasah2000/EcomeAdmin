@@ -12,12 +12,14 @@ import { getDateInMMDDYYYY } from "../../../Utils/DateFunction";
 
 const INITIAL = {
   eventID: "",
-  sponserName: "",
-  sponserDetails: "",
-  sessionDate: "",
-  websiteLink: "",
-  priority: "",
-  images: "",
+  companyName: "",
+  companyDetails: "",
+  logo: "",
+  bannerImage: "",
+  CEOname: "",
+  CEOdescription: "",
+  CEOimage:"",
+  introVideo:""
 };
 
 const AddAndManageBooth = () => {
@@ -36,7 +38,7 @@ const AddAndManageBooth = () => {
   const [id, setId] = useState("");
 
   useEffect(() => {
-    fetchAllSponserData();
+    fetchAllBoothData();
     fetchAllEventData();
   }, []);
 
@@ -50,7 +52,7 @@ const AddAndManageBooth = () => {
       // console.log("UploadImage", res);
       setEventData({
         ...eventData,
-        introVideo: res?.transcoderUrl,
+        introVideo: res?.originalUrl,
       });
       //   setImage(res?.url);
       setVideoLoder(false);
@@ -143,11 +145,14 @@ const AddAndManageBooth = () => {
     setEventData({
       ...eventData,
       eventID: item?.eventID,
-      sponserName: item?.sponserName,
-      sponserDetails: item?.sponserDetails,
-      websiteLink: item?.websiteLink,
-      priority: item?.priority,
-      images: item?.images,
+      companyName: item?.companyName,
+      companyDetails: item?.companyDetails,
+      logo: item?.logo,
+      bannerImage: item?.bannerImage,
+      CEOname: item?.CEOname,
+      CEOdescription: item?.CEOdescription,
+      CEOimage: item?.CEOimage,
+      introVideo: item?.introVideo,
     });
     setId(item?._id);
     setHide(false);
@@ -164,12 +169,12 @@ const AddAndManageBooth = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        HomeService.DeleteSponser(id)
+        HomeService.DeleteBooth(id)
           .then((res) => {
             if (res && res.status) {
               toast.success("Deleted Successfully");
 
-              fetchAllSponserData();
+              fetchAllBoothData();
             } else {
               toast.error(res?.message);
             }
@@ -181,23 +186,22 @@ const AddAndManageBooth = () => {
     });
   };
 
-  const fetchAllSponserData = () => {
+  const fetchAllBoothData = () => {
     setLoading(true);
-    HomeService.ViewAllSponser()
+    HomeService.ViewAllBooth()
       .then((res) => {
         if (res && res?.status) {
           setLoading(false);
           let arr = res?.data?.map((item, index) => {
             return {
               sl: index + 1,
-              eventName: item?.EventDetails?.eventName,
-              sponserName: item?.sponserName,
-              sponserDetails: item?.sponserDetails,
-              websiteLink: item?.websiteLink,
-              priority: item?.priority,
-              images: (
+              companyName: item?.companyName,
+              companyDetails: item?.companyDetails,
+              CEOname: item?.CEOname,
+              CEOdescription: item?.CEOdescription,
+              logo: (
                 <>
-                  {item?.images ? (
+                  {item?.logo ? (
                     <img
                       style={{
                         height: "65%",
@@ -205,7 +209,61 @@ const AddAndManageBooth = () => {
                         borderRadius: "9px",
                         margin: "5px",
                       }}
-                      src={item?.images}
+                      src={item?.logo}
+                    />
+                  ) : (
+                    <img
+                      style={{
+                        height: "11%",
+                        width: "11%",
+                        borderRadius: "9px",
+                        margin: "5px",
+                      }}
+                      src={
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+                      }
+                    />
+                  )}
+                </>
+              ),
+              bannerImage: (
+                <>
+                  {item?.bannerImage ? (
+                    <img
+                      style={{
+                        height: "65%",
+                        width: "65%",
+                        borderRadius: "9px",
+                        margin: "5px",
+                      }}
+                      src={item?.bannerImage}
+                    />
+                  ) : (
+                    <img
+                      style={{
+                        height: "11%",
+                        width: "11%",
+                        borderRadius: "9px",
+                        margin: "5px",
+                      }}
+                      src={
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+                      }
+                    />
+                  )}
+                </>
+              ),
+              CEOimage: (
+                <>
+                  {item?.CEOimage ? (
+                    <img
+                      style={{
+                        height: "65%",
+                        width: "65%",
+                        borderRadius: "9px",
+                        margin: "5px",
+                      }}
+                      src={item?.CEOimage}
                     />
                   ) : (
                     <img
@@ -276,22 +334,26 @@ const AddAndManageBooth = () => {
       });
   };
 
-  const AddSponser = () => {
+  const AddBooth = () => {
     let data = eventData;
     if (
       eventData?.eventID &&
-      eventData?.sponserName &&
-      eventData?.sponserDetails &&
-      eventData?.websiteLink &&
-      eventData?.priority &&
-      eventData?.images
+      eventData?.companyName &&
+      eventData?.companyDetails &&
+      eventData?.logo &&
+      eventData?.bannerImage &&
+      eventData?.CEOname  &&
+      eventData?.CEOdescription &&
+      eventData?.CEOimage
     ) {
-      HomeService.AddSponser(data)
+
+      console.log( "DARA" , data);
+      HomeService.AddBooth(data)
         .then((res) => {
           if (res && res.status) {
             toast.success(res.message);
             setEventData(INITIAL);
-            fetchAllSponserData();
+            fetchAllBoothData();
           } else {
             toast.error(res?.message);
           }
@@ -320,22 +382,44 @@ const AddAndManageBooth = () => {
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          EventName
+          companyName
         </div>
       ),
-      selector: (row) => row.eventName,
+      selector: (row) => row.companyName,
       width: "15rem",
     },
-
     {
       name: (
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          SponserName
+          companyDetails
         </div>
       ),
-      selector: (row) => row.sponserName,
+      selector: (row) => row.companyDetails,
+      width: "15rem",
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          logo
+        </div>
+      ),
+      selector: (row) => row.logo,
+      // width: "15rem",
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          bannerImage
+        </div>
+      ),
+      selector: (row) => row.bannerImage,
+      // width: "15rem",
     },
 
     {
@@ -343,10 +427,10 @@ const AddAndManageBooth = () => {
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          SponserDetails
+          CEOname
         </div>
       ),
-      selector: (row) => row.sponserDetails,
+      selector: (row) => row.CEOname,
     },
 
     {
@@ -354,20 +438,22 @@ const AddAndManageBooth = () => {
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          WebsiteLink
+          CEOdescription
         </div>
       ),
-      selector: (row) => row.websiteLink,
+      selector: (row) => row.CEOdescription,
     },
+
     {
       name: (
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          Images
+          CEOimage
         </div>
       ),
-      selector: (row) => row.images,
+      selector: (row) => row.CEOimage,
+      // width: "15rem",
     },
     {
       name: (
@@ -386,22 +472,25 @@ const AddAndManageBooth = () => {
     },
   ];
 
-  const UpdateSponser = () => {
+  const UpdateBooth = () => {
     let data = eventData;
     if (
       eventData?.eventID &&
-      eventData?.sponserName &&
-      eventData?.sponserDetails &&
-      eventData?.websiteLink &&
-      eventData?.priority &&
-      eventData?.images
+      eventData?.companyName &&
+      eventData?.companyDetails &&
+      eventData?.logo &&
+      eventData?.bannerImage &&
+      eventData?.CEOname  &&
+      eventData?.CEOdescription &&
+      eventData?.CEOimage
     ) {
-      HomeService.UpdateSponser(id, data)
+      console.log("fhfj", data);
+      HomeService.UpdateBooth(id, data)
         .then((res) => {
           if (res && res.status) {
             toast.success(res.message);
             setEventData(INITIAL);
-            fetchAllSponserData();
+            fetchAllBoothData();
             setHide(true);
           } else {
             toast.error(res?.message);
@@ -532,7 +621,7 @@ const AddAndManageBooth = () => {
                     CEO Description<span style={{ color: "red" }}>*</span> :
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
                     name="CEOdescription"
                     placeholder="Enter CEOdescription..."
@@ -568,8 +657,8 @@ const AddAndManageBooth = () => {
                   <div>
                     <img
                       style={{
-                        height: "10%",
-                        width: "10%",
+                        height: "20%",
+                        width: "20%",
                         marginTop: "12px",
                         borderRadius: "5px",
                       }}
@@ -612,8 +701,8 @@ const AddAndManageBooth = () => {
                   <div>
                     <img
                       style={{
-                        height: "10%",
-                        width: "10%",
+                        height: "20%",
+                        width: "20%",
                         marginTop: "12px",
                         borderRadius: "5px",
                       }}
@@ -656,8 +745,8 @@ const AddAndManageBooth = () => {
                   <div>
                     <img
                       style={{
-                        height: "10%",
-                        width: "10%",
+                        height: "20%",
+                        width: "20%",
                         marginTop: "12px",
                         borderRadius: "5px",
                       }}
@@ -716,7 +805,7 @@ const AddAndManageBooth = () => {
                 <button
                   class="btn btn-primary"
                   style={{ marginTop: "1rem" }}
-                  onClick={AddSponser}
+                  onClick={AddBooth}
                 >
                   Submit
                 </button>
@@ -724,7 +813,7 @@ const AddAndManageBooth = () => {
                 <button
                   class="btn btn-primary"
                   style={{ marginTop: "1rem" }}
-                  onClick={UpdateSponser}
+                  onClick={UpdateBooth}
                 >
                   Update
                 </button>

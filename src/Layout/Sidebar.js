@@ -1773,6 +1773,51 @@ export default function Sidebar() {
                 </div>
               </div>
 
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapsexyz"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapseddd"
+                        aria-expanded="false"
+                        aria-controls="collapseddd"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Booth Product
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapseddd"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapsexyz"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-manage-booth-product"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Booth Product
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
