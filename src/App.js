@@ -14,6 +14,7 @@ import AddAndManageLanguage from "./View/Category/AddAndManageLanguage";
 import AddAndManageSubCategory from "./View/Category/AddAndManageSubCategory";
 import AddAndManageBanner from "./View/Category/AddAndManageBanner";
 import AddAndManageUnit from "./View/Category/AddAndManageUnit";
+import AddAndManageCoupon from "./View/Category/AddAndManageCoupon";
 import ApprovedPartnerList from "./View/EstorePartnerCategory/ApprovedPartnerList";
 import PendingForApproval from "./View/EstorePartnerCategory/PendingForApproval";
 import AddAndMAnageMusicCategory from "./View/PodCast/AddAndMAnageMusicCategory";
@@ -49,6 +50,7 @@ import AddAndManageSpeaker from "./View/Event/Speaker/AddAndManageSpeaker";
 import AddAndManageSponser from "./View/Event/Sponser/AddAndManageSponser";
 import AddAndManageBooth from "./View/Event/Booth/AddAndManageBooth";
 import AddAndManageBoothProduct from "./View/Event/BoothProduct/AddAndManageBoothProduct";
+import AddAndManagecoupon from "./View/Category/AddAndManageCoupon";
 
 function App() {
   return (
@@ -78,6 +80,7 @@ function App() {
             />
             <Route path="/add-manage-banner" element={<AddAndManageBanner />} />
             <Route path="/add-manage-unit" element={<AddAndManageUnit />} />
+            <Route path="/add-manage-coupon" element={<AddAndManageCoupon />} />
             <Route
               path="/apprroved-partner-list"
               element={<ApprovedPartnerList />}

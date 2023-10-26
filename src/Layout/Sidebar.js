@@ -373,6 +373,52 @@ export default function Sidebar() {
                   </div>
                 </div>
               </div>
+
+
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="heading7"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse8"
+                        aria-expanded="false"
+                        aria-controls="collapseTen"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Coupon
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse8"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="heading7"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-manage-coupon"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Coupon
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -1117,7 +1163,7 @@ export default function Sidebar() {
                         aria-controls="collapse91"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                       
+
                         Main Banner
                       </a>
                     </div>
@@ -1163,7 +1209,7 @@ export default function Sidebar() {
                         aria-controls="collapse92"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                       
+
                         Points
                       </a>
                     </div>
@@ -1283,7 +1329,7 @@ export default function Sidebar() {
                         aria-controls="collapse52"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                       
+
                         Donation
                       </a>
                     </div>
@@ -1329,7 +1375,7 @@ export default function Sidebar() {
                         aria-controls="collapse53"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                       
+
                         Time Zone
                       </a>
                     </div>
@@ -1821,7 +1867,7 @@ export default function Sidebar() {
             </div>
           </div>
 
-          
+
         </div>
       </div>
     </>

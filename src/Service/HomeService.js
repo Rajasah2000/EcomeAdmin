@@ -659,8 +659,30 @@ async function DeleteBoothProduct(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
+async function AddCoupon(data) {
+  let endpoind = "add-Coupon";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllCoupon() {
+  let endpoind = "view-Coupon";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdateCoupon(id, data) {
+  let endpoind = `update-Coupon/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteCoupon(id) {
+  let endpoind = `delete-Coupon/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
 
 export default {
+  AddCoupon,
+  ViewAllCoupon,
+  UpdateCoupon,
+  DeleteCoupon,
   ViewEventWiseSession,
   ViewAllBoothProduct,
   AddBoothProduct,
