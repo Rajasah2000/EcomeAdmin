@@ -28,20 +28,20 @@ const INITIAL = {
   priority: null,
   color: "",
   images: "",
-  tableLogo:[]
+  tableLogo: []
 };
 
 const AddAndManageEvents = () => {
   const [eventData, setEventData] = useState(INITIAL);
-  const [timeZoneData , setTimeZoneData] = useState([]);
-  const [AllEventData , setAllEventData] = useState([]);
+  const [timeZoneData, setTimeZoneData] = useState([]);
+  const [AllEventData, setAllEventData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [imageLoader, setImageLoader] = useState(false);
-  const [check , setChecked] = useState(false);
-  const [check1 ,setChecked1] = useState(false)
-  const [disable , setDisable] = useState(true)
+  const [check, setChecked] = useState(false);
+  const [check1, setChecked1] = useState(false)
+  const [disable, setDisable] = useState(true)
   const [hide, setHide] = useState(true);
-  const [logoData , setLogoData] = useState([]);
+  const [logoData, setLogoData] = useState([]);
   const [id, setId] = useState("");
 
 
@@ -52,53 +52,61 @@ const AddAndManageEvents = () => {
     fetchTimeZoneData()
   }, []);
 
-  const fetchTimeZoneData = async() => {
+  const fetchTimeZoneData = async () => {
     let res = await HomeService.ViewAllTimeZoneData();
-    if(res && res?.status){
-        setTimeZoneData(res?.data);
-    }else{
-        toast.error(res?.message)
+    if (res && res?.status) {
+      setTimeZoneData(res?.data);
+    } else {
+      toast.error(res?.message)
     }
   }
 
-  const HandleChange = (e ) => {
-    if(e.target.name  == "eventRoom"){
+  const HandleChange = (e) => {
+    if (e.target.name == "eventRoom") {
       e.target.value ? setChecked1(true) : setChecked1(false)
     }
-    if(e.target.name == "timezone"){
+    if (e.target.name == "timezone") {
       e.target.value ? setChecked(true) : setChecked(false)
     }
-    else if(e.target.name == "eventType" && e.target.value == "Free" ){
+    else if (e.target.name == "eventType" && e.target.value == "Free") {
       setEventData({
-        ...eventData , seatPrice : "0" , eventType:e.target.value
+        ...eventData, seatPrice: "0", eventType: e.target.value
       })
+      setDisable(true)
     }
-    else if(e.target.name == "eventType" && e.target.value == "Paid" ){
+    else if (e.target.name == "eventType" && e.target.value == "Paid") {
       setEventData({
-        ...eventData , seatPrice : "" , eventType : e.target.value
+        ...eventData, seatPrice: "", eventType: e.target.value
       });
       setDisable(false)
     }
-    else if(e.target.name == "eventType" && e.target.value == "" ){
+    else if (e.target.name == "eventType" && e.target.value == "") {
       setEventData({
-        ...eventData ,seatPrice : "" , eventType : e.target.value
+        ...eventData, seatPrice: "", eventType: e.target.value
       });
       setDisable(true)
-    }else{
+    } else {
       setEventData({
-        ...eventData , [e.target.name]:e.target.value
-    })
+        ...eventData, [e.target.name]: e.target.value
+      })
     }
   }
 
-  const HandleCrossClick = () => {
+  const HandleCrossClick2 = () => {
     setEventData({
-        ...eventData,images:""
+      ...eventData.tableLogo, images: []
     })
     let file = document.querySelector("#LearningCategory");
     file.value = "";
   };
 
+  const HandleCrossClick = () => {
+    setEventData({
+      ...eventData, images: ""
+    })
+    let file = document.querySelector("#LearningCategory");
+    file.value = "";
+  };
 
 
   const HandleImage = async (e) => {
@@ -110,9 +118,9 @@ const AddAndManageEvents = () => {
     if (res && res.status) {
       // console.log("UploadImage", res);
       setEventData({
-        ...eventData , images:res?.url
+        ...eventData, images: res?.url
       })
-    //   setImage(res?.url);
+      //   setImage(res?.url);
       setImageLoader(false);
     } else {
       toast.error(res?.message);
@@ -131,7 +139,7 @@ const AddAndManageEvents = () => {
       let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
       if (res && res?.status) {
         arr.push({
-          logo:res?.url
+          logo: res?.url
         });
       } else {
         toast.error(res?.message);
@@ -141,33 +149,33 @@ const AddAndManageEvents = () => {
     file && setLogoData(arr);
 
     setEventData({
-      ...eventData , tableLogo :arr
+      ...eventData, tableLogo: arr
     })
   };
 
 
 
   const onEdit = (item) => {
-    console.log("STARTDATE" ,getDateInMMDDYYYY(item?.startDate));
+    console.log("STARTDATE", getDateInMMDDYYYY(item?.startDate));
     window.scroll(0, 0);
     setEventData({
-        ...eventData ,eventName:item?.eventName,
-        timezone:item?.timezone,
-        startDate:    moment(item?.startDate).format('YYYY-MM-DD'),  // getDateInMMDDYYYY(item?.startDate), // moment(item?.startDate).format('MM-DD-YYYY HH:mm:ss'),
-        endDate:moment(item?.endDate).format('YYYY-MM-DD'),
-        startTime:item?.startTime,
-        endTime:item?.endTime,
-        eventDetails:item?.eventDetails,
-        hostedBy:item?.hostedBy,
-        eventType:item?.eventType,
-        eventRoom:item?.eventRoom,
-        floorNo:item?.floorNo,
-        tablePerFloor:item?.tablePerFloor,
-        seatPrice:item?.seatPrice,
-        venue:item?.venue,
-        priority:item?.priority,
-        color:item?.color,
-        images:item?.images
+      ...eventData, eventName: item?.eventName,
+      timezone: item?.timezone,
+      startDate: moment(item?.startDate).format('YYYY-MM-DD'),  // getDateInMMDDYYYY(item?.startDate), // moment(item?.startDate).format('MM-DD-YYYY HH:mm:ss'),
+      endDate: moment(item?.endDate).format('YYYY-MM-DD'),
+      startTime: item?.startTime,
+      endTime: item?.endTime,
+      eventDetails: item?.eventDetails,
+      hostedBy: item?.hostedBy,
+      eventType: item?.eventType,
+      eventRoom: item?.eventRoom,
+      floorNo: item?.floorNo,
+      tablePerFloor: item?.tablePerFloor,
+      seatPrice: item?.seatPrice,
+      venue: item?.venue,
+      priority: item?.priority,
+      color: item?.color,
+      images: item?.images
     })
     setId(item?._id);
     setHide(false);
@@ -210,22 +218,22 @@ const AddAndManageEvents = () => {
           let arr = res?.data?.map((item, index) => {
             return {
               sl: index + 1,
-              eventName:item?.eventName,
-              timezone:item?.timezone,
-              startDate:item?.startDate,
-              endDate:item?.endDate,
-              startTime:item?.startTime,
-              endTime:item?.endTime,
-              eventDetails:item?.eventDetails,
-              hostedBy:item?.hostedBy,
-              eventType:item?.eventType,
-              eventRoom:item?.eventRoom,
-              floorNo:item?.floorNo,
-              tablePerFloor:item?.tablePerFloor,
-              seatPrice:item?.seatPrice,
-              venue:item?.venue,
-              priority:item?.priority,
-              color:item?.color,
+              eventName: item?.eventName,
+              timezone: item?.timezone,
+              startDate: item?.startDate,
+              endDate: item?.endDate,
+              startTime: item?.startTime,
+              endTime: item?.endTime,
+              eventDetails: item?.eventDetails,
+              hostedBy: item?.hostedBy,
+              eventType: item?.eventType,
+              eventRoom: item?.eventRoom,
+              floorNo: item?.floorNo,
+              tablePerFloor: item?.tablePerFloor,
+              seatPrice: item?.seatPrice,
+              venue: item?.venue,
+              priority: item?.priority,
+              color: item?.color,
               images: (
                 <>
                   {item?.images ? (
@@ -307,32 +315,32 @@ const AddAndManageEvents = () => {
       });
   };
 
-    const AddEvent = () => {
-      // let data = eventData;
-      // if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime&&
-      //   eventData?.endTime , eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
-      //   eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
-      //   eventData?.images ) {
-      //   HomeService.AddEvent(data)
-      //     .then((res) => {
-      //       if (res && res.status) {
-      //         toast.success(res.message);
-      //         setEventData(INITIAL)
-      //         fetchAllEventData();
+  const AddEvent = () => {
+    // let data = eventData;
+    // if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime&&
+    //   eventData?.endTime , eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
+    //   eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
+    //   eventData?.images ) {
+    //   HomeService.AddEvent(data)
+    //     .then((res) => {
+    //       if (res && res.status) {
+    //         toast.success(res.message);
+    //         setEventData(INITIAL)
+    //         fetchAllEventData();
 
-      //       } else {
-      //         toast.error(res?.message);
-      //       }
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //     });
-      // } else {
-      //   toast.error("All fields are required");
-      // }
+    //       } else {
+    //         toast.error(res?.message);
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // } else {
+    //   toast.error("All fields are required");
+    // }
 
-      console.log("GHGDJAK" , eventData);
-    };
+    console.log("GHGDJAK", eventData);
+  };
 
   const columns = [
     {
@@ -354,158 +362,158 @@ const AddAndManageEvents = () => {
         </div>
       ),
       selector: (row) => row.eventName,
-      width:"15rem"
+      width: "15rem"
     },
     {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            StartDate
-          </div>
-        ),
-        selector: (row) => row.startDate,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            EndDate
-          </div>
-        ),
-        selector: (row) => row.endDate,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            StartTime
-          </div>
-        ),
-        selector: (row) => row.startTime,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            EndTime
-          </div>
-        ),
-        selector: (row) => row.endTime,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            EventDetails
-          </div>
-        ),
-        selector: (row) => row.eventDetails,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            HostedBy
-          </div>
-        ),
-        selector: (row) => row.hostedBy,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            EventType
-          </div>
-        ),
-        selector: (row) => row.eventType,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            EventRoom
-          </div>
-        ),
-        selector: (row) => row.eventRoom,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            FloorNo
-          </div>
-        ),
-        selector: (row) => row.floorNo,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            tablePerFloor
-          </div>
-        ),
-        selector: (row) => row.tablePerFloor,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            SeatPrice
-          </div>
-        ),
-        selector: (row) => row.seatPrice,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            Venue
-          </div>
-        ),
-        selector: (row) => row.venue,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            Priority
-          </div>
-        ),
-        selector: (row) => row.priority,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            Color code
-          </div>
-        ),
-        selector: (row) => row.color,
-      },
-      {
-        name: (
-          <div
-            style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-          >
-            Images
-          </div>
-        ),
-        selector: (row) => row.images,
-      },
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          StartDate
+        </div>
+      ),
+      selector: (row) => row.startDate,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          EndDate
+        </div>
+      ),
+      selector: (row) => row.endDate,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          StartTime
+        </div>
+      ),
+      selector: (row) => row.startTime,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          EndTime
+        </div>
+      ),
+      selector: (row) => row.endTime,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          EventDetails
+        </div>
+      ),
+      selector: (row) => row.eventDetails,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          HostedBy
+        </div>
+      ),
+      selector: (row) => row.hostedBy,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          EventType
+        </div>
+      ),
+      selector: (row) => row.eventType,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          EventRoom
+        </div>
+      ),
+      selector: (row) => row.eventRoom,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          FloorNo
+        </div>
+      ),
+      selector: (row) => row.floorNo,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          tablePerFloor
+        </div>
+      ),
+      selector: (row) => row.tablePerFloor,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          SeatPrice
+        </div>
+      ),
+      selector: (row) => row.seatPrice,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          Venue
+        </div>
+      ),
+      selector: (row) => row.venue,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          Priority
+        </div>
+      ),
+      selector: (row) => row.priority,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          Color code
+        </div>
+      ),
+      selector: (row) => row.color,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          Images
+        </div>
+      ),
+      selector: (row) => row.images,
+    },
 
     {
       name: (
@@ -524,31 +532,31 @@ const AddAndManageEvents = () => {
     },
   ];
 
-    const UpdateEvent = () => {
-        let data = eventData;
-        if (eventData?.eventName && eventData?.timezone  && eventData?.startDate && eventData?.endDate && eventData?.startTime&&
-          eventData?.endTime , eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
-          eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
-          eventData?.images ) {
-          HomeService.UpdateEvent(id,data)
-            .then((res) => {
-              if (res && res.status) {
-                toast.success(res.message);
-                setEventData(INITIAL)
-                fetchAllEventData();
-                setHide(true)
-  
-              } else {
-                toast.error(res?.message);
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else {
-          toast.error("All fields are required");
-        }
-    };
+  const UpdateEvent = () => {
+    let data = eventData;
+    if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime &&
+      eventData?.endTime, eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
+      eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
+      eventData?.images) {
+      HomeService.UpdateEvent(id, data)
+        .then((res) => {
+          if (res && res.status) {
+            toast.success(res.message);
+            setEventData(INITIAL)
+            fetchAllEventData();
+            setHide(true)
+
+          } else {
+            toast.error(res?.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast.error("All fields are required");
+    }
+  };
   return (
     <>
       {/* {loading ? (
@@ -563,239 +571,235 @@ const AddAndManageEvents = () => {
           <PageLoader />
         </div>
       ) : ( */}
-        <div component="div" className="TabsAnimation appear-done enter-done">
-          <div className="main-card mb-3 card">
-            <div className="card-body">
-              {hide ? (
-                <div
-                  style={{
-                    textAlign: "center",
-                    fontSize: "20px",
-                    color: "#868e96",
-                    margin: "35px",
-                  }}
-                  className="card-title"
+      <div component="div" className="TabsAnimation appear-done enter-done">
+        <div className="main-card mb-3 card">
+          <div className="card-body">
+            {hide ? (
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "20px",
+                  color: "#868e96",
+                  margin: "35px",
+                }}
+                className="card-title"
+              >
+                Add Event
+              </div>
+            ) : (
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "20px",
+                  color: "#868e96",
+                  margin: "35px",
+                }}
+                className="card-title"
+              >
+                Edit Event
+              </div>
+            )}
+
+            <div class="row" style={{ marginBottom: "1rem" }}>
+              <div class="col">
+                <label for="inputEmail4">
+                  EventName<span style={{ color: "red" }}>*</span> :
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="eventName"
+                  value={eventData?.eventName}
+                  onChange={(e) => HandleChange(e)}
+                  placeholder="Enter event name..."
+                />
+              </div>
+              <div class="col">
+                <label for="inputEmail4">
+                  Time Zone<span style={{ color: "red" }}>*</span> :
+                </label>
+
+                <select
+                  style={{ marginBottom: "21px" }}
+                  class="form-select"
+                  aria-label="select category"
+                  name="timezone"
+                  value={eventData?.timezone}
+                  onChange={(e) => HandleChange(e)}
                 >
-                  Add Event
+                  <option value={""}>Select a timezone.......</option>
+                  {timeZoneData?.map((item) => {
+                    return (
+                      <option id={item?._id} value={item?._id}>
+                        {item?.value}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
+
+
+            {
+              check ? <>
+
+                <div class="row" style={{ marginBottom: "1rem" }}>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      StartDate<span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      name="startDate"
+                      value={eventData?.startDate}
+                      onChange={(e) => HandleChange(e)}
+                      placeholder="Enter start date..."
+                    />
+                  </div>
+
+                  <div class="col">
+                    <label for="inputEmail4">
+                      EndDate<span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      name="endDate"
+                      placeholder="Enter end date..."
+                      value={eventData?.endDate}
+                      onChange={(e) => HandleChange(e)}
+                    />
+                  </div>
                 </div>
-              ) : (
-                <div
-                  style={{
-                    textAlign: "center",
-                    fontSize: "20px",
-                    color: "#868e96",
-                    margin: "35px",
-                  }}
-                  className="card-title"
+                <div class="row" style={{ marginBottom: "1rem" }}>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Start Time<span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <input
+                      type="time"
+                      class="form-control"
+                      name="startTime"
+                      value={eventData?.startTime}
+                      onChange={(e) => HandleChange(e)}
+                      placeholder="Enter start time..."
+                    />
+                  </div>
+
+                  <div class="col">
+                    <label for="inputEmail4">
+                      End Time<span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <input
+                      type="time"
+                      name="endTime"
+                      class="form-control"
+                      placeholder="Enter end time..."
+                      value={eventData?.endTime}
+                      onChange={(e) => HandleChange(e)}
+                    />
+                  </div>
+                </div></>
+                :
+                null
+            }
+
+
+            <div class="row" style={{ marginBottom: "1rem" }}>
+              <div class="col">
+                <label for="inputEmail4">
+                  Event Details<span style={{ color: "red" }}>*</span> :
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="eventDetails"
+                  value={eventData?.eventDetails}
+                  onChange={(e) => HandleChange(e)}
+                  placeholder="Enter event details..."
+                />
+              </div>
+
+              <div class="col">
+                <label for="inputEmail4">
+                  HostedBy<span style={{ color: "red" }}>*</span> :
+                </label>
+                <input
+                  type="text"
+                  name="hostedBy"
+                  class="form-control"
+                  placeholder="Enter hostedBy..."
+                  value={eventData?.hostedBy}
+                  onChange={(e) => HandleChange(e)}
+                />
+              </div>
+            </div>
+
+
+
+
+
+            <div class="row" style={{ marginBottom: "1rem" }}>
+              <div class="col">
+                <label for="inputEmail4">
+                  Event Type<span style={{ color: "red" }}>*</span> :
+                </label>
+                <select
+                  style={{ marginBottom: "21px" }}
+                  class="form-select"
+                  aria-label="select category"
+                  name="eventType"
+                  value={eventData?.eventType}
+                  onChange={(e) => HandleChange(e)}
                 >
-                  Edit Event
-                </div>
-              )}
+                  <option value="">Select option...</option>
+                  <option value="Free">Free</option>
+                  <option value="Paid">Paid</option>
 
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    EventName<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="eventName"
-                    value={eventData?.eventName}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter event name..."
-                  />
-                </div>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Time Zone<span style={{ color: "red" }}>*</span> :
-                  </label>
-
-                  <select
-                    style={{ marginBottom: "21px" }}
-                    class="form-select"
-                    aria-label="select category"
-                    name="timezone"
-                    value={eventData?.timezone}
-                    onChange={(e) => HandleChange(e)}
-                  >
-                    <option value={""}>Select a timezone.......</option>
-                    {timeZoneData?.map((item) => {
-                      return (
-                        <option id={item?._id} value={item?._id}>
-                          {item?.value}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
+                </select>
+              </div>
+              <div class="col">
+                <label for="inputEmail4">
+                  Seat Price<span style={{ color: "red" }}>*</span> :
+                </label>
+                <input
+                  type="number"
+                  name="seatPrice"
+                  class="form-control"
+                  disabled={disable}
+                  value={eventData?.seatPrice}
+                  onChange={(e) => HandleChange(e)}
+                  placeholder="Enter seatPrice..."
+                />
               </div>
 
+            </div>
 
-              {
-                check ? <>
-                
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    StartDate<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    name="startDate"
-                    value={eventData?.startDate}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter start date..."
-                  />
-                </div>
 
-                <div class="col">
-                  <label for="inputEmail4">
-                    EndDate<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    name="endDate"
-                    placeholder="Enter end date..."
-                    value={eventData?.endDate}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
+            <div class="row" style={{ marginBottom: "1rem" }}>
+              <div class="col">
+                <label for="inputEmail4">
+                  Event Room<span style={{ color: "red" }}>*</span> :
+                </label>
+                <select
+                  style={{ marginBottom: "21px" }}
+                  class="form-select"
+                  aria-label="select category"
+                  name="eventRoom"
+                  value={eventData?.eventRoom}
+                  onChange={(e) => HandleChange(e)}
+                >
+                  <option value="">Select option...</option>
+                  <option value="table networking">table networking</option>
+
+
+                </select>
               </div>
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Start Time<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="time"
-                    class="form-control"
-                    name="startTime"
-                    value={eventData?.startTime}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter start time..."
-                  />
-                </div>
+            </div>
 
-                <div class="col">
-                  <label for="inputEmail4">
-                    End Time<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="time"
-                    name="endTime"
-                    class="form-control"
-                    placeholder="Enter end time..."
-                    value={eventData?.endTime}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
-              </div></>
-              :
-              null
-              }
-
-
-
-
-
-
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Event Details<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="eventDetails"
-                    value={eventData?.eventDetails}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter event details..."
-                  />
-                </div>
-
-                <div class="col">
-                  <label for="inputEmail4">
-                    HostedBy<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    name="hostedBy"
-                    class="form-control"
-                    placeholder="Enter hostedBy..."
-                    value={eventData?.hostedBy}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
-              </div>
-
-
-             
-
- 
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Event Type<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <select
-                    style={{ marginBottom: "21px" }}
-                    class="form-select"
-                    aria-label="select category"
-                    name="eventType"
-                    value={eventData?.eventType}
-                    onChange={(e) => HandleChange(e)}
-                  >
-                    <option value="">Select option...</option>
-                    <option value="Free">Free</option>
-                    <option value="Paid">Paid</option>
-
-                  </select>
-                </div>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Seat Price<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="number"
-                    name="seatPrice"
-                    class="form-control"
-                    disabled={disable}
-                    value={eventData?.seatPrice}
-                    onChange={(e) => HandleChange(e)}
-                    placeholder="Enter seatPrice..."
-                  />
-                </div>
-
-              </div>
-
-
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Event Room<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <select
-                    style={{ marginBottom: "21px" }}
-                    class="form-select"
-                    aria-label="select category"
-                    name="eventRoom"
-                    value={eventData?.eventRoom}
-                    onChange={(e) => HandleChange(e)}
-                  >
-                    <option value="">Select option...</option>
-                    <option value="table networking">table networking</option>
-
-
-                  </select>
-                </div>
-              </div>
-
-    {
-        check1 ?  <div class="row" style={{ marginBottom: "1rem" }}>
+            {
+              check1 ? <div class="row" style={{ marginBottom: "1rem" }}>
                 <div class="col">
                   <label for="inputEmail4">
                     FloorNo<span style={{ color: "red" }}>*</span> :
@@ -812,7 +816,7 @@ const AddAndManageEvents = () => {
 
                 <div class="col">
                   <label for="inputEmail4">
-                  TablePerFloor<span style={{ color: "red" }}>*</span> :
+                    TablePerFloor<span style={{ color: "red" }}>*</span> :
                   </label>
                   <input
                     type="number"
@@ -824,172 +828,180 @@ const AddAndManageEvents = () => {
                   />
                 </div>
               </div> : null
-}
+            }
 
 
-<div>
-                <label for="exampleInputEmail1">
+            <div>
+              <label for="exampleInputEmail1">
                 Table Logo<span style={{ color: "red" }}>*</span> :
-                </label>
+              </label>
 
-                <input
-                  class="form-control"
-                  onChange={(e) => HandleImages(e)}
-                  name="logo"
-                  type="file"
-                  multiple
-                  id="LearningCategory"
-                  accept="image/*"
-                />
-              </div>
-
-              {imageLoader ? (
-                <>
-                  <ImageLoader />{" "}
-                </>
-              ) : null}
-
-              {eventData?.images && (
-                <>
-                  <div>
-                    <img
-                      style={{
-                        height: "10%",
-                        width: "10%",
-                        marginTop: "12px",
-                        borderRadius: "5px",
-                      }}
-                      src={eventData?.images}
-                    />
-                    <button
-                      onClick={() => HandleCrossClick()}
-                      style={{ color: "red" }}
-                      type="button"
-                      class="btn-close"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                </>
-              )}
-              
-
-              <div class="row" style={{ marginBottom: "1rem" }}>
-
-
-                <div class="col">
-                  <label for="inputEmail4">
-                    Venue<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    name="venue"
-                    class="form-control"
-                    placeholder="Enter venue..."
-                    value={eventData?.venue}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
-              </div>
-
-              <div class="row" style={{ marginBottom: "1rem" }}>
-                <div class="col">
-                  <label for="inputEmail4">
-                    Priority<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    name="priority"
-                    placeholder="Enter priority..."
-                    value={eventData?.priority}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
-
-                <div class="col">
-                  <label for="inputEmail4">
-                    Color<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="color"
-                    name="color"
-                    class="form-control"
-                    placeholder="Enter color..."
-                    value={eventData?.color}
-                    onChange={(e) => HandleChange(e)}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label for="exampleInputEmail1">
-                  Image<span style={{ color: "red" }}>*</span> :
-                </label>
-
-                <input
-                  class="form-control"
-                  onChange={(e) => HandleImage(e)}
-                  name="images"
-                  type="file"
-                  id="LearningCategory"
-                  accept="image/*"
-                />
-              </div>
-
-              {imageLoader ? (
-                <>
-                  <ImageLoader />{" "}
-                </>
-              ) : null}
-
-              {eventData?.images && (
-                <>
-                  <div>
-                    <img
-                      style={{
-                        height: "10%",
-                        width: "10%",
-                        marginTop: "12px",
-                        borderRadius: "5px",
-                      }}
-                      src={eventData?.images}
-                    />
-                    <button
-                      onClick={() => HandleCrossClick()}
-                      style={{ color: "red" }}
-                      type="button"
-                      class="btn-close"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                </>
-              )}
-
-              {hide ? (
-                <button class="btn btn-primary" style={{ marginTop:"1rem"}} onClick={AddEvent}>
-                  Submit
-                </button>
-              ) : (
-                <button class="btn btn-primary"  style={{ marginTop:"1rem"}} onClick={UpdateEvent}>
-                  Update
-                </button>
-              )}
-
-              <div
-                style={{
-                  textAlign: "center",
-                  fontSize: "20px",
-                  color: "#868e96",
-                  margin: "35px",
-                }}
-                className="card-title"
-              >
-                Manage Event
-              </div>
-              <DataTable columns={columns} data={AllEventData} pagination />
+              <input
+                class="form-control"
+                onChange={(e) => HandleImages(e)}
+                name="logo"
+                type="file"
+                multiple
+                id="LearningCategory"
+                accept="image/*"
+              />
             </div>
+
+            {imageLoader ? (
+              <>
+                <ImageLoader />{" "}
+              </>
+            ) : null}
+
+            {eventData?.tableLogo && eventData?.tableLogo?.map((item)=>{
+              console.log(item,"item")
+              return(
+                
+                 <>
+                <div>
+                  <img
+                    style={{
+                      height: "10%",
+                      width: "10%",
+                      marginTop: "12px",
+                      borderRadius: "5px",
+                    }}
+                    src={item?.logo}
+                  />
+                  <button
+                    onClick={() => HandleCrossClick2()}
+                    style={{ color: "red" }}
+                    type="button"
+                    class="btn-close"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </>
+              
+              )
+            }
+            
+             
+            )}
+
+
+            <div class="row" style={{ marginBottom: "1rem" }}>
+
+
+              <div class="col">
+                <label for="inputEmail4">
+                  Venue<span style={{ color: "red" }}>*</span> :
+                </label>
+                <input
+                  type="text"
+                  name="venue"
+                  class="form-control"
+                  placeholder="Enter venue..."
+                  value={eventData?.venue}
+                  onChange={(e) => HandleChange(e)}
+                />
+              </div>
+            </div>
+
+            <div class="row" style={{ marginBottom: "1rem" }}>
+              <div class="col">
+                <label for="inputEmail4">
+                  Priority<span style={{ color: "red" }}>*</span> :
+                </label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="priority"
+                  placeholder="Enter priority..."
+                  value={eventData?.priority}
+                  onChange={(e) => HandleChange(e)}
+                />
+              </div>
+
+              <div class="col">
+                <label for="inputEmail4">
+                  Color<span style={{ color: "red" }}>*</span> :
+                </label>
+                <input
+                  type="color"
+                  name="color"
+                  class="form-control"
+                  placeholder="Enter color..."
+                  value={eventData?.color}
+                  onChange={(e) => HandleChange(e)}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label for="exampleInputEmail1">
+                Image<span style={{ color: "red" }}>*</span> :
+              </label>
+
+              <input
+                class="form-control"
+                onChange={(e) => HandleImage(e)}
+                name="images"
+                type="file"
+                id="LearningCategory"
+                accept="image/*"
+              />
+            </div>
+
+            {/* {imageLoader ? (
+              <>
+                <ImageLoader />{" "}
+              </>
+            ) : null} */}
+
+            {eventData?.images && (
+              <>
+                <div>
+                  <img
+                    style={{
+                      height: "10%",
+                      width: "10%",
+                      marginTop: "12px",
+                      borderRadius: "5px",
+                    }}
+                    src={eventData?.images}
+                  />
+                  <button
+                    onClick={() => HandleCrossClick()}
+                    style={{ color: "red" }}
+                    type="button"
+                    class="btn-close"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </>
+            )}
+
+            {hide ? (
+              <button class="btn btn-primary" style={{ marginTop: "1rem" }} onClick={AddEvent}>
+                Submit
+              </button>
+            ) : (
+              <button class="btn btn-primary" style={{ marginTop: "1rem" }} onClick={UpdateEvent}>
+                Update
+              </button>
+            )}
+
+            <div
+              style={{
+                textAlign: "center",
+                fontSize: "20px",
+                color: "#868e96",
+                margin: "35px",
+              }}
+              className="card-title"
+            >
+              Manage Event
+            </div>
+            <DataTable columns={columns} data={AllEventData} pagination />
           </div>
         </div>
+      </div>
       {/* )} */}
     </>
   );
