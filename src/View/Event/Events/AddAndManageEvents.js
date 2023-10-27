@@ -48,7 +48,7 @@ const AddAndManageEvents = () => {
 
   useEffect(() => {
     fetchAllEventData();
-    fetchTimeZoneData()
+    fetchTimeZoneData();
   }, []);
 
   //for fetching Time Zone data
@@ -98,7 +98,7 @@ const AddAndManageEvents = () => {
     }
   }
 
-//for cross button over tablelogo
+  //for cross button over tablelogo
   const HandleCrossClick2 = (index) => {
     const updatedTableLogo = [...eventData.tableLogo];
     updatedTableLogo.splice(index, 1);
@@ -110,7 +110,7 @@ const AddAndManageEvents = () => {
     file.value = "";
   };
 
-//for cross button over single image
+  //for cross button over single image
   const HandleCrossClick = () => {
     setEventData({
       ...eventData, images: ""
@@ -120,9 +120,9 @@ const AddAndManageEvents = () => {
   };
 
 
-//for single image upload
+  //for single image upload
   const HandleImage = async (e) => {
-    // setImageLoader(true);
+    setImageLoader(true);
     let file = e.target.files[0];
     let data = new FormData();
     data.append("image", file);
@@ -132,8 +132,8 @@ const AddAndManageEvents = () => {
       setEventData({
         ...eventData, images: res?.url
       })
-        // setImage(res?.url);
-      // setImageLoader(false);
+      // setImage(res?.url);
+      setImageLoader(false);
     } else {
       toast.error(res?.message);
       setImageLoader(false);
@@ -142,10 +142,10 @@ const AddAndManageEvents = () => {
 
   //for multiple image upload in tablelogo
   const HandleImages = async (e) => {
-    // setImageLoad(true);
+    setImageLoad(true);
     let arr = [];
     let file = e.target.files;
-  
+
     if (file.length <= eventData.tablePerFloor) {
       for (let element of file) {
         let data = new FormData();
@@ -159,9 +159,9 @@ const AddAndManageEvents = () => {
           toast.error(res?.message);
         }
       }
-      // setImageLoad(false);
+      setImageLoad(false);
       file && setLogoData(arr);
-  
+
       setEventData({
         ...eventData, tableLogo: arr
       });
@@ -171,9 +171,9 @@ const AddAndManageEvents = () => {
       file.value = "";
     }
   };
-  
 
-//for edit functionality
+
+  //for edit functionality
   const onEdit = (item) => {
     console.log("STARTDATE", getDateInMMDDYYYY(item?.startDate));
     window.scroll(0, 0);
@@ -194,13 +194,16 @@ const AddAndManageEvents = () => {
       venue: item?.venue,
       priority: item?.priority,
       color: item?.color,
-      images: item?.images
+      images: item?.images,
+      tableLogo: item?.tableLogo
     })
+    setChecked(true)
+    setChecked1(true)
     setId(item?._id);
     setHide(false);
   };
 
-//for delete functionality
+  //for delete functionality
   const onDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -229,7 +232,7 @@ const AddAndManageEvents = () => {
     });
   };
 
-//for fetch all eventdata
+  //for fetch all eventdata
   const fetchAllEventData = () => {
     setLoading(true);
     HomeService.ViewAllEvent()
@@ -336,18 +339,18 @@ const AddAndManageEvents = () => {
       });
   };
 
-//for add all events
+  //for add all events
   const AddEvent = () => {
     let data = eventData;
-    if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime&&
-      eventData?.endTime , eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
+    if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime &&
+      eventData?.endTime, eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
       eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
-      eventData?.images ) {
+      eventData?.images) {
       HomeService.AddEvent(data)
         .then((res) => {
           if (res && res.status) {
             toast.success(res.message);
-            console.log(eventData,"eveveveev");
+            // console.log(eventData,"eveveveev");
             setEventData(INITIAL)
             fetchAllEventData();
 
@@ -555,6 +558,7 @@ const AddAndManageEvents = () => {
     },
   ];
 
+  //for update in event
   const UpdateEvent = () => {
     let data = eventData;
     if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime &&
@@ -870,11 +874,11 @@ const AddAndManageEvents = () => {
               />
             </div>
 
-            {/* {imageLoader ? (
+            {imageLoad ? (
               <>
                 <ImageLoader />{" "}
               </>
-            ) : null} */}
+            ) : null}
 
             {eventData?.tableLogo && eventData?.tableLogo?.map((item, index) => {
               // console.log(item, "item")
@@ -971,11 +975,11 @@ const AddAndManageEvents = () => {
               />
             </div>
 
-            {/* {imageLoad ? (
+            {imageLoader ? (
               <>
                 <ImageLoader />{" "}
               </>
-            ) : null} */}
+            ) : null}
 
             {eventData?.images && (
               <>
