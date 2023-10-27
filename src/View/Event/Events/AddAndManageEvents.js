@@ -37,6 +37,7 @@ const AddAndManageEvents = () => {
   const [AllEventData, setAllEventData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [imageLoader, setImageLoader] = useState(false);
+  const [imageLoad, setImageLoad] = useState(false)
   const [check, setChecked] = useState(false);
   const [check1, setChecked1] = useState(false)
   const [disable, setDisable] = useState(true)
@@ -45,13 +46,12 @@ const AddAndManageEvents = () => {
   const [id, setId] = useState("");
 
 
-  // console.log("EventData" , eventData?.seatPrice);
-
   useEffect(() => {
     fetchAllEventData();
     fetchTimeZoneData()
   }, []);
 
+  //for fetching Time Zone data
   const fetchTimeZoneData = async () => {
     let res = await HomeService.ViewAllTimeZoneData();
     if (res && res?.status) {
@@ -61,12 +61,17 @@ const AddAndManageEvents = () => {
     }
   }
 
+  //for onChange operation
   const HandleChange = (e) => {
     if (e.target.name == "eventRoom") {
       e.target.value ? setChecked1(true) : setChecked1(false)
     }
     if (e.target.name == "timezone") {
       e.target.value ? setChecked(true) : setChecked(false)
+
+      setEventData({
+        ...eventData, [e.target.name]: e.target.value
+      })
     }
     else if (e.target.name == "eventType" && e.target.value == "Free") {
       setEventData({
@@ -86,31 +91,38 @@ const AddAndManageEvents = () => {
       });
       setDisable(true)
     } else {
+      // alert("Hui")
       setEventData({
         ...eventData, [e.target.name]: e.target.value
       })
     }
   }
 
-  const HandleCrossClick2 = () => {
+//for cross button over tablelogo
+  const HandleCrossClick2 = (index) => {
+    const updatedTableLogo = [...eventData.tableLogo];
+    updatedTableLogo.splice(index, 1);
     setEventData({
-      ...eventData.tableLogo, images: []
-    })
+      ...eventData,
+      tableLogo: updatedTableLogo,
+    });
     let file = document.querySelector("#LearningCategory");
     file.value = "";
   };
 
+//for cross button over single image
   const HandleCrossClick = () => {
     setEventData({
       ...eventData, images: ""
     })
-    let file = document.querySelector("#LearningCategory");
+    let file = document.querySelector("#LearningCategorys");
     file.value = "";
   };
 
 
+//for single image upload
   const HandleImage = async (e) => {
-    setImageLoader(true);
+    // setImageLoader(true);
     let file = e.target.files[0];
     let data = new FormData();
     data.append("image", file);
@@ -120,41 +132,48 @@ const AddAndManageEvents = () => {
       setEventData({
         ...eventData, images: res?.url
       })
-      //   setImage(res?.url);
-      setImageLoader(false);
+        // setImage(res?.url);
+      // setImageLoader(false);
     } else {
       toast.error(res?.message);
       setImageLoader(false);
     }
   };
 
+  //for multiple image upload in tablelogo
   const HandleImages = async (e) => {
-    setImageLoader(true);
+    // setImageLoad(true);
     let arr = [];
     let file = e.target.files;
-
-    for (let element of file) {
-      let data = new FormData();
-      data.append("image", element);
-      let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
-      if (res && res?.status) {
-        arr.push({
-          logo: res?.url
-        });
-      } else {
-        toast.error(res?.message);
+  
+    if (file.length <= eventData.tablePerFloor) {
+      for (let element of file) {
+        let data = new FormData();
+        data.append("image", element);
+        let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
+        if (res && res?.status) {
+          arr.push({
+            logo: res?.url
+          });
+        } else {
+          toast.error(res?.message);
+        }
       }
+      // setImageLoad(false);
+      file && setLogoData(arr);
+  
+      setEventData({
+        ...eventData, tableLogo: arr
+      });
+    } else {
+      toast.error(`You can only upload up to ${eventData.tablePerFloor} images.`);
+      let file = document.querySelector("#LearningCategory");
+      file.value = "";
     }
-    setImageLoader(false);
-    file && setLogoData(arr);
-
-    setEventData({
-      ...eventData, tableLogo: arr
-    })
   };
+  
 
-
-
+//for edit functionality
   const onEdit = (item) => {
     console.log("STARTDATE", getDateInMMDDYYYY(item?.startDate));
     window.scroll(0, 0);
@@ -181,6 +200,7 @@ const AddAndManageEvents = () => {
     setHide(false);
   };
 
+//for delete functionality
   const onDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -209,6 +229,7 @@ const AddAndManageEvents = () => {
     });
   };
 
+//for fetch all eventdata
   const fetchAllEventData = () => {
     setLoading(true);
     HomeService.ViewAllEvent()
@@ -315,29 +336,31 @@ const AddAndManageEvents = () => {
       });
   };
 
+//for add all events
   const AddEvent = () => {
-    // let data = eventData;
-    // if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime&&
-    //   eventData?.endTime , eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
-    //   eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
-    //   eventData?.images ) {
-    //   HomeService.AddEvent(data)
-    //     .then((res) => {
-    //       if (res && res.status) {
-    //         toast.success(res.message);
-    //         setEventData(INITIAL)
-    //         fetchAllEventData();
+    let data = eventData;
+    if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime&&
+      eventData?.endTime , eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
+      eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
+      eventData?.images ) {
+      HomeService.AddEvent(data)
+        .then((res) => {
+          if (res && res.status) {
+            toast.success(res.message);
+            console.log(eventData,"eveveveev");
+            setEventData(INITIAL)
+            fetchAllEventData();
 
-    //       } else {
-    //         toast.error(res?.message);
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // } else {
-    //   toast.error("All fields are required");
-    // }
+          } else {
+            toast.error(res?.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast.error("All fields are required");
+    }
 
     console.log("GHGDJAK", eventData);
   };
@@ -847,41 +870,41 @@ const AddAndManageEvents = () => {
               />
             </div>
 
-            {imageLoader ? (
+            {/* {imageLoader ? (
               <>
                 <ImageLoader />{" "}
               </>
-            ) : null}
+            ) : null} */}
 
-            {eventData?.tableLogo && eventData?.tableLogo?.map((item)=>{
-              console.log(item,"item")
-              return(
-                
-                 <>
-                <div>
-                  <img
-                    style={{
-                      height: "10%",
-                      width: "10%",
-                      marginTop: "12px",
-                      borderRadius: "5px",
-                    }}
-                    src={item?.logo}
-                  />
-                  <button
-                    onClick={() => HandleCrossClick2()}
-                    style={{ color: "red" }}
-                    type="button"
-                    class="btn-close"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </>
-              
+            {eventData?.tableLogo && eventData?.tableLogo?.map((item, index) => {
+              // console.log(item, "item")
+              return (
+
+                <>
+                  <div>
+                    <img
+                      style={{
+                        height: "10%",
+                        width: "10%",
+                        marginTop: "12px",
+                        borderRadius: "5px",
+                      }}
+                      src={item?.logo}
+                    />
+                    <button
+                      onClick={() => HandleCrossClick2(index)}
+                      style={{ color: "red" }}
+                      type="button"
+                      class="btn-close"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                </>
+
               )
             }
-            
-             
+
+
             )}
 
 
@@ -943,12 +966,12 @@ const AddAndManageEvents = () => {
                 onChange={(e) => HandleImage(e)}
                 name="images"
                 type="file"
-                id="LearningCategory"
+                id="LearningCategorys"
                 accept="image/*"
               />
             </div>
 
-            {/* {imageLoader ? (
+            {/* {imageLoad ? (
               <>
                 <ImageLoader />{" "}
               </>
