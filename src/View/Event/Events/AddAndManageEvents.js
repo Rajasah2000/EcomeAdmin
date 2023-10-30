@@ -19,13 +19,13 @@ const INITIAL = {
   endTime: "",
   eventDetails: "",
   hostedBy: "",
-  floorNo: null,
-  tablePerFloor: null,
+  floorNo: "",
+  tablePerFloor: "",
   eventType: "",
   eventRoom: "",
   seatPrice: "",
   venue: "",
-  priority: null,
+  priority: "",
   color: "",
   images: "",
   tableLogo: []
@@ -343,9 +343,9 @@ const AddAndManageEvents = () => {
   const AddEvent = () => {
     let data = eventData;
     if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime &&
-      eventData?.endTime, eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
+      eventData?.endTime && eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
       eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
-      eventData?.images) {
+      eventData?.images && eventData?.tableLogo) {
       HomeService.AddEvent(data)
         .then((res) => {
           if (res && res.status) {
@@ -561,17 +561,37 @@ const AddAndManageEvents = () => {
   //for update in event
   const UpdateEvent = () => {
     let data = eventData;
-    if (eventData?.eventName && eventData?.timezone && eventData?.startDate && eventData?.endDate && eventData?.startTime &&
-      eventData?.endTime, eventData?.eventDetails && eventData?.hostedBy && eventData?.floorNo && eventData?.tablePerFloor &&
-      eventData?.eventType && eventData?.eventRoom && eventData?.seatPrice && eventData?.venue && eventData?.priority && eventData?.color &&
-      eventData?.images) {
+    // console.log(data.floorNo, "daataa")
+    if (eventData?.eventName &&
+      eventData?.timezone &&
+      eventData?.startDate &&
+      eventData?.endDate &&
+      eventData?.startTime &&
+      eventData?.endTime &&
+      eventData?.eventDetails &&
+      eventData?.hostedBy &&
+      eventData?.floorNo &&
+      eventData?.tablePerFloor &&
+      eventData?.eventType &&
+      eventData?.eventRoom &&
+      (eventData?.seatPrice == 0 || eventData.seatPrice) &&
+      eventData?.venue &&
+      eventData?.priority &&
+      eventData?.color &&
+      eventData?.images &&
+      eventData?.tableLogo) {
       HomeService.UpdateEvent(id, data)
         .then((res) => {
           if (res && res.status) {
             toast.success(res.message);
-            setEventData(INITIAL)
+            // setEventData({
+            //   ...eventData, floorNo:null
+            // })
+            setEventData(INITIAL);
+
             fetchAllEventData();
             setHide(true)
+
 
           } else {
             toast.error(res?.message);
@@ -630,7 +650,7 @@ const AddAndManageEvents = () => {
             <div class="row" style={{ marginBottom: "1rem" }}>
               <div class="col">
                 <label for="inputEmail4">
-                  EventName<span style={{ color: "red" }}>*</span> :
+                  Event Name<span style={{ color: "red" }}>*</span> :
                 </label>
                 <input
                   type="text"
@@ -797,7 +817,7 @@ const AddAndManageEvents = () => {
                   disabled={disable}
                   value={eventData?.seatPrice}
                   onChange={(e) => HandleChange(e)}
-                  placeholder="Enter seatPrice..."
+                  placeholder="Enter seat price..."
                 />
               </div>
 
