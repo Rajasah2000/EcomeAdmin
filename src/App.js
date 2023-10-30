@@ -51,6 +51,10 @@ import AddAndManageSponser from "./View/Event/Sponser/AddAndManageSponser";
 import AddAndManageBooth from "./View/Event/Booth/AddAndManageBooth";
 import AddAndManageBoothProduct from "./View/Event/BoothProduct/AddAndManageBoothProduct";
 import AddAndManagecoupon from "./View/Category/AddAndManageCoupon";
+import AddAndManagePodcast from "./View/PodCast/AddAndManagePodcast";
+import AddAndManagePodcastSeries from "./View/PodCast/AddAndManagePodcastSeries";
+import AddAndManageMusic from "./View/PodCast/AddAndManageMusic";
+import AddAndManageMusicAlbum from "./View/PodCast/AddAndManageMusicAlbum";
 
 function App() {
   return (
@@ -98,6 +102,15 @@ function App() {
               element={<AddAndManageMusicGenre />}
             />
             <Route
+              path="/add-manage-music"
+              element={<AddAndManageMusic />}
+            />
+
+            <Route
+              path="/add-manage-music-album"
+              element={<AddAndManageMusicAlbum />}
+            />
+            <Route
               path="/add-manage-podcast-category"
               element={<AddAndManagePodCastCategory />}
             />
@@ -115,6 +128,16 @@ function App() {
             <Route
               path="/add-and-manage-podcast-subscription"
               element={<AddAndMaangePodcastSubscription />}
+            />
+
+            <Route
+              path="/add-manage-podcast"
+              element={<AddAndManagePodcast />}
+            />
+
+            <Route
+              path="/add-manage-podcast-series"
+              element={<AddAndManagePodcastSeries />}
             />
 
             <Route
@@ -151,7 +174,7 @@ function App() {
               path="/add-manage-subscription"
               element={<AddAndManageSubscription />}
             />
-                <Route
+            <Route
               path="/add-and-manage-main-banner"
               element={<AddAndManageMainBanner />}
             />
@@ -196,23 +219,23 @@ function App() {
 
             <Route
               path="/add-and-manage-speaker"
-              element={<AddAndManageSpeaker/>}
+              element={<AddAndManageSpeaker />}
             />
 
             <Route
               path="/add-and-manage-sponser"
-              element={<AddAndManageSponser/>}
+              element={<AddAndManageSponser />}
             />
 
             <Route
               path="/add-and-manage-booth"
-              element={<AddAndManageBooth/>}
+              element={<AddAndManageBooth />}
             />
 
 
-              <Route
+            <Route
               path="/add-and-manage-booth-product"
-              element={<AddAndManageBoothProduct/>}
+              element={<AddAndManageBoothProduct />}
             />
 
           </Route>

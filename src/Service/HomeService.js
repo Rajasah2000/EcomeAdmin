@@ -678,7 +678,30 @@ async function DeleteCoupon(id) {
 }
 
 
+async function AddPodcast(data) {
+  let endpoind = "podcast-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllPodcast() {
+  let endpoind = "podcast-view";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdatePodcast(id, data) {
+  let endpoind = `podcast-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeletePodcast(id) {
+  let endpoind = `podcast-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+
 export default {
+  AddPodcast,
+  ViewAllPodcast,
+  UpdatePodcast,
+  DeletePodcast,
   AddCoupon,
   ViewAllCoupon,
   UpdateCoupon,
