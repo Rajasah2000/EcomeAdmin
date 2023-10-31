@@ -696,8 +696,52 @@ async function DeletePodcast(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
+async function AddPodcastSeries(data) {
+  let endpoind = "podcast-series-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllPodcastSeries() {
+  let endpoind = "podcast-series-view";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdatePodcastSeries(id, data) {
+  let endpoind = `podcast-series-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeletePodcastSeries(id) {
+  let endpoind = `podcast-series-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+
+async function AddMusic(data) {
+  let endpoind = "music-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllMusic() {
+  let endpoind = "music-view";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdateMusic(id, data) {
+  let endpoind = `music-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteMusic(id) {
+  let endpoind = `music-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
 
 export default {
+  AddPodcastSeries,
+  ViewAllPodcastSeries,
+  UpdatePodcastSeries,
+  DeletePodcastSeries,
+  AddMusic,
+  ViewAllMusic,
+  UpdateMusic,
+  DeleteMusic,
   AddPodcast,
   ViewAllPodcast,
   UpdatePodcast,
