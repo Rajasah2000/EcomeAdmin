@@ -733,6 +733,29 @@ async function DeleteMusic(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
+///Donation Events
+async function ViewAllDonationCategories() {
+  let endpoind = "donation-categories-view";
+  return HttpClientXml.get(endpoind);
+}
+async function AddDonationEvent(data) {
+  let endpoind = "donation-events-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllDonationEvents() {
+  let endpoind = "donation-events-view";
+  return HttpClientXml.get(endpoind);
+}
+async function DeleteDonationEvent(id) {
+  let endpoind = `donation-event-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+async function UpdateDonationEvent(id, data) {
+  let endpoind = `donation-event-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+
 export default {
   AddPodcastSeries,
   ViewAllPodcastSeries,
@@ -885,4 +908,11 @@ export default {
   PartnerApprovedByAdmin,
   ViewAllApprovedOTTPartnerShipList,
   ViewAllDisApprovedOTTPartnerShipList,
+  ///
+  ViewAllDonationCategories,
+  AddDonationEvent,
+  ViewAllDonationEvents,
+  DeleteDonationEvent,
+  UpdateDonationEvent,
+  
 };

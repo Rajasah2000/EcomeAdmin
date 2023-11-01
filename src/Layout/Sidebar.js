@@ -1450,6 +1450,7 @@ export default function Sidebar() {
                 </a>
               </div>
             </div>
+
             <div
               id="collapse73"
               className="panel-collapse collapse"
@@ -1593,6 +1594,151 @@ export default function Sidebar() {
               </div>
 
             </div>
+
+            
+            <div
+              id="collapse73"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="heading42"
+            >
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse51"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse41"
+                        aria-expanded="false"
+                        aria-controls="collapse51"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Social Wallet
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse41"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse51"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-manage-social-wallet"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Social Wallet
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse52"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse45"
+                        aria-expanded="false"
+                        aria-controls="collapse52"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+
+                        Donation
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse45"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse52"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-manage-donation"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Donation
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Wallet Events */}
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse53"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse-we"
+                        aria-expanded="false"
+                        aria-controls="collapse-we"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        Wallet Events
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse-we"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse-we"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/wallet-event"
+                            className="metismenu-link"
+                          >
+                            Manage
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
           </div>
 
           <div className="panel panel-default metismenu vertical-nav-menu">

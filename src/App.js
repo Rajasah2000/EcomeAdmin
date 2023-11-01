@@ -55,6 +55,7 @@ import AddAndManagePodcast from "./View/PodCast/AddAndManagePodcast";
 import AddAndManagePodcastSeries from "./View/PodCast/AddAndManagePodcastSeries";
 import AddAndManageMusic from "./View/PodCast/AddAndManageMusic";
 import AddAndManageMusicAlbum from "./View/PodCast/AddAndManageMusicAlbum";
+import WalletEvent from "./View/BushidoWallet/WalletEvent";
 
 function App() {
   return (
@@ -236,6 +237,11 @@ function App() {
             <Route
               path="/add-and-manage-booth-product"
               element={<AddAndManageBoothProduct />}
+            />
+
+<Route
+              path="/wallet-event"
+              element={<WalletEvent/>}
             />
 
           </Route>
