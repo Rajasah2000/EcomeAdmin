@@ -48,19 +48,19 @@ const AddAndManageMusic = () => {
     const Addmusic = () => {
         let data = musicData;
         console.log(data, "music");
-        if (musicData?.musicCategoryID && 
-          musicData?.musicGenreID &&
-          musicData?.moodID &&
-          musicData?.contentType &&
-          musicData?.musicType &&
-          musicData?.musicName &&
-          musicData?.audioName &&
-          musicData?.singerName &&
-          musicData?.musicDuration &&
-          musicData?.releaseYear &&
-          musicData?.uploadThumbnail 
-          // && musicData?.AddMusic
-          ) {
+        if (musicData?.musicCategoryID &&
+            musicData?.musicGenreID &&
+            musicData?.moodID &&
+            musicData?.contentType &&
+            musicData?.musicType &&
+            musicData?.musicName &&
+            musicData?.audioName &&
+            musicData?.singerName &&
+            musicData?.musicDuration &&
+            musicData?.releaseYear &&
+            musicData?.uploadThumbnail
+            // && musicData?.AddMusic
+        ) {
             HomeService.AddMusic(data)
                 .then((res) => {
                     if (res && res.status) {
@@ -171,7 +171,7 @@ const AddAndManageMusic = () => {
         if (res && res.status) {
             console.log("UploadImage", res);
             // setmusicImage(res?.url);
-            setmusicData((prev) => ({ ...prev, Addmusic: res?.url }));
+            setmusicData((prev) => ({ ...prev, AddMusic: res?.url }));
         } else {
             toast.error(res?.message);
         }
@@ -191,7 +191,7 @@ const AddAndManageMusic = () => {
         // setmusicImage("");
         // let file = document.querySelector("#addmusic");
         // file.value = "";
-        setmusicData((prev) => ({ ...prev, Addmusic: "" }));
+        setmusicData((prev) => ({ ...prev, AddMusic: "" }));
     };
 
     //for fetch all musicdata
@@ -242,7 +242,7 @@ const AddAndManageMusic = () => {
                             ),
                             AddMusic: (
                                 <>
-                                    {item?.Addmusic ? (
+                                    {item?.AddMusic ? (
                                         <img
                                             style={{
                                                 height: "65%",
@@ -471,7 +471,7 @@ const AddAndManageMusic = () => {
                     Addmusic
                 </div>
             ),
-            selector: (row) => row.Addmusic,
+            selector: (row) => row.AddMusic,
         },
 
         {
@@ -549,8 +549,8 @@ const AddAndManageMusic = () => {
                                 onChange={handleChange}
                             >
                                 <option value={""}>Select musicType</option>
-                                <option value={"single"}>single</option>
-                                <option value={"series"}>series</option>
+                                <option value={"music"}>music</option>
+                                <option value={"album"}>album</option>
                             </select>
                         </div>
                     </div>
@@ -786,7 +786,7 @@ const AddAndManageMusic = () => {
                             <ImageLoader />{" "}
                         </>
                     ) : null}
-                    {musicData?.Addmusic && (
+                    {musicData?.AddMusic && (
                         <>
                             <div>
                                 <img
@@ -796,7 +796,7 @@ const AddAndManageMusic = () => {
                                         marginTop: "12px",
                                         borderRadius: "5px",
                                     }}
-                                    src={musicData?.Addmusic}
+                                    src={musicData?.AddMusic}
                                 />
                                 <button
                                     onClick={() => HandleCrossClick2()}

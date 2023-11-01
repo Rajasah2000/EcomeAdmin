@@ -13,10 +13,15 @@ const INITIAL = {
   podcastType: "",
   titleOfseries: "",
   seriesDescription: "",
+  // listenFree: "",
   podcast: [{ episodeName: "", audioName: "", artistName: "", releaseYear: "", podcastDuration: "", addPodcast: "", uploadThumbload: "" }]
 };
+
+const initSeriesPodcast = { episodeName: "", audioName: "", artistName: "", releaseYear: "", podcastDuration: "", addPodcast: "", uploadThumbload: "" }
+
 const AddAndManagePodcastSeries = () => {
   const [podcastData, setPodcastData] = useState(INITIAL);
+  // const [seriesPodcast, setSeriesPodcast] = useState([initSeriesPodcast])
   const [AllPodcastData, setAllPodcastData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hide, setHide] = useState(true);
@@ -41,6 +46,15 @@ const AddAndManagePodcastSeries = () => {
   //for add all Podcast
   const AddPodcast = () => {
     let data = podcastData;
+    // let data2 = {
+    //   "contentType": podcastData.contentType,
+    //   "podcastType": podcastData.podcastType,
+    //   "titleOfseries": podcastData.titleOfseries,
+    //   "seriesDescription": podcastData.seriesDescription,
+    //   "moodID": podcastData.moodID,
+    //   "listenFree": podcastData.listenFree,
+    //   "podcast": seriesPodcast
+    // }
     console.log(data, "podcast");
     if (podcastData?.podcastCategoryID && podcastData?.podcastGenreID) {
       HomeService.AddPodcastSeries(data)
@@ -48,6 +62,7 @@ const AddAndManagePodcastSeries = () => {
           if (res && res.status) {
             toast.success(res.message);
             setPodcastData(INITIAL);
+            // setSeriesPodcast(initSeriesPodcast)
             fetchAllPodcastData();
           } else {
             toast.error(res?.message);
@@ -95,12 +110,22 @@ const AddAndManagePodcastSeries = () => {
 
   // Update the podcast data
   const UpdatePodcast = () => {
+    // let data2 = {
+    //   "contentType": podcastData.contentType,
+    //   "podcastType": podcastData.podcastType,
+    //   "titleOfseries": podcastData.titleOfseries,
+    //   "seriesDescription": podcastData.seriesDescription,
+    //   "moodID": podcastData.moodID,
+    //   "listenFree": podcastData.listenFree,
+    //   "podcast": seriesPodcast
+    // }
     if (selectedPodcastId) {
       HomeService.UpdatePodcastSeries(selectedPodcastId, podcastData)
         .then((res) => {
           if (res && res.status) {
             toast.success(res.message);
             setPodcastData(INITIAL);
+            // setSeriesPodcast(initSeriesPodcast)
             setSelectedPodcastId(null); // Clear the selected podcast ID
             fetchAllPodcastData();
           } else {
@@ -121,10 +146,11 @@ const AddAndManagePodcastSeries = () => {
     setHide(false);
     setSelectedPodcastId(podcast._id);
     setPodcastData({ ...podcast });
+    // setSeriesPodcast({...podcast})
   };
 
   //handeling upload thumbnail
-  const HandleImage = async (e) => {
+  const HandleImage = async (e,index) => {
     setImageLoader(true);
     let file = e.target.files[0];
     let data = new FormData();
@@ -133,7 +159,7 @@ const AddAndManagePodcastSeries = () => {
     let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
 
     if (res && res.status) {
-      console.log("UploadImage", res);
+      console.log("UploadImage", res?.url);
       // setThumbnail(res?.url);
       setPodcastData((prev) => ({ ...prev, uploadThumbload: res?.url }));
     } else {
@@ -355,7 +381,7 @@ const AddAndManagePodcastSeries = () => {
     setPodcastData({ ...podcastData, podcast: updatedPodcast });
   };
 
-//add more button
+  //add more button
   const addPodcastField = () => {
     setPodcastData({
       ...podcastData,
@@ -382,6 +408,7 @@ const AddAndManagePodcastSeries = () => {
       ),
       selector: (row) => row.sl,
     },
+
     {
       name: (
         <div
@@ -390,29 +417,37 @@ const AddAndManagePodcastSeries = () => {
           PodcastName
         </div>
       ),
-      selector: (row) => row.podcastName,
-      width: "15rem",
+      selector: (row) => row?.podcast?.map((item) => {
+        return item?.podcastName
+      })
     },
+
     {
       name: (
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          PodCastDuration
+          PodcastDuration
         </div>
       ),
-      selector: (row) => row.podcastDuration,
+      selector: (row) => row?.podcast?.map((item) => {
+        return item?.podcastDuration
+      })
     },
+
     {
       name: (
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          ReleaseYear
+          Release Year
         </div>
       ),
-      selector: (row) => row.releaseYear,
+      selector: (row) => row?.podcast?.map((item) => {
+        return item?.releaseYear
+      })
     },
+
     {
       name: (
         <div
@@ -423,6 +458,7 @@ const AddAndManagePodcastSeries = () => {
       ),
       selector: (row) => row.titleOfseries,
     },
+
     {
       name: (
         <div
@@ -431,8 +467,11 @@ const AddAndManagePodcastSeries = () => {
           AudioName
         </div>
       ),
-      selector: (row) => row.audioName,
+      selector: (row) => row?.podcast?.map((item) => {
+        return item?.audioName
+      })
     },
+
     {
       name: (
         <div
@@ -441,8 +480,12 @@ const AddAndManagePodcastSeries = () => {
           ArtistName
         </div>
       ),
-      selector: (row) => row.artistName,
+      selector: (row) => row?.podcast?.map((item) => {
+        return item?.artistName
+      })
     },
+
+
     {
       name: (
         <div
@@ -527,7 +570,7 @@ const AddAndManagePodcastSeries = () => {
     <div component="div" className="TabsAnimation appear-done enter-done">
       <div className="main-card mb-3 card">
         <div className="card-body">
-          {hide ? (
+          {/* {hide ? (
             <div
               style={{
                 textAlign: "center",
@@ -551,9 +594,9 @@ const AddAndManagePodcastSeries = () => {
             >
               Edit PodCast Series
             </div>
-          )}
+          )} */}
 
-          <div className="row">
+          {/* <div className="row">
             <div className="col">
               <label htmlFor="formGroupExampleInput">Select ContentType</label>
               <select
@@ -570,7 +613,6 @@ const AddAndManagePodcastSeries = () => {
             </div>
 
 
-            {/* <div className="row"> */}
             <div className="col">
               <label htmlFor="formGroupExampleInput">Select PodcastType</label>
               <select
@@ -585,8 +627,7 @@ const AddAndManagePodcastSeries = () => {
                 <option value={"series"}>series</option>
               </select>
             </div>
-            {/* </div> */}
-          </div>
+          </div> */}
 
           <div className="row">
             {/* <div className="col">
@@ -632,7 +673,7 @@ const AddAndManagePodcastSeries = () => {
 
           <div className="row">
             <div className="col">
-              <label htmlFor="formGroupExampleInput">title Of Series</label>
+              <label htmlFor="formGroupExampleInput">Title Of Series</label>
               <input
                 type="text"
                 className="form-control"
@@ -682,6 +723,7 @@ const AddAndManagePodcastSeries = () => {
 
           {
             podcastData?.podcast?.map((item, index) => {
+              console.log("sss", item)
               return (
                 <>
                   <div className="row">
@@ -775,7 +817,7 @@ const AddAndManagePodcastSeries = () => {
 
                     <input
                       class="form-control"
-                      onChange={(e) => HandleImage(e)}
+                      onChange={(e) => HandleImage(e,index)}
                       type="file"
                       id="thumbnail"
                       accept="image/*"
@@ -984,4 +1026,6 @@ const AddAndManagePodcastSeries = () => {
 };
 
 export default AddAndManagePodcastSeries;
+
+
 

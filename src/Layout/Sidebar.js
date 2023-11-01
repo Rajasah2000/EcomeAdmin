@@ -831,7 +831,7 @@ export default function Sidebar() {
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
                         {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
-                       PodCast Add/Manage
+                        PodCast Add/Manage
                       </a>
                     </div>
                   </div>
@@ -858,7 +858,7 @@ export default function Sidebar() {
               </div>
 
 
-              <div className="panel-body">
+              {/* <div className="panel-body">
                 <div className="panel panel-default metismenu vertical-nav-menu">
                   <div
                     className="panel-heading metismenu-container"
@@ -876,7 +876,7 @@ export default function Sidebar() {
                         aria-controls="collapse79"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                       
                        PodCast Series Add/Manage
                       </a>
                     </div>
@@ -901,7 +901,7 @@ export default function Sidebar() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
 
               <div className="panel-body">
@@ -922,8 +922,8 @@ export default function Sidebar() {
                         aria-controls="collapse80"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
-                       Music Add/Manage
+
+                        Music Add/Manage
                       </a>
                     </div>
                   </div>
@@ -951,7 +951,7 @@ export default function Sidebar() {
 
 
 
- <div className="panel-body">
+              {/* <div className="panel-body">
                 <div className="panel panel-default metismenu vertical-nav-menu">
                   <div
                     className="panel-heading metismenu-container"
@@ -969,8 +969,8 @@ export default function Sidebar() {
                         aria-controls="collapse81"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
-                       Music Album Add/Manage
+                      
+                        Music Album Add/Manage
                       </a>
                     </div>
                   </div>
@@ -994,9 +994,7 @@ export default function Sidebar() {
                     </div>
                   </div>
                 </div>
-              </div>
-
-
+              </div> */}
 
             </div>
           </div>
