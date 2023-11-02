@@ -126,7 +126,7 @@ const WalletEvent = () => {
     const HandleImage = async (e) => {
         setImageLoader(true);
         let file = e.target.files[0];
-        let data = new FormData();
+        let data = new FormData({});
         data.append("image", file);
 
         let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);

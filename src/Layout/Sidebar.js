@@ -1426,6 +1426,51 @@ export default function Sidebar() {
                 </div>
               </div>
 
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse92"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse-vc"
+                        aria-expanded="false"
+                        aria-controls="collapse92"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+
+                        Video Content
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse-vc"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse92"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/video-content"
+                            className="metismenu-link"
+                          >
+                            Manage Video
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 

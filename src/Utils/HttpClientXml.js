@@ -35,7 +35,7 @@ async function requestData(url, data = {}, method = "GET") {
     } else {
       xhr.send(JSON.stringify(data));
     }
-    xhr.onload = () => {
+    xhr.onload = () => {  
       console.log(xhr.status);
       let response = JSON.parse(xhr.response);
       console.log(response);
@@ -137,7 +137,68 @@ async function fileUplode(
 ) {
   let token = "";
   let user = reactLocalStorage.get("Auth");
-  console.log("UserTok", user);
+  // console.log("UserTok", user);
+  if (user && user != null && Object.keys(user).length > 0) {
+    token = user;
+  }
+  // let bash_url = "http://13.127.101.102:5011/api/v1/";
+  let apiUrl = BASE_URL + url;
+  // let data = new FormData();
+  // data.append("image", file);
+  // Object.keys(object_get).forEach(function (key) {
+  //   let ddd = object_get[key];
+  //   data.append(key, ddd);
+  // });
+
+  if (token != "") {
+    var toooo = token;
+  }
+  //  console.log("tokenn",toooo);
+  let headers = {
+    // 'Accept': 'application/json',
+    // "Content-Type": "multipart/form-data",
+    // "Access-Control-Allow-Origin": "http://13.127.101.102:5008",
+    authorization: toooo,
+    userType: "Admin",
+    // 'Authorization': 'Bearer ' + login_status,
+  };
+
+  // Display the key/value pairs
+  // for (var pair of file.entries()) {
+  //   console.log(pair[0] + ", " + pair[1]);
+  // }
+
+  return await fetch(apiUrl, {
+    method: method,
+    body: file,
+    redirect: "follow",
+    headers: headers,
+  })
+    .then((response) => {
+      // console.log("responseee", response, headers);
+      return response.json();
+    })
+    .then(
+      (result) => {
+        console.log("ResponIMG", result);
+        return result;
+      },
+      (error) => {
+        return error;
+      }
+    );
+}
+
+async function fileVideoUplode(
+  url,
+  method,
+  file,
+  object_get = {},
+  tokenCustom = null
+) {
+  let token = "";
+  let user = reactLocalStorage.get("Auth");
+  // console.log("UserTok", user);
   if (user && user != null && Object.keys(user).length > 0) {
     token = user;
   }
@@ -206,4 +267,5 @@ export default {
   put,
   deletemethod,
   fileUplode,
+  fileVideoUplode,
 };

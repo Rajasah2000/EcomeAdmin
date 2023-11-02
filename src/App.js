@@ -56,6 +56,7 @@ import AddAndManagePodcastSeries from "./View/PodCast/AddAndManagePodcastSeries"
 import AddAndManageMusic from "./View/PodCast/AddAndManageMusic";
 import AddAndManageMusicAlbum from "./View/PodCast/AddAndManageMusicAlbum";
 import WalletEvent from "./View/BushidoWallet/WalletEvent";
+import ManageVideoContent from "./View/OTT/ManageVideoContent";
 
 function App() {
   return (
@@ -239,10 +240,12 @@ function App() {
               element={<AddAndManageBoothProduct />}
             />
 
-<Route
+            <Route
               path="/wallet-event"
-              element={<WalletEvent/>}
+              element={<WalletEvent />}
             />
+
+            <Route path="/video-content" element={<ManageVideoContent/>}/>
 
           </Route>
         </Route>

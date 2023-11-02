@@ -307,7 +307,7 @@ async function OTTPartnerApprovedByAdmin(id) {
 }
 async function AddLearningCategory(data) {
   let endpoind = "add-learning-category";
-  return HttpClientXml.post(endpoind,data);
+  return HttpClientXml.post(endpoind, data);
 }
 async function ViewLearningCategory() {
   let endpoind = "view-learning-category";
@@ -321,18 +321,18 @@ async function UpdateLearningCategory(id, data) {
   let endpoind = `update-learning-category/${id}`;
   return HttpClientXml.put(endpoind, data);
 }
-async function ViewLearningExpertise(){
-  let endpoint="view-learning-expertise";
+async function ViewLearningExpertise() {
+  let endpoint = "view-learning-expertise";
   return HttpClientXml.get(endpoint)
 }
-async function AddLearningExpertise(data){
-  let endpoint="add-learning-expertise"
-  return HttpClientXml.post(endpoint,data)
+async function AddLearningExpertise(data) {
+  let endpoint = "add-learning-expertise"
+  return HttpClientXml.post(endpoint, data)
 }
 
-async function EditLearningExpertise(id,data){
-  let endpoint=`update-learning-expertise/${id}`
-  return HttpClientXml.put(endpoint,data)
+async function EditLearningExpertise(id, data) {
+  let endpoint = `update-learning-expertise/${id}`
+  return HttpClientXml.put(endpoint, data)
 }
 
 async function DeleteLearningExpertise(id) {
@@ -342,18 +342,18 @@ async function DeleteLearningExpertise(id) {
 
 
 
-async function ViewOttSubscription(){
-  let endpoint="view-ott-subscription";
+async function ViewOttSubscription() {
+  let endpoint = "view-ott-subscription";
   return HttpClientXml.get(endpoint)
 }
-async function AddOttSubscription(data){
-  let endpoint="add-ott-subscription"
-  return HttpClientXml.post(endpoint,data)
+async function AddOttSubscription(data) {
+  let endpoint = "add-ott-subscription"
+  return HttpClientXml.post(endpoint, data)
 }
 
-async function EditOttSubscription(id,data){
-  let endpoint=`update-ott-subscription/${id}`
-  return HttpClientXml.put(endpoint,data)
+async function EditOttSubscription(id, data) {
+  let endpoint = `update-ott-subscription/${id}`
+  return HttpClientXml.put(endpoint, data)
 }
 
 async function DeleteOttSubscription(id) {
@@ -633,7 +633,7 @@ async function DeleteBooth(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
-async function EventWiseBooth(data){
+async function EventWiseBooth(data) {
   let endpoind = "event-wise-booth";
   return HttpClientXml.post(endpoind, data);
 }
@@ -754,6 +754,21 @@ async function UpdateDonationEvent(id, data) {
   let endpoind = `donation-event-update/${id}`;
   return HttpClientXml.put(endpoind, data);
 }
+
+///OTT Content
+async function ViewOTTCategories() {
+  let endpoind = "donation-categories-view";//user/view-ott-categories
+  return HttpClientXml.get(endpoind);
+}
+async function AddVideoContent(data) {
+  let endpoind = "OTT-content-video-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllVideoContents() {
+  let endpoind = "OTT-video-view-all";
+  return HttpClientXml.get(endpoind);
+}
+
 
 
 export default {
@@ -914,5 +929,9 @@ export default {
   ViewAllDonationEvents,
   DeleteDonationEvent,
   UpdateDonationEvent,
-  
+  ///OTT Content
+  ViewOTTCategories,
+  AddVideoContent,
+  ViewAllVideoContents,
+
 };
