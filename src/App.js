@@ -57,6 +57,7 @@ import AddAndManageMusic from "./View/PodCast/AddAndManageMusic";
 import AddAndManageMusicAlbum from "./View/PodCast/AddAndManageMusicAlbum";
 import WalletEvent from "./View/BushidoWallet/WalletEvent";
 import ManageVideoContent from "./View/OTT/ManageVideoContent";
+import ManageSeason from "./View/OTT/ManageSeason";
 
 function App() {
   return (
@@ -246,6 +247,7 @@ function App() {
             />
 
             <Route path="/video-content" element={<ManageVideoContent/>}/>
+            <Route path="/manage-season/:id" element={<ManageSeason/>}/>
 
           </Route>
         </Route>

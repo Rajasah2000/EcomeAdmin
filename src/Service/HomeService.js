@@ -754,10 +754,14 @@ async function UpdateDonationEvent(id, data) {
   let endpoind = `donation-event-update/${id}`;
   return HttpClientXml.put(endpoind, data);
 }
+async function ViewAllTimeZones() {
+  let endpoind = "timezone-view";
+  return HttpClientXml.get(endpoind);
+}
 
 ///OTT Content
 async function ViewOTTCategories() {
-  let endpoind = "donation-categories-view";//user/view-ott-categories
+  let endpoind = "Ott-category-get";
   return HttpClientXml.get(endpoind);
 }
 async function AddVideoContent(data) {
@@ -766,6 +770,22 @@ async function AddVideoContent(data) {
 }
 async function ViewAllVideoContents() {
   let endpoind = "OTT-video-view-all";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdateVideoContent(id, data) {
+  let endpoind = `Ott-content-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+async function DeleteVideoContent(id) {
+  let endpoind = `OTT-content-video-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+async function AddOTTSesion(data) {
+  let endpoind = "Ott-season-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewSeasonsByShow(id) {
+  let endpoind = `season-list-show-wise/${id}`;
   return HttpClientXml.get(endpoind);
 }
 
@@ -929,9 +949,14 @@ export default {
   ViewAllDonationEvents,
   DeleteDonationEvent,
   UpdateDonationEvent,
+  ViewAllTimeZones,
   ///OTT Content
   ViewOTTCategories,
   AddVideoContent,
   ViewAllVideoContents,
+  UpdateVideoContent,
+  DeleteVideoContent,
+  AddOTTSesion,
+  ViewSeasonsByShow,
 
 };

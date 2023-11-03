@@ -8,6 +8,7 @@ import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
 import PageLoader from "../../Loader/PageLoader";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const ManageVideoContent = () => {
     const [loading, setLoading] = useState(false);
@@ -158,28 +159,44 @@ const ManageVideoContent = () => {
 
 
     const AddData = () => {
-
-        let data = {
-            ottCategoryID: ottCategoryID,
-            contentType: contentType,
-            productionName: productionName,
-            showTitle: showTitle,
-            description: description,
-            duration: duration,
-            directorName: directorName,
-            addCastName: addCastName,
-            watchfreeStatus: watchfreeStatus,
-            thumbnailImage: thumbnailImage,
-            uploadMovieTailer: movieTailer,
-            uploadMovie: movie
-        };
+        let data = {}
+        if (contentType === "movie") {
+            data = {
+                ottCategoryID: ottCategoryID,
+                contentType: contentType,
+                productionName: productionName,
+                showTitle: showTitle,
+                description: description,
+                duration: duration,
+                directorName: directorName,
+                addCastName: addCastName,
+                watchfreeStatus: watchfreeStatus,
+                thumbnailImage: thumbnailImage,
+                uploadMovieTailer: movieTailer,
+                uploadMovie: movie
+            };
+        } else if (contentType === "ott") {
+            data = {
+                ottCategoryID: ottCategoryID,
+                contentType: contentType,
+                productionName: productionName,
+                showTitle: showTitle,
+                description: description,
+                duration: duration,
+                directorName: directorName,
+                addCastName: addCastName,
+                watchfreeStatus: watchfreeStatus,
+                thumbnailImage: thumbnailImage,
+                uploadMovieTailer: movieTailer,
+            };
+        }
         // console.log(data);
         if (contentType && productionName) {
             HomeService.AddVideoContent(data)
                 .then((res) => {
                     if (res && res.status) {
                         toast.success(res.message);
-                        // FetchAllData()
+                        FetchAllData()
                         setInitialState()
                     } else {
                         toast.error(res?.message);
@@ -194,8 +211,42 @@ const ManageVideoContent = () => {
     }
 
     const UpdateData = () => {
+        console.log("ID", id);
+        let data = {
+            ottCategoryID: ottCategoryID,
+            contentType: contentType,
+            productionName: productionName,
+            showTitle: showTitle,
+            description: description,
+            duration: duration,
+            directorName: directorName,
+            addCastName: addCastName,
+            watchfreeStatus: watchfreeStatus,
+            thumbnailImage: thumbnailImage,
+            uploadMovieTailer: movieTailer,
+            uploadMovie: movie
+        };
+        if (thumbnailImage && productionName) {
+            HomeService.UpdateVideoContent(id, data)
+                .then((res) => {
+                    if (res && res.status) {
+                        toast.success("Updated Successfully");
+                        setHide(true);
 
-    }
+                        setInitialState()
+                        FetchAllData();
+                        
+                    } else {
+                        toast.error(res?.message);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            toast.error("All fields is required");
+        }
+    };
 
     const [allData, setAllData] = useState([]);
     const columns = [
@@ -282,14 +333,14 @@ const ManageVideoContent = () => {
             ),
 
             selector: (row) => {
-                if (row.contentType==="ott") {
-                    return 'Add Season'
+                if (row.contentType === "ott") {
+                    return (<><Link to={`/manage-season/${row.id}`}>Manage</Link></>)
                 }
-                
+
             },
         },
 
-        
+
 
 
 
@@ -320,6 +371,7 @@ const ManageVideoContent = () => {
                     let arr = res?.data?.map((item, index) => {
                         return {
                             sl: index + 1,
+                            id: item?._id,
                             contentType: item?.contentType,
                             productionName: item?.productionName,
                             showTitle: item?.showTitle,
@@ -331,7 +383,8 @@ const ManageVideoContent = () => {
                                         <img
                                             style={{
 
-                                                width: "100%",
+                                                // width: "100%",
+                                                maxHeight: "100px",
 
                                                 margin: "5px",
                                             }}
@@ -353,12 +406,12 @@ const ManageVideoContent = () => {
                                 </>
                             ),
 
-                            
+
 
                             action: (
                                 <div style={{ display: "flex", flexDirection: "coloum" }}>
                                     <svg
-                                        // onClick={() => onEdit(item)}
+                                        onClick={() => onEdit(item)}
                                         style={{
                                             height: "20px",
                                             width: "20px",
@@ -379,7 +432,7 @@ const ManageVideoContent = () => {
                                         />
                                     </svg>
                                     <svg
-                                        // onClick={() => onDelete(item?._id)}
+                                        onClick={() => onDelete(item?._id)}
                                         style={{
                                             color: "red",
                                             height: "20px",
@@ -408,6 +461,55 @@ const ManageVideoContent = () => {
                 console.log("err", err);
             });
     };
+
+    const [id, setId] = useState("");
+    const onEdit = (item) => {
+        window.scroll(0, 0);
+        setContentType(item?.contentType);
+        setOttCategoryID(item?.categoryData?._id)
+        setProductionName(item?.productionName)
+        setShowTitle(item?.showTitle)
+        setDescription(item?.description)
+
+        setDuration(item?.duration)
+        setDirectorName(item?.directorName)
+        setAddCastName(item?.addCastName)
+        setWatchfreeStatus(item?.watchfreeStatus)
+        setThumbnailImage(item?.thumbnailImage)
+        setMovieTailer(item?.uploadMovieTailer)
+        setMovie(item?.uploadMovie)
+        setId(item?._id);
+        setHide(false);
+    };
+
+    const onDelete = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            // text: "You won't  to delete this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                HomeService.DeleteVideoContent(id)
+                    .then((res) => {
+                        if (res && res.status) {
+                            toast.success("Deleted Successfully");
+                            setInitialState()
+                            FetchAllData();
+                        } else {
+                            toast.error(res?.message);
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+        });
+    };
+
 
     useEffect(() => {
         FetchAllOttCategories()
@@ -463,7 +565,7 @@ const ManageVideoContent = () => {
                                     </label>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="movie" id="flexRadioDefault1" onClick={(e) => setContentType(e.target.name)} checked={checkRadio(contentType, 'video')} />
+                                        <input class="form-check-input" type="radio" name="movie" id="flexRadioDefault1" onClick={(e) => setContentType(e.target.name)} checked={checkRadio(contentType, 'movie')} />
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             Movie
                                         </label>
@@ -476,7 +578,7 @@ const ManageVideoContent = () => {
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" style={{ display: contentType === "" && "none" }}>
 
 
 
@@ -621,13 +723,13 @@ const ManageVideoContent = () => {
                                         </label>
 
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="free" value={true} id="flexRadioDefault1" onClick={(e) => setWatchfreeStatus(e.target.value)} checked={checkRadio(watchfreeStatus, 'true')} />
+                                            <input class="form-check-input" type="radio" name="free" value={true} id="flexRadioDefault1" onClick={(e) => {setWatchfreeStatus(e.target.value);}} checked={checkRadio(watchfreeStatus, true)} />
                                             <label class="form-check-label" for="flexRadioDefault1">
                                                 Yes
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="paid" value={false} id="flexRadioDefault2" onClick={(e) => setWatchfreeStatus(e.target.value)} checked={checkRadio(watchfreeStatus, 'false')} />
+                                            <input class="form-check-input" type="radio" name="paid" value={false} id="flexRadioDefault2" onClick={(e) => {setWatchfreeStatus(e.target.value);}} checked={checkRadio(watchfreeStatus, false)} />
                                             <label class="form-check-label" for="flexRadioDefault2">
                                                 No
                                             </label>
@@ -663,44 +765,44 @@ const ManageVideoContent = () => {
                                     {movieTailer && (
                                         <>
                                             <div>
-                                                Uploaded {movieTailer}
+                                                Uploaded Successfully
 
                                             </div>
                                         </>
                                     )}
 
-                                    {/* Tailer Video upload */}
+                                    {/* //Tailer Video upload */}
 
 
                                     {/* Video upload */}
+                                    <div style={{ display: contentType === "ott" && "none", marginTop: "1rem" }}>
+                                        <label for="exampleInputEmail1">
+                                            Upload Movie :
+                                        </label>
+                                        <input
+                                            class="form-control"
+                                            onChange={(e) => HandleVideo(e)}
+                                            type="file"
+                                            id="movie"
+                                            accept="video/*"
+                                        />
+                                        {videoLoader ? (
+                                            <>
+                                                <ImageLoader />{" "}
+                                            </>
+                                        ) : null}
+                                        {movie && (
+                                            <>
+                                                <div>
+                                                    Uploaded Successfully
 
-                                    <label for="exampleInputEmail1">
-                                        Upload Movie :
-                                    </label>
-                                    <input
-                                        class="form-control"
-                                        onChange={(e) => HandleVideo(e)}
-                                        type="file"
-                                        id="movie"
-                                        accept="video/*"
-                                    />
-                                    {videoLoader ? (
-                                        <>
-                                            <ImageLoader />{" "}
-                                        </>
-                                    ) : null}
-                                    {movie && (
-                                        <>
-                                            <div>
-                                                Uploaded {movie}
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                    {/* //Video upload */}
 
-                                            </div>
-                                        </>
-                                    )}
-
-                                    {/* Video upload */}
-
-                                    <label for="exampleInputEmail1">
+                                    <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
                                         Thumbnail Image :
                                     </label>
                                     <input
@@ -732,25 +834,26 @@ const ManageVideoContent = () => {
                                         </>
                                     )}
 
+                                    <div style={{ marginTop: "1rem" }}>
+                                        {hide ? (
+                                            <>
+                                                <button class="btn btn-primary" onClick={AddData}>
+                                                    Add
+                                                </button>
 
-
-                                </div>
-
-                                {hide ? (
-                                    <>
-                                        <button class="btn btn-primary" onClick={AddData}>
-                                            Add
-                                        </button>
-
-                                        {/* <button class="btn btn-primary" onClick={setInitialState}>
+                                                {/* <button class="btn btn-primary" onClick={setInitialState}>
                                         Reset
                                     </button> */}
-                                    </>
-                                ) : (
-                                    <button class="btn btn-primary" onClick={UpdateData}>
-                                        Update
-                                    </button>
-                                )}
+                                            </>
+                                        ) : (
+                                            <button class="btn btn-primary" onClick={UpdateData}>
+                                                Update
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+
+
 
                                 <div
                                     style={{
@@ -763,7 +866,18 @@ const ManageVideoContent = () => {
                                 >
                                     Content
                                 </div>
-                                <DataTable columns={columns} data={allData} pagination />
+                                <DataTable
+                                    columns={columns}
+                                    data={allData}
+                                    pagination
+                                    highlightOnHover
+                                    paginationPerPage={3}
+                                    paginationRowsPerPageOptions={[5, 15, 25, 50]}
+                                    paginationComponentOptions={{
+                                        rowsPerPageText: "Records per page:",
+                                        rangeSeparatorText: "out of",
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>

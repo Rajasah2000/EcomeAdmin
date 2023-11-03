@@ -1791,134 +1791,6 @@
 									"response": []
 								}
 							]
-						},
-						{
-							"name": "Product",
-							"item": [
-								{
-									"name": "add product",
-									"request": {
-										"method": "POST",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"productName\":\"admin\",\n    \"catID\":\"64ad5fd39fcbb4751c0eb986\",\n    \"subCatID\":\"64ae5713100f6be371af8cfa\",\n    \"unitID\":\"64bb8244e3bde76aafade56b\",\n    \"weight\":5,\n    \"brandName\":\"admin\",\n    \"size\":[],\n    \"color\":[],\n    \"productDetails\":\"very good one\",\n    \"productImg\":[\n        \"https://bushido.sgp1.digitaloceanspaces.com/Category/image//4c919240-53a2-11ee-850b-93f0e0e0210a.jpg\",\n        \"https://bushido.sgp1.digitaloceanspaces.com/Category/image//618fb780-53a2-11ee-850b-93f0e0e0210a.jpg\"\n    ],\n    \"ActualProductPrice\":249,\n    \"discountPercentage\":59,\n    \"quantity\":200\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}v1/admin/product-add",
-											"host": [
-												"{{baseUrl}}v1"
-											],
-											"path": [
-												"admin",
-												"product-add"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "view product",
-									"request": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}v1/admin/product-view",
-											"host": [
-												"{{baseUrl}}v1"
-											],
-											"path": [
-												"admin",
-												"product-view"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "update product",
-									"request": {
-										"method": "PUT",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"productName\": \"tools\",\n    \"catID\": \"64ad5fd39fcbb4751c0eb986\",\n    \"subCatID\": \"64ae5713100f6be371af8cfa\",\n    \"unitID\": \"64bb8244e3bde76aafade56b\",\n    \"weight\": 5,\n    \"brandName\": \"wood\",\n    \"size\": [\"M\",\"L\"],\n    \"color\": [\"#f96aff\"],\n    \"productDetails\": \"very good one\",\n    \"productImg\": [\n        \"https://bushido.sgp1.digitaloceanspaces.com/Category/image//4c919240-53a2-11ee-850b-93f0e0e0210a.jpg\",\n        \"https://bushido.sgp1.digitaloceanspaces.com/Category/image//618fb780-53a2-11ee-850b-93f0e0e0210a.jpg\"\n    ],\n    \"ActualProductPrice\": 249,\n    \"discountPercentage\": 59,\n    \"quantity\": 200\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}v1/admin/product-update/6542070c38e28d32b5ed54c8",
-											"host": [
-												"{{baseUrl}}v1"
-											],
-											"path": [
-												"admin",
-												"product-update",
-												"6542070c38e28d32b5ed54c8"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "delete product",
-									"request": {
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}v1/admin/product-delete/6542070c38e28d32b5ed54c8",
-											"host": [
-												"{{baseUrl}}v1"
-											],
-											"path": [
-												"admin",
-												"product-delete",
-												"6542070c38e28d32b5ed54c8"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "update product stock",
-									"request": {
-										"method": "POST",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"productID\":\"6542070c38e28d32b5ed54c8\",\n    \"quantity\": 10\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}v1/admin/stock-update",
-											"host": [
-												"{{baseUrl}}v1"
-											],
-											"path": [
-												"admin",
-												"stock-update"
-											]
-										}
-									},
-									"response": []
-								}
-							]
-						},
-						{
-							"name": "Orders",
-							"item": []
 						}
 					]
 				},
@@ -4594,24 +4466,6 @@
 										}
 									},
 									"response": []
-								},
-								{
-									"name": "get Ott category",
-									"request": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}v1/admin/Ott-category-get",
-											"host": [
-												"{{baseUrl}}v1"
-											],
-											"path": [
-												"admin",
-												"Ott-category-get"
-											]
-										}
-									},
-									"response": []
 								}
 							]
 						},
@@ -5730,24 +5584,6 @@
 											"path": [
 												"admin",
 												"donation-categories-view"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Get timezone",
-									"request": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}v1/admin/timezone-view",
-											"host": [
-												"{{baseUrl}}v1"
-											],
-											"path": [
-												"admin",
-												"timezone-view"
 											]
 										}
 									},
@@ -12517,7 +12353,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"courseName\": \"reac\"\n}",
+											"raw": "{\n    \"courseName\": \"fire\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -12545,14 +12381,12 @@
 											{
 												"key": "Authorization",
 												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlJhYmluZHJhIiwiZW1haWwiOiJyYWJpbmRyYUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1Njc4OSIsImltYWdlIjoiaHR0cHM6Ly9idXNoaWRvLnNncDEuZGlnaXRhbG9jZWFuc3BhY2VzLmNvbS9wcm9maWxlL2ltYWdlLy8wYjA1NDIyMC0yN2IyLTExZWUtYWVmMy1mZDNhZjBmNTg5ZjQucG5nIiwiaWF0IjoxNjg5OTM1NzUwfQ.tQ_6vwjL1GEAX9ICNONUc-70NkLpPAi8FBb6N3t_6zA",
-												"type": "text",
-												"disabled": true
+												"type": "text"
 											},
 											{
 												"key": "userType",
 												"value": "User",
-												"type": "text",
-												"disabled": true
+												"type": "text"
 											}
 										],
 										"url": {

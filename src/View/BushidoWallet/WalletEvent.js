@@ -18,14 +18,20 @@ const WalletEvent = () => {
     const [address, setAddress] = useState("");
     const [raisingAmountStatus, setRaisingAmountStatus] = useState(false);
     const [raisingVolunteerStatus, setRaisingVolunteerStatus] = useState(false);
-    const [raisingAmount, setRaisingAmount] = useState(0);
+    const [raisingAmount, setRaisingAmount] = useState(null);
+
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
+    const [volunteer, setVolunteer] = useState(null);
+    const [time, setTime] = useState("");
+    const [allTimeZone, setAllTimeZone] = useState([]);
+    const [timeZone, setTimeZone] = useState("");
 
 
-    const [buttonText, setButtonText] = useState("");
+
+    // const [buttonText, setButtonText] = useState("");
     const [imageLoader, setImageLoader] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -63,8 +69,24 @@ const WalletEvent = () => {
             });
     };
 
+    const FetchAllTimeZone = () => {
+        HomeService.ViewAllTimeZones()
+            .then((res) => {
+                console.log("AllState", res.data);
+                if (res && res?.status) {
+                    // setLoader(false)
+                    let arr = res?.data;
+                    setAllTimeZone(arr);
+                }
+            })
+            .catch((err) => {
+                console.log("err", err);
+            });
+    };
+
     useEffect(() => {
         FetchAllDonationCategories()
+        FetchAllTimeZone()
         FetchAllData()
     }, []);
 
@@ -90,6 +112,9 @@ const WalletEvent = () => {
         }
         setStartDate(moment(item?.startDate).format("YYYY-MM-DD"))
         setEndDate(moment(item?.endDate).format("YYYY-MM-DD"))
+        setTimeZone(item?.timeZone)
+        setTime(item?.time)
+        console.log("L177:",item?.time);
 
         setId(item?._id);
         setHide(false);
@@ -126,7 +151,7 @@ const WalletEvent = () => {
     const HandleImage = async (e) => {
         setImageLoader(true);
         let file = e.target.files[0];
-        let data = new FormData({});
+        let data = new FormData();
         data.append("image", file);
 
         let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
@@ -141,19 +166,42 @@ const WalletEvent = () => {
     };
 
     const AddData = () => {
-        let data = {
-            eventName: eventName,
-            donationCatID: donationCatID,
-            description: description,
-            raisingAmount: raisingAmount,
-            address: address,
-            raisingAmountStatus: raisingAmountStatus,
-            raisingVolunteerStatus: raisingVolunteerStatus,
-            image: image,
-            startDate: startDate,
-            endDate: endDate,
-            // description: desc,
-        };
+        let data={}
+        if (raisingVolunteerStatus) {
+            data = {
+                eventName: eventName,
+                donationCatID: donationCatID,
+                description: description,
+                raisingAmount: raisingAmount,
+                address: address,
+                raisingAmountStatus: raisingAmountStatus,
+                raisingVolunteerStatus: raisingVolunteerStatus,
+                image: image,
+                startDate: startDate,
+                endDate: endDate,
+                volunteer: volunteer,
+                time: time,
+                timeZone: timeZone,
+                // description: desc,
+            };
+        }else if (raisingAmountStatus) {
+            data = {
+                eventName: eventName,
+                donationCatID: donationCatID,
+                description: description,
+                raisingAmount: raisingAmount,
+                address: address,
+                raisingAmountStatus: raisingAmountStatus,
+                raisingVolunteerStatus: raisingVolunteerStatus,
+                image: image,
+                startDate: startDate,
+                endDate: endDate,
+                volunteer: volunteer,
+                // time: time,
+                // timeZone: timeZone,
+                // description: desc,
+            };
+        }
         console.log(data);
         if (image && eventName) {
             HomeService.AddDonationEvent(data)
@@ -372,7 +420,7 @@ const WalletEvent = () => {
                     style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
                 >
 
-                    Value
+                    People / Money
                 </div>
             ),
             selector: (row) => {
@@ -408,14 +456,14 @@ const WalletEvent = () => {
 
         setRaisingAmountStatus(true)
         setRaisingVolunteerStatus(false)
-
+        setVolunteer(null)
     }
 
     const setVolunteerProject = () => {
 
         setRaisingVolunteerStatus(true)
         setRaisingAmountStatus(false)
-
+        setRaisingAmount(null)
     }
 
 
@@ -455,6 +503,9 @@ const WalletEvent = () => {
             toast.error("All fields is required");
         }
     };
+
+
+    
     return (
         <>
             {loading ? (
@@ -691,6 +742,45 @@ const WalletEvent = () => {
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
                                     />
+                                </div>
+                            </div>
+
+                            <div class="row" style={{ marginBottom: "1rem" }}>
+                                <div class="col" style={{ display: raisingVolunteerStatus ? "block" : "none" }}>
+                                    <label for="inputEmail4">
+                                        Time :
+                                    </label>
+                                    <input
+
+                                        type="time"
+                                        class="form-control"
+                                        value={time}
+                                        onChange={(e) => setTime(e.target.value)}
+                                        placeholder="Enter name..."
+                                    />
+                                </div>
+
+                                <div class="col" style={{ display: raisingVolunteerStatus ? "block" : "none" }}>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            Time Zone :
+                                        </label>
+                                        <select className="form-control" onChange={(e) => setTimeZone(e.target.value)}>
+                                            <option value="">Select</option>
+                                            {allTimeZone?.map((ele, id) => {
+                                                console.log(ele);
+                                                return (
+                                                    <option
+                                                        selected={ele._id == timeZone ? true : false}
+                                                        value={ele._id}
+                                                        key={ele._id}
+                                                    >
+                                                        {ele.value}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
