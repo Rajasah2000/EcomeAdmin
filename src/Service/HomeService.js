@@ -733,7 +733,29 @@ async function DeleteMusic(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
+async function AddMusicSeries(data) {
+  let endpoind = "music-album-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewMusicSeries() {
+  let endpoind = "music-album-view";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdateMusicSeries(id, data) {
+  let endpoind = `music-album-update//${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteMusicSeries(id) {
+  let endpoind = `music-album-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
 export default {
+  AddMusicSeries,
+  ViewMusicSeries,
+  UpdateMusicSeries,
+  DeleteMusicSeries,
   AddPodcastSeries,
   ViewAllPodcastSeries,
   UpdatePodcastSeries,

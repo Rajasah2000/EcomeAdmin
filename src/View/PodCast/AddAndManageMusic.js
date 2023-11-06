@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
+import AddAndManageMusicAlbum from "./AddAndManageMusicAlbum";
 
 const INITIAL = {
     musicCategoryID: "",
@@ -496,352 +497,361 @@ const AddAndManageMusic = ({ musicval, setmusicval }) => {
         <div component="div" className="TabsAnimation appear-done enter-done">
             <div className="main-card mb-3 card">
                 <div className="card-body">
-                    {hide ? (
-                        <div
-                            style={{
-                                textAlign: "center",
-                                fontSize: "20px",
-                                color: "#868e96",
-                                margin: "35px",
-                            }}
-                            className="card-title"
-                        >
-                            Add music
-                        </div>
+                    {musicData.musicType === "album" ? (
+                        <AddAndManageMusicAlbum />
                     ) : (
-                        <div
-                            style={{
-                                textAlign: "center",
-                                fontSize: "20px",
-                                color: "#868e96",
-                                margin: "35px",
-                            }}
-                            className="card-title"
-                        >
-                            Edit music
-                        </div>
-                    )}
-
-                    <div className="row">
-                        <div className="col">
-                            <label htmlFor="formGroupExampleInput">Select ContentType</label>
-                            <select
-                                class="form-control"
-                                aria-label="Default select example"
-                                name="contentType"
-                                value={musicData.contentType}
-                                onChange={handleChange}
-                            >
-                                {/* <option value={""}>Select contentType</option> */}
-                                {/* <option value={"podCast"}>PodCast</option> */}
-                                <option value={"music"}>Music</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col">
-                            <label htmlFor="formGroupExampleInput">Select musicType</label>
-                            <select
-                                class="form-control"
-                                aria-label="Default select example"
-                                name="musicType"
-                                value={musicData.musicType}
-                                onChange={handleChange}
-                            >
-                                <option value={""}>Select musicType</option>
-                                <option value={"music"}>music</option>
-                                <option value={"album"}>album</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col">
-                            <label htmlFor="formGroupExampleInput">Select Category</label>
-                            <select
-                                class="form-control"
-                                aria-label="Default select example"
-                                name="musicCategoryID"
-                                value={musicData.musicCategoryID}
-                                onChange={handleChange}
-                            >
-                                <option value={""} disabled>
-                                    Select Category
-                                </option>
-                                {catData.map((item, i) => (
-                                    <option key={i} value={item?._id}>
-                                        {item?.catName}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className="col">
-                            <label htmlFor="formGroupExampleInput">Select Genre</label>
-                            <select
-                                class="form-control"
-                                aria-label="Default select example"
-                                name="musicGenreID"
-                                value={musicData.musicGenreID}
-                                onChange={handleChange}
-                            >
-                                <option value={""} disabled>
-                                    Select Genre
-                                </option>
-                                {genreData.map((item, i) => (
-                                    <option key={i} value={item?._id}>
-                                        {item?.genreName}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col">
-                            <label htmlFor="formGroupExampleInput">Select Mood</label>
-                            <select
-                                class="form-control"
-                                aria-label="Default select example"
-                                name="moodID"
-                                value={musicData.moodID}
-                                onChange={handleChange}
-                            >
-                                <option value={""} disabled>
-                                    Select Mood
-                                </option>
-                                {moodData.map((item, i) => (
-                                    <option key={i} value={item?._id}>
-                                        {item?.mood}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className="col">
-                            <label htmlFor="formGroupExampleInput">Audio Name</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Audio Name"
-                                name="audioName"
-                                value={musicData.audioName}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col">
-                            <label htmlFor="formGroupExampleInput">music Name</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="music Name"
-                                name="musicName"
-                                value={musicData.musicName}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        <div className="col">
-                            <label htmlFor="formGroupExampleInput">Artist Name</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Artist Name"
-                                name="singerName"
-                                value={musicData.singerName}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </div>
-
-                    <div class="row" style={{ marginBottom: "1rem" }}>
-                        <div class="col">
-                            <label for="inputEmail4">
-                                Release Year<span style={{ color: "red" }}></span> :
-                            </label>
-                            <input
-                                type="date"
-                                class="form-control"
-                                name="releaseYear"
-                                value={musicData?.releaseYear}
-                                onChange={handleChange}
-                                placeholder="Enter release year"
-                            />
-                        </div>
-                        <div class="col">
-                            <label for="inputEmail4">
-                                music Duration<span style={{ color: "red" }}></span> :
-                            </label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="musicDuration"
-                                value={musicData?.musicDuration}
-                                onChange={handleChange}
-                                placeholder="Enter music duration"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="col">
-                        {/* <div className="d-flex flex-wrap"> */}
-                        <div>
-                            <label htmlFor="formGroupExampleInput">Listen Free</label>
-                        </div>
-                        <div className="d-flex flex-wrap">
-                            <div
-                                classname="form-check form-check-inline"
-                                style={{ marginRight: "1rem" }}
-                            >
-                                <input
-                                    classname="form-check-input"
-                                    type="radio"
-                                    name="listenFree"
-                                    id="inlineRadio1"
-                                    value="true"
-                                    onChange={() =>
-                                        setmusicData((prev) => ({ ...prev, listenFree: "true" }))
-                                    }
-                                />
-                                <label classname="form-check-label" for="inlineRadio1">
-                                    Yes
-                                </label>
-                            </div>
-
-                            <div
-                                classname="form-check form-check-inline"
-                                style={{ marginRight: "1rem" }}
-                            >
-                                <input
-                                    classname="form-check-input"
-                                    type="radio"
-                                    name="listenFree"
-                                    id="inlineRadio1"
-                                    value="false"
-                                    onChange={() =>
-                                        setmusicData((prev) => ({ ...prev, listenFree: "false" }))
-                                    }
-                                />
-                                <label classname="form-check-label" for="inlineRadio1">
-                                    No
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <label for="exampleInputEmail1">
-                        Thumbnail<span style={{ color: "red" }}></span> :
-                    </label>
-
-                    <input
-                        class="form-control"
-                        onChange={(e) => HandleImage(e)}
-                        type="file"
-                        id="thumbnail"
-                        accept="image/*"
-                    />
-                    {imageLoader ? (
-                        <>
-                            <ImageLoader />{" "}
-                        </>
-                    ) : null}
-                    {musicData?.uploadThumbnail && (
                         <>
                             <div>
-                                <img
-                                    style={{
-                                        height: "10%",
-                                        width: "10%",
-                                        marginTop: "12px",
-                                        borderRadius: "5px",
-                                    }}
-                                    src={musicData?.uploadThumbnail}
+                                {hide ? (
+                                    <div
+                                        style={{
+                                            textAlign: "center",
+                                            fontSize: "20px",
+                                            color: "#868e96",
+                                            margin: "35px",
+                                        }}
+                                        className="card-title"
+                                    >
+                                        Add music
+                                    </div>
+                                ) : (
+                                    <div
+                                        style={{
+                                            textAlign: "center",
+                                            fontSize: "20px",
+                                            color: "#868e96",
+                                            margin: "35px",
+                                        }}
+                                        className="card-title"
+                                    >
+                                        Edit music
+                                    </div>
+                                )}
+
+                                <div className="row">
+                                    <div className="col">
+                                        <label htmlFor="formGroupExampleInput">Select ContentType</label>
+                                        <select
+                                            class="form-control"
+                                            aria-label="Default select example"
+                                            name="contentType"
+                                            value={musicData.contentType}
+                                            onChange={handleChange}
+                                        >
+                                            <option value={""}>Select contentType</option>
+                                            {/* <option value={"podCast"}>PodCast</option> */}
+                                            <option value={"music"}>Music</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col">
+                                        <label htmlFor="formGroupExampleInput">Select musicType</label>
+                                        <select
+                                            class="form-control"
+                                            aria-label="Default select example"
+                                            name="musicType"
+                                            value={musicData.musicType}
+                                            onChange={handleChange}
+                                        >
+                                            <option value={""}>Select musicType</option>
+                                            <option value={"music"}>music</option>
+                                            <option value={"album"}>album</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col">
+                                        <label htmlFor="formGroupExampleInput">Select Category</label>
+                                        <select
+                                            class="form-control"
+                                            aria-label="Default select example"
+                                            name="musicCategoryID"
+                                            value={musicData.musicCategoryID}
+                                            onChange={handleChange}
+                                        >
+                                            <option value={""} disabled>
+                                                Select Category
+                                            </option>
+                                            {catData.map((item, i) => (
+                                                <option key={i} value={item?._id}>
+                                                    {item?.catName}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className="col">
+                                        <label htmlFor="formGroupExampleInput">Select Genre</label>
+                                        <select
+                                            class="form-control"
+                                            aria-label="Default select example"
+                                            name="musicGenreID"
+                                            value={musicData.musicGenreID}
+                                            onChange={handleChange}
+                                        >
+                                            <option value={""} disabled>
+                                                Select Genre
+                                            </option>
+                                            {genreData.map((item, i) => (
+                                                <option key={i} value={item?._id}>
+                                                    {item?.genreName}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col">
+                                        <label htmlFor="formGroupExampleInput">Select Mood</label>
+                                        <select
+                                            class="form-control"
+                                            aria-label="Default select example"
+                                            name="moodID"
+                                            value={musicData.moodID}
+                                            onChange={handleChange}
+                                        >
+                                            <option value={""} disabled>
+                                                Select Mood
+                                            </option>
+                                            {moodData.map((item, i) => (
+                                                <option key={i} value={item?._id}>
+                                                    {item?.mood}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className="col">
+                                        <label htmlFor="formGroupExampleInput">Audio Name</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Audio Name"
+                                            name="audioName"
+                                            value={musicData.audioName}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col">
+                                        <label htmlFor="formGroupExampleInput">music Name</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="music Name"
+                                            name="musicName"
+                                            value={musicData.musicName}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+
+                                    <div className="col">
+                                        <label htmlFor="formGroupExampleInput">Singer Name</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Artist Name"
+                                            name="singerName"
+                                            value={musicData.singerName}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="row" style={{ marginBottom: "1rem" }}>
+                                    <div class="col">
+                                        <label for="inputEmail4">
+                                            Release Year<span style={{ color: "red" }}></span> :
+                                        </label>
+                                        <input
+                                            type="date"
+                                            class="form-control"
+                                            name="releaseYear"
+                                            value={musicData?.releaseYear}
+                                            onChange={handleChange}
+                                            placeholder="Enter release year"
+                                        />
+                                    </div>
+                                    <div class="col">
+                                        <label for="inputEmail4">
+                                            music Duration<span style={{ color: "red" }}></span> :
+                                        </label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            name="musicDuration"
+                                            value={musicData?.musicDuration}
+                                            onChange={handleChange}
+                                            placeholder="Enter music duration"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="col">
+                                    {/* <div className="d-flex flex-wrap"> */}
+                                    <div>
+                                        <label htmlFor="formGroupExampleInput">Listen Free</label>
+                                    </div>
+                                    <div className="d-flex flex-wrap">
+                                        <div
+                                            classname="form-check form-check-inline"
+                                            style={{ marginRight: "1rem" }}
+                                        >
+                                            <input
+                                                classname="form-check-input"
+                                                type="radio"
+                                                name="listenFree"
+                                                id="inlineRadio1"
+                                                value="true"
+                                                onChange={() =>
+                                                    setmusicData((prev) => ({ ...prev, listenFree: "true" }))
+                                                }
+                                            />
+                                            <label classname="form-check-label" for="inlineRadio1">
+                                                Yes
+                                            </label>
+                                        </div>
+
+                                        <div
+                                            classname="form-check form-check-inline"
+                                            style={{ marginRight: "1rem" }}
+                                        >
+                                            <input
+                                                classname="form-check-input"
+                                                type="radio"
+                                                name="listenFree"
+                                                id="inlineRadio1"
+                                                value="false"
+                                                onChange={() =>
+                                                    setmusicData((prev) => ({ ...prev, listenFree: "false" }))
+                                                }
+                                            />
+                                            <label classname="form-check-label" for="inlineRadio1">
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label for="exampleInputEmail1">
+                                    Thumbnail<span style={{ color: "red" }}></span> :
+                                </label>
+
+                                <input
+                                    class="form-control"
+                                    onChange={(e) => HandleImage(e)}
+                                    type="file"
+                                    id="thumbnail"
+                                    accept="image/*"
                                 />
-                                <button
-                                    onClick={() => HandleCrossClick()}
-                                    style={{ color: "red" }}
-                                    type="button"
-                                    class="btn-close"
-                                    aria-label="Close"
-                                ></button>
-                            </div>
-                        </>
-                    )}
+                                {imageLoader ? (
+                                    <>
+                                        <ImageLoader />{" "}
+                                    </>
+                                ) : null}
+                                {musicData?.uploadThumbnail && (
+                                    <>
+                                        <div>
+                                            <img
+                                                style={{
+                                                    height: "10%",
+                                                    width: "10%",
+                                                    marginTop: "12px",
+                                                    borderRadius: "5px",
+                                                }}
+                                                src={musicData?.uploadThumbnail}
+                                            />
+                                            <button
+                                                onClick={() => HandleCrossClick()}
+                                                style={{ color: "red" }}
+                                                type="button"
+                                                class="btn-close"
+                                                aria-label="Close"
+                                            ></button>
+                                        </div>
+                                    </>
+                                )}
 
-                    <label for="exampleInputEmail1">
-                        Addmusic<span style={{ color: "red" }}></span> :
-                    </label>
-                    <input
-                        class="form-control"
-                        onChange={(e) => HandlemusicImage(e)}
-                        type="file"
-                        id="addmusic"
-                        accept="image/*"
-                    />
-                    {imageLoader2 ? (
-                        <>
-                            <ImageLoader />{" "}
-                        </>
-                    ) : null}
-                    {musicData?.AddMusic && (
-                        <>
-                            <div>
-                                <img
-                                    style={{
-                                        height: "10%",
-                                        width: "10%",
-                                        marginTop: "12px",
-                                        borderRadius: "5px",
-                                    }}
-                                    src={musicData?.AddMusic}
+                                <label for="exampleInputEmail1">
+                                    Addmusic<span style={{ color: "red" }}></span> :
+                                </label>
+                                <input
+                                    class="form-control"
+                                    onChange={(e) => HandlemusicImage(e)}
+                                    type="file"
+                                    id="addmusic"
+                                    accept="image/*"
                                 />
-                                <button
-                                    onClick={() => HandleCrossClick2()}
-                                    style={{ color: "red" }}
-                                    type="button"
-                                    class="btn-close"
-                                    aria-label="Close"
-                                ></button>
+                                {imageLoader2 ? (
+                                    <>
+                                        <ImageLoader />{" "}
+                                    </>
+                                ) : null}
+                                {musicData?.AddMusic && (
+                                    <>
+                                        <div>
+                                            <img
+                                                style={{
+                                                    height: "10%",
+                                                    width: "10%",
+                                                    marginTop: "12px",
+                                                    borderRadius: "5px",
+                                                }}
+                                                src={musicData?.AddMusic}
+                                            />
+                                            <button
+                                                onClick={() => HandleCrossClick2()}
+                                                style={{ color: "red" }}
+                                                type="button"
+                                                class="btn-close"
+                                                aria-label="Close"
+                                            ></button>
+                                        </div>
+                                    </>
+                                )}
+
+                                {hide ? (
+                                    <button
+                                        class="btn btn-primary"
+                                        style={{ marginTop: "1rem" }}
+                                        onClick={Addmusic}
+                                    >
+                                        Submit
+                                    </button>
+                                ) : (
+                                    <button
+                                        class="btn btn-primary"
+                                        style={{ marginTop: "1rem" }}
+                                        onClick={Updatemusic}
+                                    >
+                                        Update
+                                    </button>
+                                )}
                             </div>
+                            <div
+                                style={{
+                                    textAlign: "center",
+                                    fontSize: "20px",
+                                    color: "#868e96",
+                                    margin: "35px",
+                                }}
+                                className="card-title"
+                            >
+                                Manage music
+                            </div>
+                            <DataTable columns={columns} data={AllmusicData} pagination />
                         </>
                     )}
-
-                    {hide ? (
-                        <button
-                            class="btn btn-primary"
-                            style={{ marginTop: "1rem" }}
-                            onClick={Addmusic}
-                        >
-                            Submit
-                        </button>
-                    ) : (
-                        <button
-                            class="btn btn-primary"
-                            style={{ marginTop: "1rem" }}
-                            onClick={Updatemusic}
-                        >
-                            Update
-                        </button>
-                    )}
-
-                    <div
-                        style={{
-                            textAlign: "center",
-                            fontSize: "20px",
-                            color: "#868e96",
-                            margin: "35px",
-                        }}
-                        className="card-title"
-                    >
-                        Manage music
-                    </div>
-                    <DataTable columns={columns} data={AllmusicData} pagination />
                 </div>
+
             </div>
+
         </div>
     );
 };

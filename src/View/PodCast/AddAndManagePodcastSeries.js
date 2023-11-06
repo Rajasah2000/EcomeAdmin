@@ -17,14 +17,11 @@ const AddAndManagePodcastSeries = () => {
   const [loading, setLoading] = useState(false);
   const [podId, setPodId] = useState('')
   const [hide, setHide] = useState(true);
-  // const [showPodcast,setShowPodcast]=useState(true);
-
   const [contentType, setcontentType] = useState("");
   const [podcastType, setpodcastType] = useState("");
   const [moodID, setmoodID] = useState([]);
   const [moodData, setMoodData] = useState([]);
   const [listenFree, setlistenFree] = useState("");
-  console.log("listenFree", listenFree);
   const [titleOfseries, settitleOfseries] = useState("");
   const [seriesDescription, setseriesDescription] = useState("");
 
@@ -534,7 +531,7 @@ const AddAndManagePodcastSeries = () => {
                           value={contentType}
                           onChange={(e) => setcontentType(e.target.value)}
                         >
-                          {/* <option value={""}>Select contentType</option> */}
+                          <option value={""}>Select contentType</option>
                           <option value={"podcast"}>Podcast</option>
                           {/* <option value={"music"}>Music</option> */}
                         </select>
