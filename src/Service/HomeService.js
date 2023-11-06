@@ -784,11 +784,34 @@ async function AddOTTSesion(data) {
   let endpoind = "Ott-season-add";
   return HttpClientXml.post(endpoind, data);
 }
+async function UpdateOTTSesion(id, data) {
+  let endpoind = `Ott-season-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
 async function ViewSeasonsByShow(id) {
   let endpoind = `season-list-show-wise/${id}`;
   return HttpClientXml.get(endpoind);
 }
-
+async function ViewEpisodesBySeason(id) {
+  let endpoind = `episode-list-season-wise/${id}`;
+  return HttpClientXml.get(endpoind);
+}
+async function DeleteSeason(id) {
+  let endpoind = `season-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+async function AddEpisode(data) {
+  let endpoind = "Ott-episode-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function UpdateEpisode(id, data) {
+  let endpoind = `Ott-episode-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+async function DeleteEpisode(id) {
+  let endpoind = `Ott-episode-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
 
 
 export default {
@@ -957,6 +980,13 @@ export default {
   UpdateVideoContent,
   DeleteVideoContent,
   AddOTTSesion,
+  UpdateOTTSesion,
   ViewSeasonsByShow,
+  ViewEpisodesBySeason,
+  DeleteSeason,
+  AddEpisode,
+  UpdateEpisode,
+  DeleteEpisode,
+
 
 };

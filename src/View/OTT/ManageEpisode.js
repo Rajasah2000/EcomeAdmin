@@ -11,15 +11,64 @@ import moment from "moment";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 
-const ManageSeason = () => {
-    const { id } = useParams()
+const ManageEpisode = () => {
+    const { show, id } = useParams()
 
     const [loading, setLoading] = useState(false);
     const [hide, setHide] = useState(true);
 
-    const [addShowID, setAddShowID] = useState(id);
-    const [numberOfSeason, setNumberOfSeason] = useState("");
-    const [directorName, setDirectorName] = useState("");
+    const [nameOfEpisode, setNameOfEpisode] = useState("")
+    const [episodeNumber, setEpisodeNumber] = useState("")
+    const [duration, setDuration] = useState("")
+    const [episodeDescription, setEpisodeDescription] = useState("")
+
+
+
+
+
+
+    const [imageLoader, setImageLoader] = useState(false);
+    const [bannerImage, setBannerImage] = useState("");
+
+    const HandleBannerImage = async (e) => {
+        setImageLoader(true);
+        let file = e.target.files[0];
+        let data = new FormData();
+        data.append("image", file);
+        // console.log('L86:', data);
+        let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
+
+        if (res && res.status) {
+            console.log("UploadImageRes", res);
+            setBannerImage(res?.url);
+        } else {
+            toast.error(res?.message);
+        }
+        setImageLoader(false);
+    };
+
+    const [tailerVideoLoader, setTailerVideoLoader] = useState(false);
+    const [addEpisode, setAddEpisode] = useState("");
+
+    const HandleTailerVideo = async (e) => {
+        setTailerVideoLoader(true);
+        let file = e.target.files[0];
+        // console.log("gfgf:",file);
+        let data = new FormData();
+        data.append("video", file);
+        // console.log('L105:',data);
+        let res = await HttpClientXml.fileVideoUplode("video-upload", "POST", data);
+
+        if (res && res.status) {
+            // console.log("UploadImageRes", res);
+            setAddEpisode(res?.transcoderUrl);
+        } else {
+            toast.error(res?.message);
+        }
+        setTailerVideoLoader(false);
+    };
+
+
 
 
     ///Add Episode
@@ -107,54 +156,13 @@ const ManageSeason = () => {
 
     ///Add Episode//
 
-    const [imageLoader, setImageLoader] = useState(false);
-    const [bannerImage, setBannerImage] = useState("");
-
-    const HandleImage = async (e) => {
-        setImageLoader(true);
-        let file = e.target.files[0];
-        let data = new FormData();
-        data.append("image", file);
-        // console.log('L86:', data);
-        let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
-
-        if (res && res.status) {
-            console.log("UploadImageRes", res);
-            setBannerImage(res?.url);
-        } else {
-            toast.error(res?.message);
-        }
-        setImageLoader(false);
-    };
-
-    const [tailerVideoLoader, setTailerVideoLoader] = useState(false);
-    const [tailerUrl, setTailerUrl] = useState("");
-
-    const HandleTailerVideo = async (e) => {
-        setTailerVideoLoader(true);
-        let file = e.target.files[0];
-        // console.log("gfgf:",file);
-        let data = new FormData();
-        data.append("video", file);
-        // console.log('L105:',data);
-        let res = await HttpClientXml.fileVideoUplode("video-upload", "POST", data);
-
-        if (res && res.status) {
-            // console.log("UploadImageRes", res);
-            setTailerUrl(res?.transcoderUrl);
-        } else {
-            toast.error(res?.message);
-        }
-        setTailerVideoLoader(false);
-    };
-
 
 
     const setInitialState = () => {
-        setNumberOfSeason("")
-        setDirectorName("")
-
-        // setAddCastName(initialCastNames)
+        setNameOfEpisode("")
+        setEpisodeNumber("")
+        setEpisodeDescription("")
+        setDuration("")
 
         let trailer = document.querySelector("#trailer");
         trailer.value = "";
@@ -165,22 +173,20 @@ const ManageSeason = () => {
 
     const AddData = () => {
         let data = {
-            addShowID: addShowID,
-            numberOfSeason: numberOfSeason,
-            directorName: directorName,
-            tailerUrl: tailerUrl,
-            bannerImage: bannerImage,
+            showID: show,
+            seasonID: id,
             addEpisode: formValues,
         };
 
-        console.log(data);
-        if (addShowID) {
-            HomeService.AddOTTSesion(data)
+        // console.log("L179:",data);
+        if (show && id) {
+            HomeService.AddEpisode(data)
                 .then((res) => {
                     if (res && res.status) {
                         toast.success(res.message);
                         FetchAllData()
-                        setInitialState()
+                        // setInitialState()
+                        setFormValues([{}]);
                     } else {
                         toast.error(res?.message);
                     }
@@ -195,22 +201,23 @@ const ManageSeason = () => {
 
     const UpdateData = () => {
         let data = {
-            addShowID: addShowID,
-            numberOfSeason: numberOfSeason,
-            directorName: directorName,
-            tailerUrl: tailerUrl,
+            nameOfEpisode: nameOfEpisode,
+            episodeNumber: episodeNumber,
+            addEpisode: addEpisode,
             bannerImage: bannerImage,
-            // addEpisode: formValues,
+            duration: duration,
+            episodeDescription: episodeDescription
         };
 
-        console.log("L208:",data,seasonId);
-        if (addShowID) {
-            HomeService.UpdateOTTSesion(seasonId, data)
+        console.log("L208:", data, episodeId);
+        if (episodeId) {
+            HomeService.UpdateEpisode(episodeId, data)
                 .then((res) => {
                     if (res && res.status) {
                         toast.success(res.message);
                         FetchAllData()
                         setInitialState()
+                        setOnEditing(false)
                         setHide(true)
                     } else {
                         toast.error(res?.message);
@@ -241,10 +248,10 @@ const ManageSeason = () => {
                 <div
                     style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
                 >
-                    Number
+                    Name
                 </div>
             ),
-            selector: (row) => row.numberOfSeason,
+            selector: (row) => row.nameOfEpisode,
         },
 
         {
@@ -252,10 +259,10 @@ const ManageSeason = () => {
                 <div
                     style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
                 >
-                    Director Name
+                    Number
                 </div>
             ),
-            selector: (row) => row.directorName,
+            selector: (row) => row.episodeNumber,
         },
         {
             name: (
@@ -273,16 +280,11 @@ const ManageSeason = () => {
                     style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
                 >
 
-                    Episode
+                    Duration
                 </div>
             ),
 
-            selector: (row) => {
-
-                return (<><Link to={`/manage-episode/${addShowID}/${row.id}`}>Manage</Link></>)
-
-
-            },
+            selector: (row) => row.duration,
         },
         {
             name: (
@@ -302,8 +304,8 @@ const ManageSeason = () => {
     ];
     const FetchAllData = () => {
         setLoading(true);
-        console.log(addShowID);
-        HomeService.ViewSeasonsByShow(addShowID)
+        // console.log(addShowID);
+        HomeService.ViewEpisodesBySeason(id)
             .then((res) => {
                 console.log("Video Content:", res.data);
                 if (res && res?.status) {
@@ -313,9 +315,10 @@ const ManageSeason = () => {
                         return {
                             sl: index + 1,
                             id: item?._id,
-
-                            directorName: item?.directorName,
-                            numberOfSeason: item?.numberOfSeason,
+                            nameOfEpisode: item?.nameOfEpisode,
+                            episodeNumber: item?.episodeNumber,
+                            episodeDescription: item?.episodeDescription,
+                            duration: item?.duration,
                             bannerImage: (
                                 <>
                                     {item?.bannerImage ? (
@@ -404,20 +407,25 @@ const ManageSeason = () => {
     const [showId, setShowId] = useState("");
     const [onEditing, setOnEditing] = useState(false)
     const [seasonId, setSeasonId] = useState("");
-    
+    const [episodeId, setEpisodeId] = useState("")
+
     const onEdit = (item) => {
         window.scroll(0, 0);
-        setNumberOfSeason(item?.numberOfSeason);
-        setDirectorName(item?.directorName)
-        setTailerUrl(item?.tailerUrl)
+
+        setNameOfEpisode(item?.nameOfEpisode)
+        setEpisodeNumber(item?.episodeNumber)
+        setDuration(item?.duration)
+        setEpisodeDescription(item?.episodeDescription)
+
+        setAddEpisode(item?.addEpisode)
         setBannerImage(item?.bannerImage)
         setOnEditing(true)
 
-        // setFormValues(null)
-        console.log("L422:", item);
+        setEpisodeId(item?._id)
 
-        setSeasonId(item?._id)
-        setShowId(item?._id);
+        // setFormValues(null)
+        console.log("L425:", item._id);
+
         setHide(false);
     };
 
@@ -432,7 +440,7 @@ const ManageSeason = () => {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                HomeService.DeleteSeason(id)
+                HomeService.DeleteEpisode(id)
                     .then((res) => {
                         if (res && res.status) {
                             toast.success("Deleted Successfully");
@@ -482,7 +490,7 @@ const ManageSeason = () => {
                                         }}
                                         className="card-title"
                                     >
-                                        Add Season
+                                        Add Episode
                                     </div>
                                 ) : (
                                     <div
@@ -494,7 +502,7 @@ const ManageSeason = () => {
                                         }}
                                         className="card-title"
                                     >
-                                        Update Season
+                                        Update Episode
                                     </div>
                                 )}
 
@@ -502,114 +510,148 @@ const ManageSeason = () => {
 
                                 <div class="form-group">
 
+                                    <div className="row" data-aos="fade-up" style={{ display: onEditing ? "block" : "none" }}>
+                                        <div className="col-lg-12">
+                                            {/* <form> */}
 
 
 
 
-                                    <div class="row" style={{ marginBottom: "1rem" }}>
-                                        <div class="col">
-                                            <label for="inputEmail4">
-                                                Season Number:
-                                            </label>
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                value={numberOfSeason}
-                                                onChange={(e) => setNumberOfSeason(e.target.value)}
-                                                placeholder=""
-                                            />
-                                        </div>
+                                            <div style={{ border: "solid 1px #ced4da", padding: "1em", margin: "1em 0", borderRadius: "0.25rem" }} className="_form-inline">
+                                                <div className="form-group mb-2 mt-1">
+                                                    <label for="inputEmail4">
+                                                        Episode Name:
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="nameOfEpisode"
+                                                        placeholder="Name of Episode"
+                                                        value={nameOfEpisode}
+                                                        onChange={(e) => setNameOfEpisode(e.target.value)}
+                                                    />
+                                                </div>
 
-                                        <div class="col">
-                                            <label for="inputEmail4">
-                                                Director:
-                                            </label>
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                value={directorName}
-                                                onChange={(e) => setDirectorName(e.target.value)}
-                                                placeholder=""
-                                            />
-                                        </div>
+                                                <div className="form-group mb-2 mt-1">
+                                                    <label for="inputEmail4">
+                                                        Episode Number:
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="episodeNumber"
+                                                        placeholder="Episode Number"
+                                                        value={episodeNumber}
+                                                        onChange={(e) => setEpisodeNumber(e.target.value)}
+                                                    />
+                                                </div>
 
+                                                {/* Tailer Video upload */}
 
-                                    </div>
-
-
-
-
-
-
-
-
-
-
-
-                                    {/* Tailer Video upload */}
-
-                                    <label for="exampleInputEmail1">
-                                        Upload Tailer :
-                                    </label>
-                                    <input
-                                        class="form-control"
-                                        onChange={(e) => HandleTailerVideo(e)}
-                                        type="file"
-                                        id="trailer"
-                                        accept="video/*"
-                                    />
-                                    {tailerVideoLoader ? (
-                                        <>
-                                            <ImageLoader />{" "}
-                                        </>
-                                    ) : null}
-                                    {tailerUrl && (
-                                        <>
-                                            <div>
-                                                Uploaded Successfully
-
-                                            </div>
-                                        </>
-                                    )}
-
-                                    {/* //Tailer Video upload */}
-
-
-
-                                    {/* Image Upload */}
-                                    <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
-                                        Thumbnail Image :
-                                    </label>
-                                    <input
-                                        class="form-control"
-                                        onChange={(e) => HandleImage(e)}
-                                        type="file"
-                                        id="thumbnail"
-                                        accept="image/*"
-                                    />
-                                    {imageLoader ? (
-                                        <>
-                                            <ImageLoader />{" "}
-                                        </>
-                                    ) : null}
-                                    {bannerImage && (
-                                        <>
-                                            <div>
-                                                <img
-                                                    style={{
-                                                        height: "10%",
-                                                        width: "10%",
-                                                        marginTop: "12px",
-                                                        borderRadius: "5px",
-                                                    }}
-                                                    src={bannerImage}
+                                                <label for="exampleInputEmail1">
+                                                    Episode Video :
+                                                </label>
+                                                <input
+                                                    class="form-control"
+                                                    onChange={(e) => HandleTailerVideo(e)}
+                                                    type="file"
+                                                    id="trailer"
+                                                    accept="video/*"
                                                 />
+                                                {episodeTailerVideoLoader ? (
+                                                    <>
+                                                        <ImageLoader />{" "}
+                                                    </>
+                                                ) : null}
+                                                {addEpisode && (
+                                                    <>
+                                                        <div>
+                                                            Uploaded Successfully
+
+                                                        </div>
+                                                    </>
+                                                )}
+
+                                                {/* //Tailer Video upload */}
+
+
+                                                {/* Image Upload */}
+                                                <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
+                                                    Banner Image :
+                                                </label>
+                                                <input
+                                                    class="form-control"
+                                                    onChange={(e) => HandleBannerImage(e)}
+                                                    type="file"
+                                                    id="thumbnail"
+                                                    accept="image/*"
+                                                />
+                                                {episodeImageLoader ? (
+                                                    <>
+                                                        <ImageLoader />
+                                                    </>
+                                                ) : null}
+                                                {bannerImage && (
+                                                    <>
+                                                        <div>
+                                                            <img
+                                                                style={{
+                                                                    height: "10%",
+                                                                    width: "10%",
+                                                                    marginTop: "12px",
+                                                                    borderRadius: "5px",
+                                                                }}
+                                                                src={bannerImage}
+                                                            />
+
+                                                        </div>
+                                                    </>
+                                                )}
+                                                {/* //Image Upload */}
+
+
+
+
+
+                                                <div className="form-group mb-2 mt-1">
+                                                    <label for="inputEmail4">
+                                                        Episode Duration:
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="duration"
+                                                        placeholder="duration"
+                                                        value={duration}
+                                                        onChange={(e) => setDuration(e.target.value)}
+                                                    />
+                                                </div>
+
+                                                <div className="form-group mb-2 mt-1">
+                                                    <label for="inputEmail4">
+                                                        Episode Description:
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="episodeDescription"
+                                                        placeholder="episodeDescription"
+                                                        value={episodeDescription}
+                                                        onChange={(e) => setEpisodeDescription(e.target.value)}
+                                                    />
+                                                </div>
+
+
 
                                             </div>
-                                        </>
-                                    )}
-                                    {/* //Image Upload */}
 
+
+
+
+
+                                            {/* </form> */}
+                                        </div>
+                                    </div>
 
                                     {/* Episode */}
 
@@ -618,7 +660,7 @@ const ManageSeason = () => {
                                             {/* <form> */}
 
 
-                                            {formValues.map((element, index) => (
+                                            {formValues?.map((element, index) => (
 
                                                 <div style={{ border: "solid 1px #ced4da", padding: "1em", margin: "1em 0", borderRadius: "0.25rem" }} className="_form-inline" key={index}>
                                                     <div className="form-group mb-2 mt-1">
@@ -629,7 +671,7 @@ const ManageSeason = () => {
                                                             type="text"
                                                             class="form-control"
                                                             name="nameOfEpisode"
-                                                            placeholder={`Name Of Episode${index + 1}`}
+                                                            placeholder="Name Of Episode"
                                                             value={element.nameOfEpisode || ""}
                                                             onChange={(e) => handleChange(index, e)}
                                                         />
@@ -643,7 +685,7 @@ const ManageSeason = () => {
                                                             type="text"
                                                             class="form-control"
                                                             name="episodeNumber"
-                                                            placeholder={`Episode${index + 1} Number `}
+                                                            placeholder="Episode Number"
                                                             value={element.episodeNumber || ""}
                                                             onChange={(e) => handleChange(index, e)}
                                                         />
@@ -724,7 +766,7 @@ const ManageSeason = () => {
                                                             type="text"
                                                             class="form-control"
                                                             name="duration"
-                                                            placeholder={`Duration Of Episode ${index + 1}`}
+                                                            placeholder="Duration"
                                                             value={element.duration || ""}
                                                             onChange={(e) => handleChange(index, e)}
                                                         />
@@ -738,7 +780,7 @@ const ManageSeason = () => {
                                                             type="text"
                                                             class="form-control"
                                                             name="episodeDescription"
-                                                            placeholder={`Description Of Episode ${index + 1}`}
+                                                            placeholder="Description"
                                                             value={element.episodeDescription || ""}
                                                             onChange={(e) => handleChange(index, e)}
                                                         />
@@ -775,10 +817,6 @@ const ManageSeason = () => {
 
                                     {/* //Episode */}
 
-
-
-
-
                                     <div style={{ marginTop: "1rem" }}>
                                         {hide ? (
                                             <>
@@ -809,7 +847,7 @@ const ManageSeason = () => {
                                     }}
                                     className="card-title"
                                 >
-                                    Season(s)
+                                    Episode(s)
                                 </div>
                                 <DataTable
                                     columns={columns}
@@ -832,4 +870,4 @@ const ManageSeason = () => {
     )
 }
 
-export default ManageSeason
+export default ManageEpisode
