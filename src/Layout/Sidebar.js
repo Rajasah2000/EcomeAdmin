@@ -831,7 +831,7 @@ export default function Sidebar() {
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
                         {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
-                        PodCast Add/Manage
+                        PodCast/Music Add/Manage
                       </a>
                     </div>
                   </div>
@@ -848,7 +848,7 @@ export default function Sidebar() {
                             to="/add-manage-podcast"
                             className="metismenu-link"
                           >
-                            Add/Manage Podcast
+                            Add/Manage Podcast/Music
                           </Link>
                         </li>
                       </ul>
@@ -858,53 +858,9 @@ export default function Sidebar() {
               </div>
 
 
+
+
               {/* <div className="panel-body">
-                <div className="panel panel-default metismenu vertical-nav-menu">
-                  <div
-                    className="panel-heading metismenu-container"
-                    role="tab"
-                    id="collapse79"
-                  >
-                    <div className="panel-title metismenu-item">
-                      <a
-                        className="collapsed metismenu-link"
-                        role="button"
-                        data-toggle="collapse"
-                        data-parent="#accordionMenu"
-                        href="#collapseThree"
-                        aria-expanded="false"
-                        aria-controls="collapse79"
-                        style={{ fontWeight: "700", fontSize: "medium" }}
-                      >
-                       
-                       PodCast Series Add/Manage
-                      </a>
-                    </div>
-                  </div>
-                  <div
-                    id="collapseThree"
-                    className="panel-collapse collapse"
-                    role="tabpanel"
-                    aria-labelledby="collapse79"
-                  >
-                    <div className="panel-body">
-                      <ul className="metismenu-container">
-                        <li className="metismenu-item">
-                          <Link
-                            to="/add-manage-podcast-series"
-                            className="metismenu-link"
-                          >
-                            Add/Manage Podcast Series
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-
-
-              <div className="panel-body">
                 <div className="panel panel-default metismenu vertical-nav-menu">
                   <div
                     className="panel-heading metismenu-container"
@@ -947,7 +903,7 @@ export default function Sidebar() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
 
 

@@ -21,8 +21,9 @@ const INITIAL = {
     AddMusic: "",
     listenFree: "",
 };
-const AddAndManageMusic = () => {
+const AddAndManageMusic = ({ musicval, setmusicval }) => {
     const [musicData, setmusicData] = useState(INITIAL);
+    // console.log(musicval,setmusicval,"AddAndManageMusic")
     const [AllmusicData, setAllmusicData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hide, setHide] = useState(true);
@@ -35,7 +36,7 @@ const AddAndManageMusic = () => {
     const [imageLoader2, setImageLoader2] = useState(false);
     const [selectedmusicId, setSelectedmusicId] = useState(null);
 
-    console.log("musicData", musicData);
+    console.log("musicval", musicval);
 
     useEffect(() => {
         fetchAllmusicData();
@@ -531,8 +532,8 @@ const AddAndManageMusic = () => {
                                 value={musicData.contentType}
                                 onChange={handleChange}
                             >
-                                <option value={""}>Select contentType</option>
-                                <option value={"podCast"}>PodCast</option>
+                                {/* <option value={""}>Select contentType</option> */}
+                                {/* <option value={"podCast"}>PodCast</option> */}
                                 <option value={"music"}>Music</option>
                             </select>
                         </div>
