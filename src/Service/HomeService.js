@@ -742,7 +742,7 @@ async function ViewMusicSeries() {
   return HttpClientXml.get(endpoind);
 }
 async function UpdateMusicSeries(id, data) {
-  let endpoind = `music-album-update//${id}`;
+  let endpoind = `music-album-update/${id}`;
   return HttpClientXml.put(endpoind, data);
 }
 
@@ -751,7 +751,31 @@ async function DeleteMusicSeries(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
+async function AddProduct(data) {
+  let endpoind = "product-add";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllProduct() {
+  let endpoind = "product-view";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateProduct(id, data) {
+  let endpoind = `product-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteProduct(id) {
+  let endpoind = `product-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
 export default {
+  AddProduct,
+  ViewAllProduct,
+  UpdateProduct,
+  DeleteProduct,
   AddMusicSeries,
   ViewMusicSeries,
   UpdateMusicSeries,

@@ -215,44 +215,89 @@ const AddAndManageMusicAlbum = () => {
   //   // }
   // }
 
+  // const UpdateData = () => {
+  
+  //   let data = {
+  //     contentType: contentType,
+  //     musicType: musicType,
+  //     titleOfAlbum: titleOfAlbum,
+  //     albumDescription: albumDescription,
+  //     musicGenreID:musicGenreID,
+  //     listenFree: listenFree,
+  //     moodID: moodID,
+  //     // listenFree:listenFree,
+  //     // tailerUrl: tailerUrl,
+  //     // uploadThumbload: uploadThumbload,
+  //     music: formValues,
+  //   };
+  //   console.log("gfgfgfgfgfgf", data);
+  //   if (musicType) {
+  //     HomeService.UpdateMusicSeries(musId,data)
+  //       .then((res) => {
+  //         if (res && res.status) {
+  //           toast.success(res.message);
+  //           FetchAllData();
+  //           setFormValues([initialMusic]);
+  //           setcontentType("");
+  //           setmusicType("");
+  //           setlistenFree("");
+  //           setmoodID([]);
+  //           setmusicGenreID("")
+  //           setalbumDescription("");
+  //           settitleOfAlbum("");
+  //           setInitialState();
+  //         } else {
+  //           toast.error(res?.message);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } else {
+  //     toast.error("Error Occured!");
+  //   }
+  // }
+
+
   const UpdateData = () => {
-    // alert("Hii")
-    // let data = {
-    //   contentType: contentType,
-    //   musicType: musicType,
-    //   titleOfAlbum: titleOfAlbum,
-    //   albumDescription: albumDescription,
-    //   musicGenreID:musicGenreID,
-    //   listenFree: listenFree,
-    //   moodID: moodID,
-    //   // listenFree:listenFree,
-    //   // tailerUrl: tailerUrl,
-    //   // uploadThumbload: uploadThumbload,
-    //   music: formValues,
-    // };
-    // console.log("gfgfgfgfgfgf", data);
-    // if (musicType) {
-    //   HomeService.UpdateMusicSeries(musId,data)
-    //     .then((res) => {
-    //       if (res && res.status) {
-    //         toast.success(res.message);
-    //         FetchAllData();
-    //         setFormValues([initialMusic]);
-    //         setcontentType("");
-    //         setmusicType("");
-    //         setlistenFree("");
-    //         setmoodID([]);
-    //         setmusicGenreID("")
-    //         setalbumDescription("");
-    //         settitleOfAlbum("");
-    //         setInitialState();
-    //       } else {
-    //         toast.error(res?.message);
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
+
+    let data = {
+      contentType: contentType,
+      musicType: musicType,
+      titleOfAlbum: titleOfAlbum,
+      albumDescription: albumDescription,
+      listenFree: listenFree,
+      moodID: moodID,
+      musicGenreID:musicGenreID,
+      // listenFree:listenFree,
+      // tailerUrl: tailerUrl,
+      // uploadThumbload: uploadThumbload,
+      music: formValues,
+    };
+    console.log("gggg", data);
+    HomeService.UpdateMusicSeries(musId, data)
+      .then((res) => {
+        if (res && res.status) {
+          toast.success(res.message);
+          FetchAllData();
+          fetchAllGenreData();
+          fetchAllMoodData();
+          setFormValues([initialMusic]);
+          setcontentType("");
+          setmusicType("");
+          setlistenFree("");
+          setmoodID([]);
+          setalbumDescription("");
+          settitleOfAlbum("");
+          setInitialState();
+          toast.success("Updated Successfully")
+        } else {
+          toast.error(res?.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // } else {
     //   toast.error("Error Occured!");
     // }
@@ -479,9 +524,11 @@ const AddAndManageMusicAlbum = () => {
     setlistenFree(item?.listenFree);
     setmoodID(item?.moodID);
     setmusicGenreID(item?.musicGenreID)
+    setFormValues(item?.AlbumMusics)
+    // setFormValues(item?.music);
   
 
-    setFormValues(item?.music)
+    // setFormValues(item?.music)
     // // console.log("L422:",item);
 
     // setShowId(item?._id);
@@ -751,7 +798,7 @@ const AddAndManageMusicAlbum = () => {
                         {/* <form> */}
 
 
-                        {formValues?.map((element, index) => (
+                        {formValues && formValues?.map((element, index) => (
 
                           <div style={{ border: "solid 1px #ced4da", padding: "1em", margin: "1em 0", borderRadius: "0.25rem" }} className="_form-inline" key={index}>
                             <div className="form-group mb-2 mt-1">

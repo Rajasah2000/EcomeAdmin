@@ -55,6 +55,7 @@ import AddAndManagePodcast from "./View/PodCast/AddAndManagePodcast";
 import AddAndManagePodcastSeries from "./View/PodCast/AddAndManagePodcastSeries";
 import AddAndManageMusic from "./View/PodCast/AddAndManageMusic";
 import AddAndManageMusicAlbum from "./View/PodCast/AddAndManageMusicAlbum";
+import AddAndManageProduct from "./View/Category/AddAndManageProduct";
 
 function App() {
   return (
@@ -85,6 +86,7 @@ function App() {
             <Route path="/add-manage-banner" element={<AddAndManageBanner />} />
             <Route path="/add-manage-unit" element={<AddAndManageUnit />} />
             <Route path="/add-manage-coupon" element={<AddAndManageCoupon />} />
+            <Route path="/add-manage-product" element={<AddAndManageProduct />} />
             <Route
               path="/apprroved-partner-list"
               element={<ApprovedPartnerList />}

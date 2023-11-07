@@ -127,7 +127,6 @@ export default function Sidebar() {
                         aria-controls="collapseNine"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
                         Country
                       </a>
                     </div>
@@ -419,6 +418,52 @@ export default function Sidebar() {
                   </div>
                 </div>
               </div>
+
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="heading10"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse10"
+                        aria-expanded="false"
+                        aria-controls="collapseNine"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Product
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse10"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="heading10"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-manage-product"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Product
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 

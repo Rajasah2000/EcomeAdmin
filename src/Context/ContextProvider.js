@@ -14,6 +14,7 @@ const ContextProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // console.log(userDetails,"userDetails")
   useEffect(() => {
     fetchUserDetails();
   }, [loginStatus]);
