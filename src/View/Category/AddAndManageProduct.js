@@ -55,13 +55,20 @@ const AddAndManageProduct = () => {
     // },[formData.catID])
 
 
+    // const PrimaryVarient = [
+    //     { label: "1", value: "1" },
+    //     { label: "2", value: "2" },
+    //     { label: "3", value: "3" },
+    //     { label: "4", value: "4" },
+    //     { label: "5", value: "5" },
+    //     { label: "6", value: "6" },
+    // ];
+
     const PrimaryVarient = [
-        { label: "1", value: "1" },
-        { label: "2", value: "2" },
-        { label: "3", value: "3" },
-        { label: "4", value: "4" },
-        { label: "5", value: "5" },
-        { label: "6", value: "6" },
+        { label: "L", value: "L" },
+        { label: "XL", value: "XL" },
+        { label: "M", value: "M" },
+        { label: "XXL", value: "XXL" },
     ];
 
     const fetchAllCatData = async () => {
@@ -105,7 +112,7 @@ const AddAndManageProduct = () => {
         setSelectedOptions(e);
         let arr = [];
         e?.map((item) => {
-            return arr.push(item?.value, ",");
+            return arr.push(item?.value, "  ");
         });
         setFormData({
             ...formData,
@@ -306,12 +313,17 @@ const AddAndManageProduct = () => {
 
     const AddProductData = () => {
         let data = formData;
+        // console.log(data,"datadata")
         if (
             formData?.catID &&
             formData?.subCatID &&
+            formData?.unitID &&
             formData?.brandName &&
             formData?.productName &&
             formData?.ActualProductPrice &&
+            formData?.weight &&
+            formData?.discountPercentage &&
+            formData?.quantity &&
             formData?.productImg
         ) {
             HomeService.AddProduct(data)
@@ -320,6 +332,7 @@ const AddAndManageProduct = () => {
                         toast.success(res.message);
                         setFormData(INITIAL);
                         setSelectedOptions([]);
+                        setColorData([])
                         fetchAllProductData();
                     } else {
                         toast.error(res?.message);
@@ -387,16 +400,16 @@ const AddAndManageProduct = () => {
             ),
             selector: (row) => row.size,
         },
-        {
-            name: (
-                <div
-                    style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-                >
-                    unit
-                </div>
-            ),
-            selector: (row) => row.name,
-        },
+        // {
+        //     name: (
+        //         <div
+        //             style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        //         >
+        //             unit
+        //         </div>
+        //     ),
+        //     selector: (row) => row?.name,
+        // },
         {
             name: (
                 <div
@@ -448,9 +461,14 @@ const AddAndManageProduct = () => {
         let data = formData;
         if (
             formData?.catID &&
+            formData?.subCatID &&
+            formData?.unitID &&
             formData?.brandName &&
             formData?.productName &&
             formData?.ActualProductPrice &&
+            formData?.weight &&
+            formData?.discountPercentage &&
+            formData?.quantity &&
             formData?.productImg
         ) {
             HomeService.UpdateProduct(id, data)
@@ -458,7 +476,8 @@ const AddAndManageProduct = () => {
                     if (res && res.status) {
                         toast.success(res.message);
                         setFormData(INITIAL);
-                        setSelectedOptions([])
+                        setSelectedOptions([]);
+                        setColorData([]);
                         fetchAllProductData();
                         setHide(true);
                     } else {
@@ -591,7 +610,7 @@ const AddAndManageProduct = () => {
                             <div class="row" style={{ marginBottom: "1rem" }}>
                                 <div class="col">
                                     <label for="inputEmail4">
-                                        Product Name<span style={{ color: "red" }}>*</span> :
+                                        Product Name<span style={{ color: "red" }}></span> :
                                     </label>
                                     <input
                                         type="text"
@@ -605,7 +624,7 @@ const AddAndManageProduct = () => {
 
                                 <div class="col">
                                     <label for="inputEmail4">
-                                        Product actual Price<span style={{ color: "red" }}>*</span> :
+                                        Product actual Price<span style={{ color: "red" }}></span> :
                                     </label>
                                     <input
                                         type="number"
@@ -621,7 +640,7 @@ const AddAndManageProduct = () => {
                             <div className="row">
                                 <div class="col">
                                     <label for="inputEmail4">
-                                        Brand Name<span style={{ color: "red" }}>*</span> :
+                                        Brand Name<span style={{ color: "red" }}></span> :
                                     </label>
                                     <input
                                         type="text"
@@ -664,21 +683,6 @@ const AddAndManageProduct = () => {
                                         onChange={HandlePrimaryVarient}
                                     />
                                 </div>
-
-
-                                {/* <div class="col">
-                                    <label for="inputEmail4">
-                                        Product Color<span style={{ color: "red" }}>*</span> :
-                                    </label>
-                                    <input
-                                        type="color"
-                                        class="form-control"
-                                        name="color"
-                                        value={formData?.color}
-                                        onChange={(e) => HandleChange(e)}
-                                        placeholder="Enter color..."
-                                    />
-                                </div> */}
 
 
                                 <div className="add_prdt">
@@ -782,7 +786,7 @@ const AddAndManageProduct = () => {
                             <div className="row">
                                 <div class="col">
                                     <label for="inputEmail4">
-                                        productDetails<span style={{ color: "red" }}>*</span> :
+                                        productDetails<span style={{ color: "red" }}></span> :
                                     </label>
                                     <input
                                         type="text"
@@ -795,7 +799,7 @@ const AddAndManageProduct = () => {
                                 </div>
                                 <div class="col">
                                     <label for="inputEmail4">
-                                        Product discountPercentage<span style={{ color: "red" }}>*</span> :
+                                        Product discountPercentage<span style={{ color: "red" }}></span> :
                                     </label>
                                     <input
                                         type="number"
@@ -811,7 +815,7 @@ const AddAndManageProduct = () => {
                             <div>
                                 <div class="col">
                                     <label for="inputEmail4">
-                                        Product quantity<span style={{ color: "red" }}>*</span> :
+                                        Product quantity<span style={{ color: "red" }}></span> :
                                     </label>
                                     <input
                                         type="number"

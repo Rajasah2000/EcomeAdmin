@@ -91,7 +91,6 @@ const AddAndManageEvents = () => {
       });
       setDisable(true)
     } else {
-      // alert("Hui")
       setEventData({
         ...eventData, [e.target.name]: e.target.value
       })
