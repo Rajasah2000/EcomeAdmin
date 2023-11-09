@@ -795,7 +795,19 @@ async function ViewCancelledOrders() {
   let endpoind = "fetch-cancelled-product";
   return HttpClientXml.get(endpoind);
 }
+
+async function UpdateAcceptRejectStatus(id, data) {
+  let endpoind = `admin-accept-reject-orderStatus/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function UpdateTrackOrderStatus(id, data) {
+  let endpoind = `admin-track-Order-Status/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
 export default {
+  UpdateTrackOrderStatus,
+  UpdateAcceptRejectStatus,
   ViewAcceptedOrders,
   ViewCancelledOrders,
   ViewAllOrders,
