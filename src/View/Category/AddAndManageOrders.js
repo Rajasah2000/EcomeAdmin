@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import HomeService from "../../Service/HomeService";
 import PageLoader from "../../Loader/PageLoader";
 import Modal from 'react-modal';
+import OrderStatus from "./OrderStatus";
 
 
 const customStyles = {
@@ -26,6 +27,8 @@ const AddAndManageOrders = () => {
     const [hide, setHide] = useState(true);
     const [item, setItem] = useState({});
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [modalIsOpen2, setIsOpen2] = useState(false);
+
 
 
     useEffect(() => {
@@ -42,6 +45,9 @@ const AddAndManageOrders = () => {
 
     function closeModal() {
         setIsOpen(false);
+    }
+    function closeModal2() {
+        setIsOpen2(false);
     }
 
     function handleStatus(e, val) {
@@ -144,9 +150,12 @@ const AddAndManageOrders = () => {
                                             (item?.productAcceptStatus === "Accept") ? (
                                                 <>
                                                     <button className="btn btn-success"
-                                                        onClick={() => toast.success("Already accepted")}
+                                                        onClick={() => {
+                                                            toast.success("Already accepted");
+                                                            setIsOpen2(true)
+                                                        }}
                                                     >
-                                                        Accepted
+                                                        Track Order
                                                     </button>
                                                 </>
                                             ) : (item?.productAcceptStatus === "Reject") ? (
@@ -170,8 +179,13 @@ const AddAndManageOrders = () => {
                                         }
                                     </>
 
+
                                 </div>
                             ),
+                            actions: (
+                                <button className="btn btn-warning">{item?.orderStatus}</button>
+                            )
+
                         };
                     });
                     setAllOrdersData(arr);
@@ -622,10 +636,25 @@ const AddAndManageOrders = () => {
                         fontWeight: "bolder",
                     }}
                 >
-                    Status
+                    Product Status
                 </div>
             ),
             selector: (row) => row.action,
+        },
+        {
+            name: (
+                <div
+                    style={{
+                        fontSize: "14px",
+                        color: "#495057",
+                        marginLeft: "15px",
+                        fontWeight: "bolder",
+                    }}
+                >
+                    Order Status
+                </div>
+            ),
+            selector: (row) => row.actions,
         },
     ];
 
@@ -676,7 +705,23 @@ const AddAndManageOrders = () => {
                                 </form>
                             </Modal>
 
+                            {/* Order Status     */}
+
+
+                            <Modal
+                                isOpen={modalIsOpen2}
+                                onRequestClose={closeModal2}
+                                style={customStyles}
+                                contentLabel="Example Modal"
+                            >
+                                <div>
+                                    <button className="btn btn-danger" style={{ marginLeft: "50px" }} onClick={closeModal2}>X</button>
+                                    <OrderStatus />
+                                </div>
+                            </Modal>
+
                             <DataTable columns={columns} data={AllOrdersData} pagination />
+                            {/* <OrderStatus /> */}
 
 
                         </div>
