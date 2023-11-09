@@ -123,6 +123,7 @@ const AddAndManagePodcast = () => {
         }
     };
 
+    //for edit functionality
     const onEdit = (podcast) => {
         window.scroll(0, 0);
         // setThumbnail(podcast?.uploadThumbnail);

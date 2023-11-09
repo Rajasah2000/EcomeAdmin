@@ -9,8 +9,6 @@ import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
 import Select from 'react-select';
 
-// import Select from "react-select/dist/declarations/src/Select";
-
 
 const INITIAL = {
     catID: "",
@@ -121,7 +119,7 @@ const AddAndManageProduct = () => {
     };
 
     const HandleColorChange = (e, i) => {
-        console.log("COLORDATA", colorData);
+        // console.log("COLORDATA", colorData);
         setColorData((prev) => {
             let update = JSON.parse(JSON.stringify(prev));
             update[i][e.target.name] = e.target.value;
@@ -654,7 +652,7 @@ const AddAndManageProduct = () => {
 
                                 <div class="col">
                                     <label for="inputEmail4">
-                                        Product Weight<span style={{ color: "red" }}>*</span> :
+                                        Product Weight<span style={{ color: "red" }}></span> :
                                     </label>
                                     <input
                                         type="number"

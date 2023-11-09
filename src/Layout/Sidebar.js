@@ -464,6 +464,51 @@ export default function Sidebar() {
                 </div>
               </div>
 
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="heading23"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse11"
+                        aria-expanded="false"
+                        aria-controls="collapseEleven"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                       Orders
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse11"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="heading23"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-manage-orders"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Orders
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -1043,6 +1088,7 @@ export default function Sidebar() {
               </div>
             </div>
           </div>
+
           <div className="panel panel-default metismenu vertical-nav-menu">
             <div
               className="panel-heading metismenu-container"
@@ -1086,6 +1132,7 @@ export default function Sidebar() {
               </div>
             </div>
           </div>
+
           <div className="panel panel-default metismenu vertical-nav-menu">
             <div
               className="panel-heading metismenu-container"
@@ -2053,6 +2100,48 @@ export default function Sidebar() {
                 </div>
               </div>
 
+            </div>
+          </div>
+
+          <div className="panel panel-default metismenu vertical-nav-menu">
+            <div
+              className="panel-heading metismenu-container"
+              role="tab"
+              id="headingnine"
+            >
+              <div className="panel-title metismenu-item">
+                <a
+                  className="collapsed metismenu-link"
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordionMenu"
+                  href="#collapse30"
+                  aria-expanded="false"
+                  aria-controls="collapseTen"
+                  style={{ fontWeight: "700", fontSize: "medium" }}
+                >
+                  About Bushido
+                </a>
+              </div>
+            </div>
+            <div
+              id="collapse30"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="headingnine"
+            >
+              <div className="panel-body">
+                <ul className="metismenu-container">
+                  <li className="metismenu-item">
+                    <Link
+                      to="/add-and-manage-about-bushido"
+                      className="metismenu-link"
+                    >
+                      Add/Manage About Bushido
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 

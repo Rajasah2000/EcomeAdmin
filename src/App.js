@@ -56,6 +56,8 @@ import AddAndManagePodcastSeries from "./View/PodCast/AddAndManagePodcastSeries"
 import AddAndManageMusic from "./View/PodCast/AddAndManageMusic";
 import AddAndManageMusicAlbum from "./View/PodCast/AddAndManageMusicAlbum";
 import AddAndManageProduct from "./View/Category/AddAndManageProduct";
+import AddAndManageAboutBushido from "./View/AboutBushido/AddAndManageAboutBushido";
+import AddAndManageOrders from "./View/Category/AddAndManageOrders";
 
 function App() {
   return (
@@ -87,6 +89,7 @@ function App() {
             <Route path="/add-manage-unit" element={<AddAndManageUnit />} />
             <Route path="/add-manage-coupon" element={<AddAndManageCoupon />} />
             <Route path="/add-manage-product" element={<AddAndManageProduct />} />
+            <Route path="/add-manage-orders" element={<AddAndManageOrders />} />
             <Route
               path="/apprroved-partner-list"
               element={<ApprovedPartnerList />}
@@ -238,6 +241,11 @@ function App() {
             <Route
               path="/add-and-manage-booth-product"
               element={<AddAndManageBoothProduct />}
+            />
+
+            <Route
+              path="/add-and-manage-about-bushido"
+              element={<AddAndManageAboutBushido />}
             />
 
           </Route>

@@ -771,7 +771,36 @@ async function DeleteProduct(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
+async function ViewAllAboutBushido() {
+  let endpoind = "view-about-bushido";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateAboutBushido(id, data) {
+  let endpoind = `update-about-bushido/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function ViewAllOrders() {
+  let endpoind = "fetch-Ordered-Product";
+  return HttpClientXml.get(endpoind);
+}
+
+async function ViewAcceptedOrders() {
+  let endpoind = "fetch-accepted-order";
+  return HttpClientXml.get(endpoind);
+}
+
+async function ViewCancelledOrders() {
+  let endpoind = "fetch-cancelled-product";
+  return HttpClientXml.get(endpoind);
+}
 export default {
+  ViewAcceptedOrders,
+  ViewCancelledOrders,
+  ViewAllOrders,
+  ViewAllAboutBushido,
+  UpdateAboutBushido,
   AddProduct,
   ViewAllProduct,
   UpdateProduct,
