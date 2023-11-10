@@ -805,7 +805,38 @@ async function UpdateTrackOrderStatus(id, data) {
   let endpoind = `admin-track-Order-Status/${id}`;
   return HttpClientXml.put(endpoind, data);
 }
+
+async function AddCourse(data) {
+  let endpoind = "course-add";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllCourse() {
+  let endpoind = "course-view";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateCourse(id, data) {
+  let endpoind = `course-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteCourse(id) {
+  let endpoind = `course-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function AddCatwiseCourses(data) {
+  let endpoind = "courses-cat-wise";
+  return HttpClientXml.post(endpoind, data);
+}
+
 export default {
+  AddCourse,
+  AddCatwiseCourses,
+  ViewAllCourse,
+  UpdateCourse,
+  DeleteCourse,
   UpdateTrackOrderStatus,
   UpdateAcceptRejectStatus,
   ViewAcceptedOrders,

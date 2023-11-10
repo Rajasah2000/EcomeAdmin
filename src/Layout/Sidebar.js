@@ -1305,6 +1305,52 @@ export default function Sidebar() {
                 </div>
               </div>
 
+
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse90"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapseFOUR"
+                        aria-expanded="false"
+                        aria-controls="collapse90"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Course
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapseFOUR"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse90"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/manage-course"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Course
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 

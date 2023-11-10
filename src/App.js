@@ -58,6 +58,7 @@ import AddAndManageMusicAlbum from "./View/PodCast/AddAndManageMusicAlbum";
 import AddAndManageProduct from "./View/Category/AddAndManageProduct";
 import AddAndManageAboutBushido from "./View/AboutBushido/AddAndManageAboutBushido";
 import AddAndManageOrders from "./View/Category/AddAndManageOrders";
+import AddAndManageCourse from "./View/Learning/Catagory/AddAndManageCourse";
 
 function App() {
   return (
@@ -174,6 +175,10 @@ function App() {
               element={<AddAndManageExpertise />}
             />
 
+            <Route
+              path="/manage-course"
+              element={<AddAndManageCourse />}
+            />
 
             <Route
               path="/add-manage-subscription"
