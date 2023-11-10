@@ -5,16 +5,26 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { toast } from 'react-hot-toast';
+import HomeService from '../../Service/HomeService';
 
-const steps = ['Pending', 'Order Confirmed', 'Order processed', 'Out For Delivery', 'Delivered'];
+const steps = ['Pending', 'Order Confirmed', 'Order processed', 'Out for delivery', 'Delivered'];
 
-export default function OrderStatus() {
+export default function OrderStatus({ item, hide, AllOrderData }) {
     const [activeStep, setActiveStep] = React.useState(0);
+    console.log(activeStep, item, "activestep")
     const [skipped, setSkipped] = React.useState(new Set());
 
     const isStepOptional = (step) => {
         return step === 1;
     };
+
+    React.useEffect(() => {
+        let index = steps.indexOf(item?.orderStatus);
+        if (index !== -1) {
+            setActiveStep(index + 1)
+        }
+    }, [])
 
     const isStepSkipped = (step) => {
         return skipped.has(step);
@@ -49,6 +59,29 @@ export default function OrderStatus() {
             return newSkipped;
         });
     };
+    const HandleSubmit = () => {
+        let data = {
+            orderStatus: steps[activeStep - 1]
+        }
+
+        HomeService.UpdateTrackOrderStatus(item?._id, data)
+            .then((res) => {
+                if (res && res.status) {
+                    hide(false);
+                    toast.success(" Order status is updated")
+                    AllOrderData();
+
+
+                } else {
+                    toast.error(res?.message);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        // console.log("fdgdgdfgd", data);
+    }
 
     const handleReset = () => {
         setActiveStep(0);
@@ -61,9 +94,9 @@ export default function OrderStatus() {
                     const stepProps = {};
                     const labelProps = {};
                     if (isStepOptional(index)) {
-                        labelProps.optional = (
-                            <Typography variant="caption">Optional</Typography>
-                        );
+                        // labelProps.optional = (
+                        //     <Typography variant="caption">Optional</Typography>
+                        // );
                     }
                     if (isStepSkipped(index)) {
                         stepProps.completed = false;
@@ -75,43 +108,46 @@ export default function OrderStatus() {
                     );
                 })}
             </Stepper>
+
             {activeStep === steps.length ? (
                 <React.Fragment>
                     <Typography sx={{ mt: 2, mb: 1 }}>
-                        All steps completed - you&apos;re finished
+                        All steps completed - Product Delivered
                     </Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                         <Box sx={{ flex: '1 1 auto' }} />
-                        <Button onClick={handleReset}>Reset</Button>
+                        {/* <Button onClick={handleReset}>Reset</Button> */}
                     </Box>
                 </React.Fragment>
             ) : (
                 <React.Fragment>
                     <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                        <Button
+                        {/* <Button
                             color="inherit"
                             disabled={activeStep === 0}
                             onClick={handleBack}
                             sx={{ mr: 1 }}
                         >
                             Back
-                        </Button>
+                        </Button> */}
 
-                        <Button sx={{ backgroundColor: "blue" }} onClick={() => alert(steps[activeStep])}>Submit</Button>
                         <Box sx={{ flex: '1 1 auto' }} />
-                        {isStepOptional(activeStep) && (
+                        {/* {isStepOptional(activeStep) && (
                             <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                                 Skip
                             </Button>
-                        )}
+                        )} */}
 
                         <Button onClick={handleNext}>
                             {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                         </Button>
                     </Box>
+
                 </React.Fragment>
             )}
+
+            <Button sx={{ backgroundColor: "blue" }} onClick={() => HandleSubmit()}>Submit</Button>
         </Box>
     );
 }

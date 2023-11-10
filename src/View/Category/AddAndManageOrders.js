@@ -26,6 +26,7 @@ const AddAndManageOrders = () => {
     const [loading, setLoading] = useState(false);
     const [hide, setHide] = useState(true);
     const [item, setItem] = useState({});
+    const [itemTo, setItemTo] = useState({})
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpen2, setIsOpen2] = useState(false);
 
@@ -151,8 +152,8 @@ const AddAndManageOrders = () => {
                                                 <>
                                                     <button className="btn btn-success"
                                                         onClick={() => {
-                                                            toast.success("Already accepted");
                                                             setIsOpen2(true)
+                                                            setItemTo(item)
                                                         }}
                                                     >
                                                         Track Order
@@ -264,12 +265,12 @@ const AddAndManageOrders = () => {
                                     )}
                                 </>
                             ),
-                            action: (
-                                <div style={{ display: "flex", flexDirection: "coloum" }}>
-                                    <button className="btn btn-success">Accepted</button>
+                            // action: (
+                            //     <div style={{ display: "flex", flexDirection: "coloum" }}>
+                            //         <button className="btn btn-success">Accepted</button>
 
-                                </div>
-                            ),
+                            //     </div>
+                            // ),
                         };
                     });
                     setAcceptedOrdersData(arr);
@@ -348,12 +349,12 @@ const AddAndManageOrders = () => {
                                     )}
                                 </>
                             ),
-                            action: (
-                                <div style={{ display: "flex", flexDirection: "coloum" }}>
-                                    <button className="btn btn-danger">Rejected</button>
+                            // action: (
+                            //     <div style={{ display: "flex", flexDirection: "coloum" }}>
+                            //         <button className="btn btn-danger">Rejected</button>
 
-                                </div>
-                            ),
+                            //     </div>
+                            // ),
                         };
                     });
                     setCancelledOrdersData(arr);
@@ -441,21 +442,21 @@ const AddAndManageOrders = () => {
             ),
             selector: (row) => row.productImg,
         },
-        {
-            name: (
-                <div
-                    style={{
-                        fontSize: "14px",
-                        color: "#495057",
-                        marginLeft: "15px",
-                        fontWeight: "bolder",
-                    }}
-                >
-                    Status
-                </div>
-            ),
-            selector: (row) => row.action,
-        },
+        // {
+        //     name: (
+        //         <div
+        //             style={{
+        //                 fontSize: "14px",
+        //                 color: "#495057",
+        //                 marginLeft: "15px",
+        //                 fontWeight: "bolder",
+        //             }}
+        //         >
+        //             Status
+        //         </div>
+        //     ),
+        //     selector: (row) => row.action,
+        // },
     ];
 
 
@@ -533,21 +534,21 @@ const AddAndManageOrders = () => {
             ),
             selector: (row) => row.productImg,
         },
-        {
-            name: (
-                <div
-                    style={{
-                        fontSize: "14px",
-                        color: "#495057",
-                        marginLeft: "15px",
-                        fontWeight: "bolder",
-                    }}
-                >
-                    Status
-                </div>
-            ),
-            selector: (row) => row.action,
-        },
+        // {
+        //     name: (
+        //         <div
+        //             style={{
+        //                 fontSize: "14px",
+        //                 color: "#495057",
+        //                 marginLeft: "15px",
+        //                 fontWeight: "bolder",
+        //             }}
+        //         >
+        //             Status
+        //         </div>
+        //     ),
+        //     selector: (row) => row.action,
+        // },
     ];
 
 
@@ -715,15 +716,14 @@ const AddAndManageOrders = () => {
                                 contentLabel="Example Modal"
                             >
                                 <div>
-                                    <button className="btn btn-danger" style={{ marginLeft: "50px" }} onClick={closeModal2}>X</button>
-                                    <OrderStatus />
+                                    <button className="btn btn-danger" style={{ marginLeft:"42rem" }} onClick={closeModal2}>X</button>
+                                    <OrderStatus item={itemTo} hide={setIsOpen2} AllOrderData={fetchAllOrdersData} />
                                 </div>
                             </Modal>
 
                             <DataTable columns={columns} data={AllOrdersData} pagination />
+
                             {/* <OrderStatus /> */}
-
-
                         </div>
                     </div>
                 </div>
@@ -755,7 +755,7 @@ const AddAndManageOrders = () => {
                                 }}
                                 className="card-title"
                             >
-                                Manage Accepted Orders
+                                All Accepted Orders
                             </div>
 
                             <DataTable columns={acceptedcolumns} data={AcceptedOrdersData} pagination />
@@ -790,7 +790,7 @@ const AddAndManageOrders = () => {
                                 }}
                                 className="card-title"
                             >
-                                Manage Cancelled Orders
+                                All Cancelled Orders
                             </div>
 
                             <DataTable columns={cancelledcolumns} data={CancelledOrdersData} pagination />
