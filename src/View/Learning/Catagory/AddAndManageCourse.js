@@ -8,24 +8,20 @@ import PageLoader from "../../../Loader/PageLoader";
 import ImageLoader from "../../../Loader/ImageLoader";
 import Swal from "sweetalert2";
 
-const INITIAL = {
-    courseName: "",
-    description: "",
-    courseCatID: "",
-    learningTopics:[],
-    requirements:[],
-    duration:"",
-    completionCertificate:"",
-    problemSovingSession:null,
-    freeCourse:"",
-    thumbnailImage:"",
-    introVideo:"",
-    courseFee:null,
-
-}
 const AddAndManageCourse = () => {
-
-    const [courseData, setCourseData] = useState(INITIAL)
+    const [courseData, setCourseData] = useState([])
+    const [description, setdescription] = useState("")
+    const [courseCatID, setcourseCatID] = useState("")
+    const [courseCatData, setcourseCatData] = useState([])
+    const [learningTopics, setlearningTopics] = useState([])
+    const [requirements, setrequirements] = useState([])
+    const [duration, setduration] = useState("")
+    const [completionCertificate, setcompletionCertificate] = useState("")
+    const [problemSovingSession, setproblemSovingSession] = useState(null)
+    const [freeCourse, setfreeCourse] = useState("")
+    const [thumbnailImage, setthumbnailImage] = useState("")
+    const [introVideo, setintroVideo] = useState("")
+    const [courseName, setcourseName] = useState("")
     const [hide, setHide] = useState(true);
     const [id, setId] = useState("");
     const [loading, setLoading] = useState(false);
@@ -36,14 +32,166 @@ const AddAndManageCourse = () => {
     const [courseFee, setcourseFee] = useState(null);
     const [image, setImage] = useState("");
     const [catId, setCatId] = useState("");
-
     const [imageLoader, setImageLoader] = useState(false);
+    const [imageLoad, setImageLoad] = useState(false);
     const [imageLoader3, setImageLoader3] = useState(false);
+    const [imageLoader4, setImageLoader4] = useState(false);
+    const [imageLoader5, setImageLoader5] = useState(false);
 
     useEffect(() => {
         fetchCategoryData();
         fetchAllCourses();
     }, []);
+
+    const iniDocumentDetails = {
+        lectureTitle: "",
+        lectureDescription: "",
+        docFile: "",
+        docVideo: ""
+    };
+    const [documentValues, setDocumentValues] = useState([iniDocumentDetails]);
+
+
+    const iniCourseDetails = {
+        docTitle: "",
+        docDescription: "",
+        documents: [iniDocumentDetails]
+    }
+    const [formValues, setFormValues] = useState([iniCourseDetails]);
+
+
+
+    const handleChange = (i, e) => {
+        let newFormValues = [...formValues];
+        newFormValues[i][e.target.name] = e.target.value;
+        setFormValues(newFormValues);
+    };
+
+    const addFormFields = () => {
+        // alert(formValues.length)
+        // if (formValues.length < 5000) {
+        setFormValues([...formValues, iniCourseDetails]);
+        // } else {
+        //     Swal("")
+        //     Swal("Error", "Not more than 5000", "error");
+        // }
+    };
+
+    const removeFormFields = (i) => {
+        let newFormValues = [...formValues];
+        newFormValues.splice(i, 1);
+        setFormValues(newFormValues);
+    };
+
+
+    const handleDocumentChange = (ind, index, e) => {
+        // let newDocumentValues = [...documentValues];
+        // newDocumentValues[i][e.target.name] = e.target.value;
+        // setDocumentValues(newDocumentValues);
+        console.log("indhhh", ind, formValues)
+        let newDocArr = [...formValues[ind].documents];
+        newDocArr[index][e.target.name] = e.target.value;
+        setFormValues(prev => {
+            return prev?.map((item, i) => {
+                if (i === ind) {
+                    return ({ ...item, documents: newDocArr })
+                } else {
+                    return item
+                }
+            })
+        })
+    };
+
+    // Function to add more document fields
+    const addDocumentFields = (ind) => {
+        let newDocArr = [...formValues[ind].documents, iniCourseDetails];
+        setFormValues(prev => {
+            return prev?.map((item, i) => {
+                if (i === ind) {
+                    return ({ ...item, documents: newDocArr })
+                } else {
+                    return item
+                }
+            })
+        })
+
+    };
+
+    const HandleDocImage = async (ind, index, e) => {
+        setImageLoader4(true)
+        let file = e.target.files[0];
+        let data = new FormData();
+        data.append("image", file);
+
+        let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
+
+        if (res && res.status) {
+            // console.log("UploadImageRes", res);
+            let newDocArr = [...formValues[ind].documents];
+            newDocArr[index].docFile = res?.url;
+            setFormValues(prev => {
+                return prev?.map((item, i) => {
+                    if (i === ind) {
+                        return ({ ...item, documents: newDocArr })
+                    } else {
+                        return item
+                    }
+                })
+            })
+            // let newFormValues = [...documentValues];
+            // newFormValues[i].docFile = res?.url;
+            // setDocumentValues(newFormValues);
+
+        } else {
+            toast.error(res?.message);
+        }
+        setImageLoader4(false);
+    };
+
+    const HandleDocVideo = async (ind, index, e) => {
+        setImageLoader5(true)
+        let file = e.target.files[0];
+        let data = new FormData();
+        data.append("video", file);
+        let res = await HttpClientXml.fileUplode("video-upload", "POST", data);
+        if (res && res.status) {
+            let newDocArr = [...formValues[ind].documents];
+            newDocArr[index].docVideo = res?.transcoderUrl;
+            setFormValues(prev => {
+                return prev?.map((item, i) => {
+                    if (i === ind) {
+                        return ({ ...item, documents: newDocArr })
+                    } else {
+                        return item
+                    }
+                })
+            })
+
+            // console.log("UploadVideoRes", res);
+            // let newFormValues = [...documentValues];
+            // newFormValues[ind].docVideo = res?.transcoderUrl;
+            // setDocumentValues(newFormValues);
+
+        } else {
+            toast.error(res?.message);
+        }
+        setImageLoader5(false);
+    };
+
+    // Function to remove document fields
+    const removeDocumentFields = (ind) => {
+        let newDocArr = [...formValues[ind].documents];
+        newDocArr.splice(ind, 1);
+        setFormValues(prev => {
+            return prev?.map((item, i) => {
+                if (i === ind) {
+                    return ({ ...item, documents: newDocArr })
+                } else {
+                    return item
+                }
+            })
+        })
+    };
 
     const fetchCategoryData = () => {
         HomeService.ViewLearningCategory()
@@ -60,8 +208,8 @@ const AddAndManageCourse = () => {
             });
     };
 
-const fetchAllCourses=()=>{
-    setLoading(true);
+    const fetchAllCourses = () => {
+        setLoading(true);
         HomeService.ViewAllCourse()
             .then((res) => {
                 if (res && res?.status) {
@@ -78,7 +226,7 @@ const fetchAllCourses=()=>{
                             courseFee: item?.courseFee,
                             completionCertificate: item?.completionCertificate,
                             problemSovingSession: item?.problemSovingSession,
-                            freeCourse:item?.freeCourse,
+                            freeCourse: item?.freeCourse,
                             thumbnailImage: (
                                 <>
                                     {item?.thumbnailImage ? (
@@ -106,7 +254,35 @@ const fetchAllCourses=()=>{
                                     )}
                                 </>
                             ),
-                            
+
+                            introVideo: (
+                                <>
+                                    {item?.introVideo ? (
+                                        <img
+                                            style={{
+                                                height: "65%",
+                                                width: "65%",
+                                                borderRadius: "9px",
+                                                margin: "5px",
+                                            }}
+                                            src={item?.introVideo}
+                                        />
+                                    ) : (
+                                        <img
+                                            style={{
+                                                height: "11%",
+                                                width: "11%",
+                                                borderRadius: "9px",
+                                                margin: "5px",
+                                            }}
+                                            src={
+                                                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+                                            }
+                                        />
+                                    )}
+                                </>
+                            ),
+
                             action: (
                                 <div style={{ display: "flex", flexDirection: "coloum" }}>
                                     <svg
@@ -159,17 +335,15 @@ const fetchAllCourses=()=>{
                 setLoading(false);
                 // console.log("err", err);
             });
-}
+    }
 
     const onEdit = (item) => {
         window.scroll(0, 0);
         console.log("item", item);
         setId(item?._id);
-        // SetCategoryName(item?.catName);
         setImage(item?.image);
-        // setSubCategoryName(item?.subCatName);
         setCategoryId(item?.catID);
-        // setcourseFee(item?.courseFee);
+        setcourseFee(item?.courseFee);
         setHide(false);
     };
 
@@ -201,125 +375,46 @@ const fetchAllCourses=()=>{
         });
     };
 
-    const fetchSubCategory = (catid) => {
-        console.log("FDFDFFDF", catid);
-        setImageLoader3(true);
-        HomeService.ViewAllSubCategory(catid)
-            .then((res) => {
-                console.log("ResAllSubCategory", res.data);
-                if (res && res?.status) {
-                    // setLoader(false)
-                    let arr = res?.data?.map((item, index) => {
-                        return {
-                            sl: index + 1,
-                            //   Name: item?.catName,
-                            SubCategoryName: item?.subCatName,
-                            courseFee: item?.courseFee,
-                            Image: (
-                                <>
-                                    {item?.image ? (
-                                        <img
-                                            style={{
-                                                height: "59%",
-                                                width: "59%",
-                                                borderRadius: "9px",
-                                                margin: "5px",
-                                            }}
-                                            src={item?.image}
-                                        />
-                                    ) : (
-                                        <img
-                                            style={{
-                                                height: "11%",
-                                                width: "11%",
-                                                borderRadius: "9px",
-                                                margin: "5px",
-                                            }}
-                                            src={
-                                                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
-                                            }
-                                        />
-                                    )}
-                                </>
-                            ),
-                            action: (
-                                <div style={{ display: "flex", flexDirection: "coloum" }}>
-                                    <svg
-                                        onClick={() => onEdit(item)}
-                                        style={{
-                                            height: "20px",
-                                            width: "20px",
-                                            cursor: "pointer",
-                                            marginRight: "20px",
-                                        }}
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        fill="currentColor"
-                                        class="bi bi-pencil-square"
-                                        viewBox="0 0 16 16"
-                                    >
-                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                                        />
-                                    </svg>
-                                    <svg
-                                        onClick={() => onDelete(item?._id, item?.catID)}
-                                        style={{
-                                            color: "red",
-                                            height: "20px",
-                                            cursor: "pointer",
-                                            width: "20px",
-                                        }}
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        fill="currentColor"
-                                        class="bi bi-trash3"
-                                        viewBox="0 0 16 16"
-                                    >
-                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                                    </svg>
-                                </div>
-                            ),
-                        };
-                    });
-                    setSubCategoryData(arr);
-
-                    setImageLoader3(false);
-                }
-                console.log("RESPONSE", res);
-            })
-            .catch((err) => {
-                //   setLoader(false)
-                console.log("err", err);
-            });
-
-        // setImageLoader3(false);
-    };
 
     const AddSubCategory = () => {
         let data = {
             catID: CategoryId,
-            subCatName: subCategoryName,
-            image: image,
+            // subCatName: subCategoryName,
+            courseName: courseName,
+            description: description,
+            learningTopics: learningTopics,
+            requirements: requirements,
+            duration: duration,
+            completionCertificate: completionCertificate,
+            problemSovingSession: problemSovingSession,
+            freeCourse: freeCourse,
+            thumbnailImage: thumbnailImage,
+            introVideo: introVideo,
             courseFee: courseFee,
+            courseDetails: formValues,
+            // documents: formValues.documents
         };
-
-        if (subCategoryName && image && courseFee && CategoryId) {
-            HomeService.AddSubCategory(data)
+        console.log(data, "Addcourse")
+        if (courseName && description && learningTopics && requirements && duration && completionCertificate && problemSovingSession && freeCourse && courseFee && CategoryId) {
+            HomeService.AddCourse(data)
                 .then((res) => {
-                    console.log("Response Add SubCategory", res);
                     if (res && res.status) {
                         toast.success(res.message);
-                        fetchSubCategory();
-                        fetchSubCategory();
-                        setImage("");
-                        setSubCategoryName("");
+                        // setcourseName(""),
+                        setdescription("")
+                        setcourseCatID("")
+                        setCatId("")
+                        setlearningTopics("")
+                        setrequirements("")
+                        setduration("")
+                        setcourseFee(null)
+                        setcompletionCertificate("")
+                        setproblemSovingSession(null)
+                        setfreeCourse("")
+                        setthumbnailImage("")
+                        setintroVideo("")
+                        setFormValues([iniCourseDetails])
                         setCategoryId("");
-                        setcourseFee("");
                         let file = document.querySelector("#images");
                         file.value = "";
                     } else {
@@ -345,25 +440,36 @@ const fetchAllCourses=()=>{
             ),
             selector: (row) => row.sl,
         },
-        // {
-        //   name: (
-        //     <div
-        //       style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-        //     >
-        //       Category Name
-        //     </div>
-        //   ),
-        //   selector: (row) => row.Name,
-        // },
         {
             name: (
                 <div
                     style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
                 >
-                    SubCategory Name
+                    Course Name
                 </div>
             ),
-            selector: (row) => row.SubCategoryName,
+            selector: (row) => row.courseName,
+        },
+
+        {
+            name: (
+                <div
+                    style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+                >
+                    Duration
+                </div>
+            ),
+            selector: (row) => row.duration,
+        },
+        {
+            name: (
+                <div
+                    style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+                >
+                    course Description
+                </div>
+            ),
+            selector: (row) => row.description,
         },
         {
             name: (
@@ -383,7 +489,7 @@ const fetchAllCourses=()=>{
                     Image
                 </div>
             ),
-            selector: (row) => row.Image,
+            selector: (row) => row.thumbnailImage,
         },
         {
             name: (
@@ -409,16 +515,16 @@ const fetchAllCourses=()=>{
             courseFee: courseFee,
         };
 
-        if (subCategoryName && image && courseFee && CategoryId) {
+        if (courseFee && CategoryId) {
             HomeService.UpdateSubCategory(id, data)
                 .then((res) => {
                     console.log("Response Add SubCategory", res);
                     if (res && res.status) {
                         toast.success("Updated Successfully");
                         setCatId(CategoryId);
-                        fetchSubCategory(CategoryId);
-                        setImage("");
-                        setSubCategoryName("");
+                        // fetchSubCategory(CategoryId);
+                        setthumbnailImage("");
+                        // setSubCategoryName("");
                         setCategoryId("");
                         setcourseFee("");
                         let file = document.querySelector("#images");
@@ -446,15 +552,34 @@ const fetchAllCourses=()=>{
         let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
 
         if (res && res.status) {
-            setImage(res?.url);
+            setthumbnailImage(res?.url);
         } else {
             toast.error(res?.message);
         }
         setImageLoader(false);
     };
 
+
+    const HandleVideo = async (e) => {
+        setImageLoad(true);
+
+        let file = e.target.files[0];
+        let data = new FormData();
+        data.append("video", file);
+
+        let res = await HttpClientXml.fileUplode("video-upload", "POST", data);
+
+        if (res && res.status) {
+            console.log("UploadVideoRes", res);
+            setintroVideo(res?.transcoderUrl);
+        } else {
+            toast.error(res?.message);
+        }
+        setImageLoad(false);
+    };
+
     const HandleCrossClick = () => {
-        setImage("");
+        setthumbnailImage("");
         let file = document.querySelector("#images");
         file.value = "";
     };
@@ -529,7 +654,22 @@ const fetchAllCourses=()=>{
 
                                     <div class="col">
                                         <label for="inputEmail4">
-                                        courseFee<span style={{ color: "red" }}>*</span> :
+                                            course Name<span style={{ color: "red" }}>*</span> :
+                                        </label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Enter course name..."
+                                            name="courseName"
+                                            value={courseName}
+                                            onChange={(e) => setcourseName(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div class="col">
+                                        <label for="inputEmail4">
+                                            courseFee<span style={{ color: "red" }}>*</span> :
                                         </label>
                                         <input
                                             type="number"
@@ -539,23 +679,148 @@ const fetchAllCourses=()=>{
                                             onChange={(e) => setcourseFee(e.target.value)}
                                         />
                                     </div>
-                                </div>
-                                <div class="row" style={{ marginBottom: "1rem" }}>
                                     <div class="col">
                                         <label for="inputEmail4">
-                                            SubCategory Name<span style={{ color: "red" }}>*</span> :
+                                            description<span style={{ color: "red" }}>*</span> :
                                         </label>
                                         <input
                                             type="text"
                                             class="form-control"
-                                            value={subCategoryName}
-                                            onChange={(e) => setSubCategoryName(e.target.value)}
-                                            placeholder="Enter subcategory name..."
+                                            placeholder="Enter description..."
+                                            value={description}
+                                            onChange={(e) => setdescription(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div class="col">
+                                        <label for="inputEmail4">
+                                            learningTopics<span style={{ color: "red" }}>*</span> :
+                                        </label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Enter learningTopics..."
+                                            value={learningTopics}
+                                            onChange={(e) => setlearningTopics(e.target.value)}
                                         />
                                     </div>
                                     <div class="col">
                                         <label for="inputEmail4">
-                                            Image<span style={{ color: "red" }}>*</span> :
+                                            requirements<span style={{ color: "red" }}>*</span> :
+                                        </label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Enter requirements..."
+                                            value={requirements}
+                                            onChange={(e) => setrequirements(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div class="col">
+                                        <label for="inputEmail4">
+                                            duration<span style={{ color: "red" }}>*</span> :
+                                        </label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Enter duration..."
+                                            value={duration}
+                                            onChange={(e) => setduration(e.target.value)}
+                                        />
+                                    </div>
+                                    <div class="col">
+                                        <label for="inputEmail4">
+                                            completionCertificate<span style={{ color: "red" }}>*</span> :
+                                        </label>
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            placeholder="Enter courseFee..."
+                                            value={completionCertificate}
+                                            onChange={(e) => setcompletionCertificate(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div class="col">
+                                        <label for="inputEmail4">
+                                            problemSovingSession<span style={{ color: "red" }}>*</span> :
+                                        </label>
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            placeholder="Enter no. of problemSovingSession..."
+                                            value={problemSovingSession}
+                                            onChange={(e) => setproblemSovingSession(e.target.value)}
+                                        />
+                                    </div>
+                                    <div class="col">
+                                        <label for="inputEmail4">
+                                            freeCourse<span style={{ color: "red" }}>*</span> :
+                                        </label>
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            placeholder="Enter freeCourse..."
+                                            value={freeCourse}
+                                            onChange={(e) => setfreeCourse(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="row" style={{ marginBottom: "1rem" }}>
+                                    <div class="col">
+                                        <label for="inputEmail4">
+                                            introVideo<span style={{ color: "red" }}>*</span> :
+                                        </label>
+                                        <div style={{ display: "flex", flexDirection: "column" }}>
+                                            <input
+                                                class="form-control"
+                                                type="file"
+                                                onChange={(e) => HandleVideo(e)}
+                                                accept="video/*"
+                                                id="images"
+                                            />
+                                            {imageLoad ? (
+                                                <>
+                                                    <ImageLoader />{" "}
+                                                </>
+                                            ) : null}
+                                            {introVideo && (
+                                                <>
+                                                    <div>
+                                                        <img
+                                                            style={{
+                                                                height: "20%",
+                                                                width: "20%",
+                                                                marginTop: "12px",
+                                                                borderRadius: "5px",
+                                                            }}
+                                                            src={introVideo}
+                                                        />
+                                                        <button
+                                                            onClick={() => HandleCrossClick()}
+                                                            style={{ color: "red" }}
+                                                            type="button"
+                                                            class="btn-close"
+                                                            aria-label="Close"
+                                                        ></button>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col">
+                                        <label for="inputEmail4">
+                                            thumbnailImage<span style={{ color: "red" }}>*</span> :
                                         </label>
                                         <div style={{ display: "flex", flexDirection: "column" }}>
                                             <input
@@ -570,7 +835,7 @@ const fetchAllCourses=()=>{
                                                     <ImageLoader />{" "}
                                                 </>
                                             ) : null}
-                                            {image && (
+                                            {thumbnailImage && (
                                                 <>
                                                     <div>
                                                         <img
@@ -580,7 +845,7 @@ const fetchAllCourses=()=>{
                                                                 marginTop: "12px",
                                                                 borderRadius: "5px",
                                                             }}
-                                                            src={image}
+                                                            src={thumbnailImage}
                                                         />
                                                         <button
                                                             onClick={() => HandleCrossClick()}
@@ -595,6 +860,195 @@ const fetchAllCourses=()=>{
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <div className="row" data-aos="fade-up">
+                                    <div className="col-lg-12">
+
+                                        {formValues.map((element, ind) => (
+
+                                            <div style={{ border: "solid 1px #ced4da", padding: "1em", margin: "1em 0", borderRadius: "0.25rem" }} className="_form-inline" key={ind}>
+                                                <div className="form-group mb-2 mt-1">
+                                                    <label for="inputEmail4">
+                                                        docTitle:
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="docTitle"
+                                                        placeholder={`docTitle ${ind + 1}`}
+                                                        value={element.docTitle || ""}
+                                                        onChange={(e) => handleChange(ind, e)}
+                                                    />
+                                                </div>
+                                                <div className="form-group mb-2 mt-1">
+                                                    <label for="inputEmail4">
+                                                        docDescription:
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="docDescription"
+                                                        placeholder={`docDescription ${ind + 1}`}
+                                                        value={element.docDescription || ""}
+                                                        onChange={(e) => handleChange(ind, e)}
+                                                    />
+                                                </div>
+                                                <div style={{ border: "1.5px solid rgb(206, 212, 218)", padding: "1rem 1rem 1rem 1rem" }}>
+                                                    <div className="row" data-aos="fade-up">
+                                                        <div className="col-lg-12">
+                                                            {element?.documents?.map((element, index) => (
+                                                                <div key={index} className="_form-inline">
+                                                                    <div className="row">
+                                                                        <div className="col">
+                                                                            <label for="inputEmail4">
+                                                                                Lecture Title:
+                                                                            </label>
+                                                                            <input
+                                                                                type="text"
+                                                                                class="form-control"
+                                                                                name="lectureTitle"
+                                                                                placeholder={`Lecture Title ${index + 1}`}
+                                                                                value={element.lectureTitle}
+                                                                                onChange={(e) => handleDocumentChange(ind, index, e)}
+                                                                            />
+
+                                                                        </div>
+
+                                                                        <div className="col">
+                                                                            <label for="inputEmail4">
+                                                                                Lecture Description:
+                                                                            </label>
+                                                                            <input
+                                                                                type="text"
+                                                                                class="form-control"
+                                                                                name="lectureDescription"
+                                                                                placeholder={`Lecture Description ${index + 1}`}
+                                                                                value={element.lectureDescription}
+                                                                                onChange={(e) => handleDocumentChange(ind, index, e)}
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div className="row">
+                                                                        <div className="col">
+                                                                            <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
+                                                                                Thumbnail Image :
+                                                                            </label>
+                                                                            <input
+                                                                                class="form-control"
+                                                                                onChange={(e) => HandleDocImage(ind, index, e)}
+                                                                                type="file"
+                                                                                id="docFile"
+                                                                            // accept="image/*"
+                                                                            />
+                                                                            {imageLoader4 ? (
+                                                                                <>
+                                                                                    <ImageLoader />
+                                                                                </>
+                                                                            ) : null}
+                                                                            {element?.docFile && (
+                                                                                <>
+                                                                                    <div>
+                                                                                        <img
+                                                                                            style={{
+                                                                                                height: "10%",
+                                                                                                width: "10%",
+                                                                                                marginTop: "12px",
+                                                                                                borderRadius: "5px",
+                                                                                            }}
+                                                                                            src={element?.docFile}
+                                                                                        />
+
+                                                                                    </div>
+                                                                                </>
+                                                                            )}
+
+                                                                        </div>
+
+                                                                        <div className="col">
+                                                                            <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
+                                                                                Document Video :
+                                                                            </label>
+                                                                            <input
+                                                                                class="form-control"
+                                                                                onChange={(e) => HandleDocVideo(ind, index, e)}
+                                                                                type="file"
+                                                                                id="docVideo"
+                                                                                accept="video/*"
+                                                                            />
+                                                                            {imageLoader5 ? (
+                                                                                <>
+                                                                                    <ImageLoader />
+                                                                                </>
+                                                                            ) : null}
+                                                                            {element.docVideo && (
+                                                                                <>
+                                                                                    <div>
+                                                                                        <img
+                                                                                            style={{
+                                                                                                height: "10%",
+                                                                                                width: "10%",
+                                                                                                marginTop: "12px",
+                                                                                                borderRadius: "5px",
+                                                                                            }}
+                                                                                            src={element.docVideo}
+                                                                                        />
+
+
+                                                                                    </div>
+                                                                                </>
+                                                                            )}
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    {index ? (
+                                                                        <button
+                                                                            type="button"
+                                                                            className="btn btn-sm btn-danger ml-1"
+                                                                            onClick={() => removeDocumentFields(ind)}
+                                                                        >
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </button>
+                                                                    ) : null}
+                                                                </div>
+                                                            ))}
+                                                            <div>
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-sm btn-success"
+                                                                    onClick={() => addDocumentFields(ind)}
+                                                                >
+                                                                    Add More Documents
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {ind ? (
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-sm btn-danger ml-1"
+                                                        onClick={() => removeFormFields(ind)}
+                                                    >
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                ) : null}
+                                            </div>
+                                        ))}
+                                        <div className="button-section mt-2">
+                                            <button
+                                                className="btn btn-sm btn-success"
+                                                type="button"
+                                                onClick={() => addFormFields()}
+                                            >
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </form>
 
                             {hide ? (
@@ -607,6 +1061,7 @@ const fetchAllCourses=()=>{
                                 </button>
                             )}
 
+
                             <div
                                 style={{
                                     textAlign: "center",
@@ -616,38 +1071,15 @@ const fetchAllCourses=()=>{
                                 }}
                                 className="card-title"
                             >
-                                Manage SubCategory
+                                Manage Course
                             </div>
-                            <label for="inputEmail4">
-                                Category Name<span style={{ color: "red" }}>*</span> :
-                            </label>
 
-                            <select
-                                style={{ marginBottom: "21px" }}
-                                class="form-select"
-                                aria-label="select category"
-                                value={catId}
-                                onChange={(e) => {
-                                    setCatId(e?.target?.value);
-                                    e.target.value && fetchSubCategory(e?.target?.value);
-                                }}
-                            >
-                                <option value={""}>Select a category name.......</option>
-                                {CategoryData.map((item) => {
-                                    return (
-                                        <option id={item?._id} value={item?._id}>
-                                            {item?.catName}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                            {catId && (
-                                <DataTable
-                                    columns={columns}
-                                    data={courseData}
-                                    pagination
-                                />
-                            )}
+                            <DataTable
+                                columns={columns}
+                                data={courseData}
+                                pagination
+                            />
+
                         </div>
                     </div>
                 </div>
@@ -655,6 +1087,5 @@ const fetchAllCourses=()=>{
         </>
     );
 };
-
 
 export default AddAndManageCourse
