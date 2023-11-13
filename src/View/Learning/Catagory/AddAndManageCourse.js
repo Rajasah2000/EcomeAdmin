@@ -7,6 +7,7 @@ import HttpClientXml from "../../../Utils/HttpClientXml";
 import PageLoader from "../../../Loader/PageLoader";
 import ImageLoader from "../../../Loader/ImageLoader";
 import Swal from "sweetalert2";
+import SelectableInput from "./SelectableInput";
 
 const AddAndManageCourse = () => {
     const [courseData, setCourseData] = useState([])
@@ -26,9 +27,7 @@ const AddAndManageCourse = () => {
     const [id, setId] = useState("");
     const [loading, setLoading] = useState(false);
     const [CategoryData, setCategoryData] = useState([]);
-    const [subCategoryData, setSubCategoryData] = useState([]);
     const [CategoryId, setCategoryId] = useState("");
-    const [subCategoryName, setSubCategoryName] = useState("");
     const [courseFee, setcourseFee] = useState(null);
     const [image, setImage] = useState("");
     const [catId, setCatId] = useState("");
@@ -37,6 +36,7 @@ const AddAndManageCourse = () => {
     const [imageLoader3, setImageLoader3] = useState(false);
     const [imageLoader4, setImageLoader4] = useState(false);
     const [imageLoader5, setImageLoader5] = useState(false);
+    const [searchTag, setSearchTag] = useState([]);
 
     useEffect(() => {
         fetchCategoryData();
@@ -59,7 +59,7 @@ const AddAndManageCourse = () => {
     }
     const [formValues, setFormValues] = useState([iniCourseDetails]);
 
-
+    console.log("formvaluesss", formValues)
 
     const handleChange = (i, e) => {
         let newFormValues = [...formValues];
@@ -68,13 +68,7 @@ const AddAndManageCourse = () => {
     };
 
     const addFormFields = () => {
-        // alert(formValues.length)
-        // if (formValues.length < 5000) {
         setFormValues([...formValues, iniCourseDetails]);
-        // } else {
-        //     Swal("")
-        //     Swal("Error", "Not more than 5000", "error");
-        // }
     };
 
     const removeFormFields = (i) => {
@@ -85,9 +79,6 @@ const AddAndManageCourse = () => {
 
 
     const handleDocumentChange = (ind, index, e) => {
-        // let newDocumentValues = [...documentValues];
-        // newDocumentValues[i][e.target.name] = e.target.value;
-        // setDocumentValues(newDocumentValues);
         console.log("indhhh", ind, formValues)
         let newDocArr = [...formValues[ind].documents];
         newDocArr[index][e.target.name] = e.target.value;
@@ -104,7 +95,12 @@ const AddAndManageCourse = () => {
 
     // Function to add more document fields
     const addDocumentFields = (ind) => {
-        let newDocArr = [...formValues[ind].documents, iniCourseDetails];
+        let newDocArr = [...formValues[ind].documents, {
+            lectureTitle: "",
+            lectureDescription: "",
+            docFile: "",
+            docVideo: ""
+        }];
         setFormValues(prev => {
             return prev?.map((item, i) => {
                 if (i === ind) {
@@ -138,9 +134,6 @@ const AddAndManageCourse = () => {
                     }
                 })
             })
-            // let newFormValues = [...documentValues];
-            // newFormValues[i].docFile = res?.url;
-            // setDocumentValues(newFormValues);
 
         } else {
             toast.error(res?.message);
@@ -329,11 +322,9 @@ const AddAndManageCourse = () => {
                     });
                     setCourseData(arr);
                 }
-                // console.log("RESPONSE", res);
             })
             .catch((err) => {
                 setLoading(false);
-                // console.log("err", err);
             });
     }
 
@@ -341,9 +332,19 @@ const AddAndManageCourse = () => {
         window.scroll(0, 0);
         console.log("item", item);
         setId(item?._id);
-        setImage(item?.image);
-        setCategoryId(item?.catID);
+        setcourseName(item?.courseName);
+        setdescription(item?.description);
+        setcourseCatID(item?.courseCatID);
+        setlearningTopics(item?.learningTopics);
+        setrequirements(item?.requirements);
+        setduration(item?.duration);
         setcourseFee(item?.courseFee);
+        setcompletionCertificate(item?.completionCertificate);
+        setproblemSovingSession(item?.problemSovingSession);
+        setfreeCourse(item?.freeCourse);
+        setthumbnailImage(item?.thumbnailImage);
+        setintroVideo(item?.introVideo);
+        setFormValues(item?.courseDetails)
         setHide(false);
     };
 
@@ -378,8 +379,7 @@ const AddAndManageCourse = () => {
 
     const AddSubCategory = () => {
         let data = {
-            catID: CategoryId,
-            // subCatName: subCategoryName,
+            courseCatID: courseCatID,
             courseName: courseName,
             description: description,
             learningTopics: learningTopics,
@@ -391,21 +391,20 @@ const AddAndManageCourse = () => {
             thumbnailImage: thumbnailImage,
             introVideo: introVideo,
             courseFee: courseFee,
-            courseDetails: formValues,
-            // documents: formValues.documents
+            courseDetails: formValues
         };
         console.log(data, "Addcourse")
-        if (courseName && description && learningTopics && requirements && duration && completionCertificate && problemSovingSession && freeCourse && courseFee && CategoryId) {
+        if (courseName && description && learningTopics && requirements && duration && completionCertificate && problemSovingSession && freeCourse && courseFee) {
             HomeService.AddCourse(data)
                 .then((res) => {
                     if (res && res.status) {
                         toast.success(res.message);
-                        // setcourseName(""),
+                        setcourseName("");
                         setdescription("")
                         setcourseCatID("")
-                        setCatId("")
-                        setlearningTopics("")
-                        setrequirements("")
+                        // setCatId("")
+                        setlearningTopics([])
+                        setrequirements([])
                         setduration("")
                         setcourseFee(null)
                         setcompletionCertificate("")
@@ -414,9 +413,10 @@ const AddAndManageCourse = () => {
                         setthumbnailImage("")
                         setintroVideo("")
                         setFormValues([iniCourseDetails])
-                        setCategoryId("");
-                        let file = document.querySelector("#images");
-                        file.value = "";
+                        // setCategoryId("");
+                        fetchAllCourses();
+                        // let file = document.querySelector("#images");
+                        // file.value = "";
                     } else {
                         toast.error(res?.message);
                     }
@@ -510,26 +510,47 @@ const AddAndManageCourse = () => {
 
     const UpdateCategory = () => {
         let data = {
-            catID: CategoryId,
-            image: image,
+            courseCatID: courseCatID,
+            courseName: courseName,
+            description: description,
+            learningTopics: learningTopics,
+            requirements: requirements,
+            duration: duration,
+            completionCertificate: completionCertificate,
+            problemSovingSession: problemSovingSession,
+            freeCourse: freeCourse,
+            thumbnailImage: thumbnailImage,
+            introVideo: introVideo,
             courseFee: courseFee,
+            courseDetails: formValues,
+
+            // documents: formValues.documents
         };
 
         if (courseFee && CategoryId) {
-            HomeService.UpdateSubCategory(id, data)
+            HomeService.UpdateCourse(id, data)
                 .then((res) => {
-                    console.log("Response Add SubCategory", res);
+                    console.log("Response Update", res);
                     if (res && res.status) {
-                        toast.success("Updated Successfully");
-                        setCatId(CategoryId);
-                        // fetchSubCategory(CategoryId);
-                        setthumbnailImage("");
-                        // setSubCategoryName("");
-                        setCategoryId("");
-                        setcourseFee("");
+                        toast.success(res.message);
+                        setcourseName("");
+                        setdescription("")
+                        setcourseCatID("")
+                        // setCatId("")
+                        setlearningTopics([])
+                        setrequirements([])
+                        setduration("")
+                        setcourseFee(null)
+                        setcompletionCertificate("")
+                        setproblemSovingSession(null)
+                        setfreeCourse("")
+                        setthumbnailImage("")
+                        setintroVideo("")
+                        setFormValues([iniCourseDetails])
+                        // setCategoryId("");
+                        fetchAllCourses();
                         let file = document.querySelector("#images");
                         file.value = "";
-                        setHide(true);
                     } else {
                         toast.error(res?.message);
                     }
@@ -566,7 +587,7 @@ const AddAndManageCourse = () => {
         let file = e.target.files[0];
         let data = new FormData();
         data.append("video", file);
-
+        console.log('data video', file, data)
         let res = await HttpClientXml.fileUplode("video-upload", "POST", data);
 
         if (res && res.status) {
@@ -638,8 +659,8 @@ const AddAndManageCourse = () => {
                                             style={{ marginBottom: "21px" }}
                                             class="form-select"
                                             aria-label="select category"
-                                            value={CategoryId}
-                                            onChange={(e) => setCategoryId(e?.target?.value)}
+                                            value={courseCatID}
+                                            onChange={(e) => setcourseCatID(e?.target?.value)}
                                         >
                                             <option value={""}>Select a category name.......</option>
                                             {CategoryData.map((item) => {
@@ -695,27 +716,21 @@ const AddAndManageCourse = () => {
 
                                 <div className="row">
                                     <div class="col">
-                                        <label for="inputEmail4">
-                                            learningTopics<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Enter learningTopics..."
+                                        <SelectableInput
+                                            title="Add learningTopics "
                                             value={learningTopics}
-                                            onChange={(e) => setlearningTopics(e.target.value)}
+                                            onChange={(val) => setlearningTopics(val)}
+                                            className="form-group"
+                                            placeholder="Enter learningTopics"
                                         />
                                     </div>
                                     <div class="col">
-                                        <label for="inputEmail4">
-                                            requirements<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Enter requirements..."
+                                        <SelectableInput
+                                            title="Add requirements "
                                             value={requirements}
-                                            onChange={(e) => setrequirements(e.target.value)}
+                                            onChange={(val) => setrequirements(val)}
+                                            className="form-group"
+                                            placeholder="Enter requirements"
                                         />
                                     </div>
                                 </div>
@@ -733,18 +748,53 @@ const AddAndManageCourse = () => {
                                             onChange={(e) => setduration(e.target.value)}
                                         />
                                     </div>
-                                    <div class="col">
-                                        <label for="inputEmail4">
-                                            completionCertificate<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            placeholder="Enter courseFee..."
-                                            value={completionCertificate}
-                                            onChange={(e) => setcompletionCertificate(e.target.value)}
-                                        />
+                                
+
+                                    <div className="col">
+                                        <div>
+                                            <label htmlFor="formGroupExampleInput">Completion Certificate</label>
+                                        </div>
+                                        <div className="d-flex flex-wrap">
+                                            <div
+                                                classname="form-check form-check-inline"
+                                                style={{ marginRight: "1rem" }}
+                                            >
+                                                <input
+                                                    classname="form-check-input"
+                                                    type="radio"
+                                                    name="completionCertificate"
+                                                    id="inlineRadio1"
+                                                    value="true"
+                                                    onChange={() =>
+                                                        setcompletionCertificate("true")
+                                                    }
+                                                />
+                                                <label classname="form-check-label" for="inlineRadio1">
+                                                    Yes
+                                                </label>
+                                            </div>
+
+                                            <div
+                                                classname="form-check form-check-inline"
+                                                style={{ marginRight: "1rem" }}
+                                            >
+                                                <input
+                                                    classname="form-check-input"
+                                                    type="radio"
+                                                    name="completionCertificate"
+                                                    id="inlineRadio1"
+                                                    value="false"
+                                                    onChange={() =>
+                                                        setcompletionCertificate("false")
+                                                    }
+                                                />
+                                                <label classname="form-check-label" for="inlineRadio1">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
 
                                 <div className="row">
@@ -760,7 +810,7 @@ const AddAndManageCourse = () => {
                                             onChange={(e) => setproblemSovingSession(e.target.value)}
                                         />
                                     </div>
-                                    <div class="col">
+                                    {/* <div class="col">
                                         <label for="inputEmail4">
                                             freeCourse<span style={{ color: "red" }}>*</span> :
                                         </label>
@@ -771,6 +821,53 @@ const AddAndManageCourse = () => {
                                             value={freeCourse}
                                             onChange={(e) => setfreeCourse(e.target.value)}
                                         />
+                                    </div> */}
+
+
+                                    <div className="col">
+                                        {/* <div className="d-flex flex-wrap"> */}
+                                        <div>
+                                            <label htmlFor="formGroupExampleInput">Free Course</label>
+                                        </div>
+                                        <div className="d-flex flex-wrap">
+                                            <div
+                                                classname="form-check form-check-inline"
+                                                style={{ marginRight: "1rem" }}
+                                            >
+                                                <input
+                                                    classname="form-check-input"
+                                                    type="radio"
+                                                    name="freeCourse"
+                                                    id="inlineRadio1"
+                                                    value="true"
+                                                    onChange={() =>
+                                                        setfreeCourse(true)
+                                                    }
+                                                />
+                                                <label classname="form-check-label" for="inlineRadio1">
+                                                    Yes
+                                                </label>
+                                            </div>
+
+                                            <div
+                                                classname="form-check form-check-inline"
+                                                style={{ marginRight: "1rem" }}
+                                            >
+                                                <input
+                                                    classname="form-check-input"
+                                                    type="radio"
+                                                    name="freeCourse"
+                                                    id="inlineRadio1"
+                                                    value="false"
+                                                    onChange={() =>
+                                                        setfreeCourse(false)
+                                                    }
+                                                />
+                                                <label classname="form-check-label" for="inlineRadio1">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -792,7 +889,7 @@ const AddAndManageCourse = () => {
                                                     <ImageLoader />{" "}
                                                 </>
                                             ) : null}
-                                            {introVideo && (
+                                            {/* {introVideo && (
                                                 <>
                                                     <div>
                                                         <img
@@ -813,7 +910,7 @@ const AddAndManageCourse = () => {
                                                         ></button>
                                                     </div>
                                                 </>
-                                            )}
+                                            )} */}
                                         </div>
                                     </div>
 
@@ -933,7 +1030,7 @@ const AddAndManageCourse = () => {
                                                                     <div className="row">
                                                                         <div className="col">
                                                                             <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
-                                                                                Thumbnail Image :
+                                                                                Document file :
                                                                             </label>
                                                                             <input
                                                                                 class="form-control"
@@ -982,7 +1079,7 @@ const AddAndManageCourse = () => {
                                                                                     <ImageLoader />
                                                                                 </>
                                                                             ) : null}
-                                                                            {element.docVideo && (
+                                                                            {/* {element.docVideo && (
                                                                                 <>
                                                                                     <div>
                                                                                         <img
@@ -998,7 +1095,7 @@ const AddAndManageCourse = () => {
 
                                                                                     </div>
                                                                                 </>
-                                                                            )}
+                                                                            )} */}
 
                                                                         </div>
                                                                     </div>
