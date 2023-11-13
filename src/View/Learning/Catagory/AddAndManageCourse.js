@@ -527,7 +527,7 @@ const AddAndManageCourse = () => {
             // documents: formValues.documents
         };
 
-        if (courseFee && CategoryId) {
+        if (courseName && description && learningTopics && requirements && duration && completionCertificate && problemSovingSession && freeCourse && courseFee) {
             HomeService.UpdateCourse(id, data)
                 .then((res) => {
                     console.log("Response Update", res);
