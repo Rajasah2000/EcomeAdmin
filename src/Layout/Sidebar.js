@@ -483,7 +483,7 @@ export default function Sidebar() {
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
                         {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
-                       Orders
+                        Orders
                       </a>
                     </div>
                   </div>
@@ -1350,6 +1350,53 @@ export default function Sidebar() {
                   </div>
                 </div>
               </div>
+
+
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse100"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapseFIVE"
+                        aria-expanded="false"
+                        aria-controls="collapse100"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        Questions & Answers
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapseFIVE"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse100"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/manage-ques-ans"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Question & Answers
+                          </Link>
+                        </li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
 
             </div>
           </div>

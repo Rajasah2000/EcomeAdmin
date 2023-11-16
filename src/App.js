@@ -7,6 +7,7 @@ import "../src/assets/base.css";
 import Main from "./Layout/Main";
 
 import Login from "./AdminAuthentication/Login";
+import EditAndUpdateQA from "./View/Learning/EditAndUpdateQA";
 import Register from "./AdminAuthentication/Register";
 import AddAndManageCountry from "./View/Category/AddAndManageCountry";
 import AddAndManageCategoryBanner from "./View/Category/AddAndManageCategoryBanner";
@@ -59,6 +60,7 @@ import AddAndManageProduct from "./View/Category/AddAndManageProduct";
 import AddAndManageAboutBushido from "./View/AboutBushido/AddAndManageAboutBushido";
 import AddAndManageOrders from "./View/Category/AddAndManageOrders";
 import AddAndManageCourse from "./View/Learning/Catagory/AddAndManageCourse";
+import AddAndManageQuesAns from "./View/Learning/AddAndManageQuesAns";
 
 function App() {
   return (
@@ -181,6 +183,11 @@ function App() {
             />
 
             <Route
+              path="/manage-ques-ans"
+              element={<AddAndManageQuesAns />}
+            />
+
+            <Route
               path="/add-manage-subscription"
               element={<AddAndManageSubscription />}
             />
@@ -240,6 +247,10 @@ function App() {
             <Route
               path="/add-and-manage-booth"
               element={<AddAndManageBooth />}
+            />
+            <Route
+              path="/update-question"
+              element={<EditAndUpdateQA />}
             />
 
 

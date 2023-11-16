@@ -307,7 +307,7 @@ async function OTTPartnerApprovedByAdmin(id) {
 }
 async function AddLearningCategory(data) {
   let endpoind = "add-learning-category";
-  return HttpClientXml.post(endpoind,data);
+  return HttpClientXml.post(endpoind, data);
 }
 async function ViewLearningCategory() {
   let endpoind = "view-learning-category";
@@ -321,18 +321,18 @@ async function UpdateLearningCategory(id, data) {
   let endpoind = `update-learning-category/${id}`;
   return HttpClientXml.put(endpoind, data);
 }
-async function ViewLearningExpertise(){
-  let endpoint="view-learning-expertise";
+async function ViewLearningExpertise() {
+  let endpoint = "view-learning-expertise";
   return HttpClientXml.get(endpoint)
 }
-async function AddLearningExpertise(data){
-  let endpoint="add-learning-expertise"
-  return HttpClientXml.post(endpoint,data)
+async function AddLearningExpertise(data) {
+  let endpoint = "add-learning-expertise"
+  return HttpClientXml.post(endpoint, data)
 }
 
-async function EditLearningExpertise(id,data){
-  let endpoint=`update-learning-expertise/${id}`
-  return HttpClientXml.put(endpoint,data)
+async function EditLearningExpertise(id, data) {
+  let endpoint = `update-learning-expertise/${id}`
+  return HttpClientXml.put(endpoint, data)
 }
 
 async function DeleteLearningExpertise(id) {
@@ -342,18 +342,18 @@ async function DeleteLearningExpertise(id) {
 
 
 
-async function ViewOttSubscription(){
-  let endpoint="view-ott-subscription";
+async function ViewOttSubscription() {
+  let endpoint = "view-ott-subscription";
   return HttpClientXml.get(endpoint)
 }
-async function AddOttSubscription(data){
-  let endpoint="add-ott-subscription"
-  return HttpClientXml.post(endpoint,data)
+async function AddOttSubscription(data) {
+  let endpoint = "add-ott-subscription"
+  return HttpClientXml.post(endpoint, data)
 }
 
-async function EditOttSubscription(id,data){
-  let endpoint=`update-ott-subscription/${id}`
-  return HttpClientXml.put(endpoint,data)
+async function EditOttSubscription(id, data) {
+  let endpoint = `update-ott-subscription/${id}`
+  return HttpClientXml.put(endpoint, data)
 }
 
 async function DeleteOttSubscription(id) {
@@ -633,7 +633,7 @@ async function DeleteBooth(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
-async function EventWiseBooth(data){
+async function EventWiseBooth(data) {
   let endpoind = "event-wise-booth";
   return HttpClientXml.post(endpoind, data);
 }
@@ -831,7 +831,43 @@ async function AddCatwiseCourses(data) {
   return HttpClientXml.post(endpoind, data);
 }
 
+async function AddQuestionAnswer(data) {
+  let endpoind = "question-answer-add";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllQuestionAnswers(data) {
+  let endpoind = "question-answer-view";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewASingleQuestion(id) {
+  let endpoind = "question-single";
+  return HttpClientXml.post(endpoind);
+}
+
+async function UpdateSingleQuestion(id, data) {
+  let endpoind = `single-question-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteAllQuestions(id) {
+  let endpoind = `question-CourseWise-delete-all/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function DeleteSingleQuestion(id) {
+  let endpoind = `single-question-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
 export default {
+  AddQuestionAnswer,
+  ViewASingleQuestion,
+  ViewAllQuestionAnswers,
+  UpdateSingleQuestion,
+  DeleteAllQuestions,
+  DeleteSingleQuestion,
   AddCourse,
   AddCatwiseCourses,
   ViewAllCourse,
