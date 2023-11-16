@@ -2,19 +2,11 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import HomeService from "../../Service/HomeService";
-import DataTable from "react-data-table-component";
 import Swal from "sweetalert2";
-import ImageLoader from "../../Loader/ImageLoader";
-import HttpClientXml from "../../Utils/HttpClientXml";
-import PageLoader from "../../Loader/PageLoader";
-import moment from "moment";
 import { Location, useLocation, useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
 
 
 const EditAndUpdateQA = () => {
-    const { id } = useParams()
-    const params = useParams();
     const location = useLocation();
     const navigate=useNavigate();
     const [loading, setLoading] = useState(false);
@@ -23,7 +15,6 @@ const EditAndUpdateQA = () => {
     const [courseID, setcourseID] = useState([]);
     const [courseData, setCourseData] = useState([]);
     const [duration, setduration] = useState(null);
-    const [courseid, setcourseid] = useState("")
     const [question, setquestion] = useState("")
     const [a, seta] = useState("")
     const [b, setb] = useState("")
