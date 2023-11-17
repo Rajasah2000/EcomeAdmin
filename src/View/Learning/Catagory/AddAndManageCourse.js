@@ -670,7 +670,7 @@ const AddAndManageCourse = () => {
 
                                     <div class="col">
                                         <label for="inputEmail4">
-                                            course Name<span style={{ color: "red" }}>*</span> :
+                                            Course Name<span style={{ color: "red" }}>*</span> :
                                         </label>
                                         <input
                                             type="text"
@@ -686,7 +686,7 @@ const AddAndManageCourse = () => {
                                 <div className="row">
                                     <div class="col">
                                         <label for="inputEmail4">
-                                            courseFee<span style={{ color: "red" }}>*</span> :
+                                            Course Fee<span style={{ color: "red" }}>*</span> :
                                         </label>
                                         <input
                                             type="number"
@@ -698,7 +698,7 @@ const AddAndManageCourse = () => {
                                     </div>
                                     <div class="col">
                                         <label for="inputEmail4">
-                                            description<span style={{ color: "red" }}>*</span> :
+                                            Description<span style={{ color: "red" }}>*</span> :
                                         </label>
                                         <input
                                             type="text"
@@ -734,7 +734,7 @@ const AddAndManageCourse = () => {
                                 <div className="row">
                                     <div class="col">
                                         <label for="inputEmail4">
-                                            duration<span style={{ color: "red" }}>*</span> :
+                                            Duration<span style={{ color: "red" }}>*</span> :
                                         </label>
                                         <input
                                             type="text"
@@ -796,7 +796,7 @@ const AddAndManageCourse = () => {
                                 <div className="row">
                                     <div class="col">
                                         <label for="inputEmail4">
-                                            problemSovingSession<span style={{ color: "red" }}>*</span> :
+                                            Problem Soving Session<span style={{ color: "red" }}>*</span> :
                                         </label>
                                         <input
                                             type="number"
@@ -857,7 +857,7 @@ const AddAndManageCourse = () => {
                                 <div class="row" style={{ marginBottom: "1rem" }}>
                                     <div class="col">
                                         <label for="inputEmail4">
-                                            introVideo<span style={{ color: "red" }}>*</span> :
+                                            Intro Video<span style={{ color: "red" }}>*</span> :
                                         </label>
                                         <div style={{ display: "flex", flexDirection: "column" }}>
                                             <input
@@ -900,7 +900,7 @@ const AddAndManageCourse = () => {
 
                                     <div class="col">
                                         <label for="inputEmail4">
-                                            thumbnailImage<span style={{ color: "red" }}>*</span> :
+                                            Thumbnail Image<span style={{ color: "red" }}>*</span> :
                                         </label>
                                         <div style={{ display: "flex", flexDirection: "column" }}>
                                             <input
@@ -950,7 +950,7 @@ const AddAndManageCourse = () => {
                                             <div style={{ border: "solid 1px #ced4da", padding: "1em", margin: "1em 0", borderRadius: "0.25rem" }} className="_form-inline" key={ind}>
                                                 <div className="form-group mb-2 mt-1">
                                                     <label for="inputEmail4">
-                                                        docTitle:
+                                                        Document Title:
                                                     </label>
                                                     <input
                                                         type="text"
@@ -963,7 +963,7 @@ const AddAndManageCourse = () => {
                                                 </div>
                                                 <div className="form-group mb-2 mt-1">
                                                     <label for="inputEmail4">
-                                                        docDescription:
+                                                        Document Description:
                                                     </label>
                                                     <input
                                                         type="text"
