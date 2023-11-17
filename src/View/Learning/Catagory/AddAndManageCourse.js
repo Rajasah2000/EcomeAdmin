@@ -59,25 +59,27 @@ const AddAndManageCourse = () => {
 
     console.log("formvaluesss", formValues)
 
+    //handle change for first add more functionality
     const handleChange = (i, e) => {
         let newFormValues = [...formValues];
         newFormValues[i][e.target.name] = e.target.value;
         setFormValues(newFormValues);
     };
 
+    //for first add more functionality
     const addFormFields = () => {
         setFormValues([...formValues, iniCourseDetails]);
     };
 
+    //for remove add more field
     const removeFormFields = (i) => {
         let newFormValues = [...formValues];
         newFormValues.splice(i, 1);
         setFormValues(newFormValues);
     };
 
-
+    //handle change for nested add more functionality
     const handleDocumentChange = (ind, index, e) => {
-        // console.log("indhhh", ind, formValues)
         let newDocArr = [...formValues[ind].documents];
         newDocArr[index][e.target.name] = e.target.value;
         setFormValues(prev => {
@@ -91,7 +93,7 @@ const AddAndManageCourse = () => {
         })
     };
 
-    // Function to add more document fields
+    //function to add more document fields
     const addDocumentFields = (ind) => {
         let newDocArr = [...formValues[ind].documents, {
             lectureTitle: "",
@@ -111,6 +113,7 @@ const AddAndManageCourse = () => {
 
     };
 
+    //for handle doument image
     const HandleDocImage = async (ind, index, e) => {
         setImageLoader4(true)
         let file = e.target.files[0];
@@ -139,6 +142,7 @@ const AddAndManageCourse = () => {
         setImageLoader4(false);
     };
 
+    //for handle document video
     const HandleDocVideo = async (ind, index, e) => {
         setImageLoader5(true)
         let file = e.target.files[0];
@@ -157,12 +161,6 @@ const AddAndManageCourse = () => {
                     }
                 })
             })
-
-            // console.log("UploadVideoRes", res);
-            // let newFormValues = [...documentValues];
-            // newFormValues[ind].docVideo = res?.transcoderUrl;
-            // setDocumentValues(newFormValues);
-
         } else {
             toast.error(res?.message);
         }
@@ -182,8 +180,9 @@ const AddAndManageCourse = () => {
                 }
             })
         })
-    };
+    }
 
+    //for getting category data
     const fetchCategoryData = () => {
         HomeService.ViewLearningCategory()
             .then((res) => {
@@ -197,8 +196,9 @@ const AddAndManageCourse = () => {
             .catch((err) => {
                 console.log(err);
             });
-    };
+    }
 
+    //for getting all courses
     const fetchAllCourses = () => {
         setLoading(true);
         HomeService.ViewAllCourse()
@@ -326,6 +326,7 @@ const AddAndManageCourse = () => {
             });
     }
 
+    //for edit
     const onEdit = (item) => {
         window.scroll(0, 0);
         console.log("item", item);
@@ -344,8 +345,9 @@ const AddAndManageCourse = () => {
         setintroVideo(item?.introVideo);
         setFormValues(item?.courseDetails)
         setHide(false);
-    };
+    }
 
+    //for delete functionality
     const onDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -372,9 +374,9 @@ const AddAndManageCourse = () => {
                     });
             }
         });
-    };
+    }
 
-
+    //for adding functionality
     const AddSubCategory = () => {
         let data = {
             courseCatID: courseCatID,
@@ -390,7 +392,7 @@ const AddAndManageCourse = () => {
             introVideo: introVideo,
             courseFee: courseFee,
             courseDetails: formValues
-        };
+        }
         console.log(data, "Addcourse")
         if (courseName && description && learningTopics && requirements && duration && completionCertificate && problemSovingSession && freeCourse && courseFee) {
             HomeService.AddCourse(data)
@@ -424,7 +426,8 @@ const AddAndManageCourse = () => {
         } else {
             toast.error("All Fields Are Required");
         }
-    };
+    }
+
 
     const columns = [
         {
@@ -505,6 +508,7 @@ const AddAndManageCourse = () => {
         },
     ];
 
+    //for update the data
     const UpdateCategory = () => {
         let data = {
             courseCatID: courseCatID,
@@ -558,6 +562,7 @@ const AddAndManageCourse = () => {
         }
     };
 
+    //for image handling
     const HandleImage = async (e) => {
         setImageLoader(true);
 
@@ -575,7 +580,7 @@ const AddAndManageCourse = () => {
         setImageLoader(false);
     };
 
-
+    //for video handle
     const HandleVideo = async (e) => {
         setImageLoad(true);
 

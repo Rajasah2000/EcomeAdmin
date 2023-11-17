@@ -8,7 +8,7 @@ import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
 import PageLoader from "../../Loader/PageLoader";
 import moment from "moment";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AddAndManagePodcast from "./AddAndManagePodcast";
 
 
@@ -25,7 +25,6 @@ const AddAndManagePodcastSeries = () => {
   const [titleOfseries, settitleOfseries] = useState("");
   const [seriesDescription, setseriesDescription] = useState("");
 
-
   ///Add podcast
   const initialPodcast = {
     episodeName: "",
@@ -36,7 +35,6 @@ const AddAndManagePodcastSeries = () => {
     audioName: "",
     artistName: ""
   };
-
 
   const [formValues, setFormValues] = useState([initialPodcast]);
   const handleChange = (i, e) => {
@@ -50,7 +48,6 @@ const AddAndManagePodcastSeries = () => {
 
 
   const HandleEpisodeImage = async (i, e) => {
-
     setEpisodeImageLoad(true)
     let file = e.target.files[0];
     let data = new FormData();
@@ -59,7 +56,7 @@ const AddAndManagePodcastSeries = () => {
     let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
 
     if (res && res.status) {
-      console.log("UploadImageRes", res);
+      // console.log("UploadImageRes", res);
 
       let newFormValues = [...formValues];
       newFormValues[i].uploadThumbload = res?.url;
@@ -67,7 +64,6 @@ const AddAndManagePodcastSeries = () => {
     } else {
       toast.error(res?.message);
     }
-
     setEpisodeImageLoad(false);
   };
 
@@ -168,9 +164,6 @@ const AddAndManagePodcastSeries = () => {
       seriesDescription: seriesDescription,
       listenFree: listenFree,
       moodID: moodID,
-      // listenFree:listenFree,
-      // tailerUrl: tailerUrl,
-      // uploadThumbload: uploadThumbload,
       podcast: formValues,
     };
     console.log("gfgfgfgfgfgf", data);
@@ -445,9 +438,7 @@ const AddAndManagePodcastSeries = () => {
 
   const handleChangeType = (e) => {
     setpodcastType(e.target.value);
-
   }
-  // console.log("podcastType", podcastType)
 
   useEffect(() => {
     FetchAllData()
@@ -501,10 +492,7 @@ const AddAndManagePodcastSeries = () => {
                   )}
 
 
-
                   <div class="form-group">
-
-
                     <div className="row">
                       <div className="col">
                         <label htmlFor="formGroupExampleInput">Select ContentType</label>
