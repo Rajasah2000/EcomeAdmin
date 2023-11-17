@@ -351,7 +351,7 @@ const AddAndManageQuesAns = () => {
                         <div class="row" style={{ marginBottom: "1rem" }}>
                           <div class="col">
                             <label for="inputEmail4">
-                              duration:
+                              Duration:
                             </label>
                             <input
                               type="number"
@@ -374,7 +374,7 @@ const AddAndManageQuesAns = () => {
                               <div style={{ border: "solid 1px #ced4da", padding: "1em", margin: "1em 0", borderRadius: "0.25rem" }} className="_form-inline" key={index}>
                                 <div className="form-group mb-2 mt-1">
                                   <label for="inputEmail4">
-                                    question:
+                                    Question:
                                   </label>
                                   <input
                                     type="text"
@@ -446,7 +446,7 @@ const AddAndManageQuesAns = () => {
 
                                 <div className="form-group mb-2 mt-1">
                                   <label for="inputEmail4">
-                                    correctAns:
+                                    Correct Answer:
                                   </label>
                                   <input
                                     type="text"
