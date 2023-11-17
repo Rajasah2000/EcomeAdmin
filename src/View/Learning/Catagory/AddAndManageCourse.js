@@ -682,6 +682,7 @@ const AddAndManageCourse = () => {
                                         />
                                     </div>
                                 </div>
+
                                 <div className="row">
                                     <div class="col">
                                         <label for="inputEmail4">
@@ -708,7 +709,7 @@ const AddAndManageCourse = () => {
                                         />
                                     </div>
                                 </div>
-
+                                <br />
                                 <div className="row">
                                     <div class="col">
                                         <SelectableInput
@@ -743,7 +744,7 @@ const AddAndManageCourse = () => {
                                             onChange={(e) => setduration(e.target.value)}
                                         />
                                     </div>
-                                
+
 
                                     <div className="col">
                                         <div>
@@ -791,7 +792,7 @@ const AddAndManageCourse = () => {
                                     </div>
 
                                 </div>
-
+                                <br />
                                 <div className="row">
                                     <div class="col">
                                         <label for="inputEmail4">
@@ -805,7 +806,7 @@ const AddAndManageCourse = () => {
                                             onChange={(e) => setproblemSovingSession(e.target.value)}
                                         />
                                     </div>
-                                
+
 
                                     <div className="col">
                                         <div>
@@ -852,7 +853,7 @@ const AddAndManageCourse = () => {
                                         </div>
                                     </div>
                                 </div>
-
+                                <br />
                                 <div class="row" style={{ marginBottom: "1rem" }}>
                                     <div class="col">
                                         <label for="inputEmail4">
