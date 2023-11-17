@@ -27,8 +27,6 @@ const AddAndManagePodcastSeries = () => {
 
 
   ///Add podcast
-
-
   const initialPodcast = {
     episodeName: "",
     releaseYear: "",
@@ -39,8 +37,8 @@ const AddAndManagePodcastSeries = () => {
     artistName: ""
   };
 
-  const [formValues, setFormValues] = useState([initialPodcast]);
 
+  const [formValues, setFormValues] = useState([initialPodcast]);
   const handleChange = (i, e) => {
     let newFormValues = [...formValues];
     newFormValues[i][e.target.name] = e.target.value;
@@ -74,7 +72,6 @@ const AddAndManagePodcastSeries = () => {
   };
 
 
-
   const addFormFields = () => {
     // alert(formValues.length)
     if (formValues.length < 5000) {
@@ -97,12 +94,10 @@ const AddAndManagePodcastSeries = () => {
     let file = e.target.files[0];
     let data = new FormData();
     data.append("image", file);
-    // console.log('L86:', data);
     let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
 
     if (res && res.status) {
       console.log("addPodcast", res);
-      // setuploadThumbload(res?.url);
       let newFormValues = [...formValues];
       newFormValues[i].addPodcast = res?.url;
       setFormValues(newFormValues);
@@ -112,7 +107,6 @@ const AddAndManagePodcastSeries = () => {
     }
     setEpisodeImageLoader(false);
   };
-
 
 
   const setInitialState = () => {
@@ -125,7 +119,6 @@ const AddAndManagePodcastSeries = () => {
     let thumbnail = document.querySelector("#thumbnail");
     thumbnail.value = "";
   }
-
 
   const AddData = () => {
     let data = {
@@ -167,9 +160,7 @@ const AddAndManagePodcastSeries = () => {
     }
   }
 
-
   const UpdateData = () => {
-
     let data = {
       contentType: contentType,
       podcastType: podcastType,
@@ -291,6 +282,7 @@ const AddAndManagePodcastSeries = () => {
       selector: (row) => row.action,
     },
   ];
+
   const FetchAllData = () => {
     setLoading(true);
     console.log(contentType);
@@ -394,7 +386,6 @@ const AddAndManagePodcastSeries = () => {
       });
   };
 
-
   const fetchAllMoodData = async () => {
     const res = await HomeService.ViewAllMood();
     // console.log("fvfvc", res);
@@ -405,7 +396,6 @@ const AddAndManagePodcastSeries = () => {
     }
   };
 
-  const [showId, setShowId] = useState("");
 
   const onEdit = (item) => {
     console.log("ITEM", item);
@@ -421,10 +411,6 @@ const AddAndManagePodcastSeries = () => {
   
 
     setFormValues(item?.podcastSeries)
-    // // console.log("L422:",item);
-
-    // setShowId(item?._id);
-    // setHide(false);
   };
 
   const onDelete = (id) => {
@@ -461,9 +447,7 @@ const AddAndManagePodcastSeries = () => {
     setpodcastType(e.target.value);
 
   }
-
-  console.log("podcastType", podcastType)
-
+  // console.log("podcastType", podcastType)
 
   useEffect(() => {
     FetchAllData()

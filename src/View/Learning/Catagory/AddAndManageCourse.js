@@ -13,12 +13,11 @@ const AddAndManageCourse = () => {
     const [courseData, setCourseData] = useState([])
     const [description, setdescription] = useState("")
     const [courseCatID, setcourseCatID] = useState("")
-    const [courseCatData, setcourseCatData] = useState([])
     const [learningTopics, setlearningTopics] = useState([])
     const [requirements, setrequirements] = useState([])
     const [duration, setduration] = useState("")
     const [completionCertificate, setcompletionCertificate] = useState("")
-    const [problemSovingSession, setproblemSovingSession] = useState(null)
+    const [problemSovingSession, setproblemSovingSession] = useState("")
     const [freeCourse, setfreeCourse] = useState("")
     const [thumbnailImage, setthumbnailImage] = useState("")
     const [introVideo, setintroVideo] = useState("")
@@ -28,7 +27,7 @@ const AddAndManageCourse = () => {
     const [loading, setLoading] = useState(false);
     const [CategoryData, setCategoryData] = useState([]);
     const [CategoryId, setCategoryId] = useState("");
-    const [courseFee, setcourseFee] = useState(null);
+    const [courseFee, setcourseFee] = useState("");
     const [image, setImage] = useState("");
     const [catId, setCatId] = useState("");
     const [imageLoader, setImageLoader] = useState(false);
@@ -36,7 +35,6 @@ const AddAndManageCourse = () => {
     const [imageLoader3, setImageLoader3] = useState(false);
     const [imageLoader4, setImageLoader4] = useState(false);
     const [imageLoader5, setImageLoader5] = useState(false);
-    const [searchTag, setSearchTag] = useState([]);
 
     useEffect(() => {
         fetchCategoryData();
@@ -79,7 +77,7 @@ const AddAndManageCourse = () => {
 
 
     const handleDocumentChange = (ind, index, e) => {
-        console.log("indhhh", ind, formValues)
+        // console.log("indhhh", ind, formValues)
         let newDocArr = [...formValues[ind].documents];
         newDocArr[index][e.target.name] = e.target.value;
         setFormValues(prev => {
@@ -400,19 +398,18 @@ const AddAndManageCourse = () => {
                     if (res && res.status) {
                         toast.success(res.message);
                         setcourseName("");
-                        setdescription("")
-                        setcourseCatID("")
-                        // setCatId("")
-                        setlearningTopics([])
-                        setrequirements([])
-                        setduration("")
-                        setcourseFee(null)
-                        setcompletionCertificate("")
-                        setproblemSovingSession(null)
-                        setfreeCourse("")
-                        setthumbnailImage("")
-                        setintroVideo("")
-                        setFormValues([iniCourseDetails])
+                        setdescription("");
+                        setcourseCatID("");
+                        setlearningTopics([]);
+                        setrequirements([]);
+                        setduration("");
+                        setcourseFee("")
+                        setcompletionCertificate("");
+                        setproblemSovingSession("");
+                        setfreeCourse("");
+                        setthumbnailImage("");
+                        setintroVideo("");
+                        setFormValues([iniCourseDetails]);
                         // setCategoryId("");
                         fetchAllCourses();
                         // let file = document.querySelector("#images");
@@ -523,8 +520,6 @@ const AddAndManageCourse = () => {
             introVideo: introVideo,
             courseFee: courseFee,
             courseDetails: formValues,
-
-            // documents: formValues.documents
         };
 
         if (courseName && description && learningTopics && requirements && duration && completionCertificate && problemSovingSession && freeCourse && courseFee) {
@@ -537,16 +532,16 @@ const AddAndManageCourse = () => {
                         setdescription("")
                         setcourseCatID("")
                         // setCatId("")
-                        setlearningTopics([])
-                        setrequirements([])
-                        setduration("")
-                        setcourseFee(null)
-                        setcompletionCertificate("")
-                        setproblemSovingSession(null)
-                        setfreeCourse("")
-                        setthumbnailImage("")
-                        setintroVideo("")
-                        setFormValues([iniCourseDetails])
+                        setlearningTopics([]);
+                        setrequirements([]);
+                        setduration("");
+                        setcourseFee("");
+                        setcompletionCertificate("");
+                        setproblemSovingSession("");
+                        setfreeCourse("");
+                        setthumbnailImage("");
+                        setintroVideo("");
+                        setFormValues([iniCourseDetails]);
                         // setCategoryId("");
                         fetchAllCourses();
                         let file = document.querySelector("#images");
@@ -663,7 +658,7 @@ const AddAndManageCourse = () => {
                                             onChange={(e) => setcourseCatID(e?.target?.value)}
                                         >
                                             <option value={""}>Select a category name.......</option>
-                                            {CategoryData.map((item) => {
+                                            {CategoryData?.map((item) => {
                                                 return (
                                                     <option id={item?._id} value={item?._id}>
                                                         {item?.catName}
@@ -810,22 +805,9 @@ const AddAndManageCourse = () => {
                                             onChange={(e) => setproblemSovingSession(e.target.value)}
                                         />
                                     </div>
-                                    {/* <div class="col">
-                                        <label for="inputEmail4">
-                                            freeCourse<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            placeholder="Enter freeCourse..."
-                                            value={freeCourse}
-                                            onChange={(e) => setfreeCourse(e.target.value)}
-                                        />
-                                    </div> */}
-
+                                
 
                                     <div className="col">
-                                        {/* <div className="d-flex flex-wrap"> */}
                                         <div>
                                             <label htmlFor="formGroupExampleInput">Free Course</label>
                                         </div>
@@ -1009,7 +991,6 @@ const AddAndManageCourse = () => {
                                                                                 value={element.lectureTitle}
                                                                                 onChange={(e) => handleDocumentChange(ind, index, e)}
                                                                             />
-
                                                                         </div>
 
                                                                         <div className="col">
@@ -1037,7 +1018,6 @@ const AddAndManageCourse = () => {
                                                                                 onChange={(e) => HandleDocImage(ind, index, e)}
                                                                                 type="file"
                                                                                 id="docFile"
-                                                                            // accept="image/*"
                                                                             />
                                                                             {imageLoader4 ? (
                                                                                 <>
@@ -1079,23 +1059,6 @@ const AddAndManageCourse = () => {
                                                                                     <ImageLoader />
                                                                                 </>
                                                                             ) : null}
-                                                                            {/* {element.docVideo && (
-                                                                                <>
-                                                                                    <div>
-                                                                                        <img
-                                                                                            style={{
-                                                                                                height: "10%",
-                                                                                                width: "10%",
-                                                                                                marginTop: "12px",
-                                                                                                borderRadius: "5px",
-                                                                                            }}
-                                                                                            src={element.docVideo}
-                                                                                        />
-
-
-                                                                                    </div>
-                                                                                </>
-                                                                            )} */}
 
                                                                         </div>
                                                                     </div>

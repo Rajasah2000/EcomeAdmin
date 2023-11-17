@@ -25,7 +25,7 @@ const EditAndUpdateQA = () => {
 
     useEffect(() => {
         if (location?.pathname == "/update-question") {
-            console.log("LOCSATION", location?.state);
+            // console.log("LOCSATION", location?.state);
             setPodId(location?.state?.item?._id)
             setcourseID(location?.state?.item?.courseID);
             setduration(location?.state?.item?.duration);
