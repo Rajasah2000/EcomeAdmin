@@ -11,9 +11,7 @@ const AddAndMaangePodcastSubscription = () => {
   const [streamingNo, setstreamingNo] = useState("");
   const [deviceNo, setdeviceNo] = useState("");
   const [price, setprice] = useState("");
-  const [allPodcastSubscriptionData, setAllPodcastSubscriptionData] = useState(
-    []
-  );
+  const [allPodcastSubscriptionData, setAllPodcastSubscriptionData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [hide, setHide] = useState(true);
@@ -36,7 +34,6 @@ const AddAndMaangePodcastSubscription = () => {
   const onDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      // text: "You won't  to delete this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

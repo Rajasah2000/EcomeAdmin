@@ -29,7 +29,6 @@ const AddAndManageExpertise = () => {
   const onDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      // text: "You won't  to delete this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

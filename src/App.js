@@ -7,6 +7,7 @@ import "../src/assets/base.css";
 import Main from "./Layout/Main";
 
 import Login from "./AdminAuthentication/Login";
+import EditAndUpdateQA from "./View/Learning/EditAndUpdateQA";
 import Register from "./AdminAuthentication/Register";
 import AddAndManageCountry from "./View/Category/AddAndManageCountry";
 import AddAndManageCategoryBanner from "./View/Category/AddAndManageCategoryBanner";
@@ -14,6 +15,7 @@ import AddAndManageLanguage from "./View/Category/AddAndManageLanguage";
 import AddAndManageSubCategory from "./View/Category/AddAndManageSubCategory";
 import AddAndManageBanner from "./View/Category/AddAndManageBanner";
 import AddAndManageUnit from "./View/Category/AddAndManageUnit";
+import AddAndManageCoupon from "./View/Category/AddAndManageCoupon";
 import ApprovedPartnerList from "./View/EstorePartnerCategory/ApprovedPartnerList";
 import PendingForApproval from "./View/EstorePartnerCategory/PendingForApproval";
 import AddAndMAnageMusicCategory from "./View/PodCast/AddAndMAnageMusicCategory";
@@ -49,6 +51,16 @@ import AddAndManageSpeaker from "./View/Event/Speaker/AddAndManageSpeaker";
 import AddAndManageSponser from "./View/Event/Sponser/AddAndManageSponser";
 import AddAndManageBooth from "./View/Event/Booth/AddAndManageBooth";
 import AddAndManageBoothProduct from "./View/Event/BoothProduct/AddAndManageBoothProduct";
+import AddAndManagecoupon from "./View/Category/AddAndManageCoupon";
+import AddAndManagePodcast from "./View/PodCast/AddAndManagePodcast";
+import AddAndManagePodcastSeries from "./View/PodCast/AddAndManagePodcastSeries";
+import AddAndManageMusic from "./View/PodCast/AddAndManageMusic";
+import AddAndManageMusicAlbum from "./View/PodCast/AddAndManageMusicAlbum";
+import AddAndManageProduct from "./View/Category/AddAndManageProduct";
+import AddAndManageAboutBushido from "./View/AboutBushido/AddAndManageAboutBushido";
+import AddAndManageOrders from "./View/Category/AddAndManageOrders";
+import AddAndManageCourse from "./View/Learning/Catagory/AddAndManageCourse";
+import AddAndManageQuesAns from "./View/Learning/AddAndManageQuesAns";
 
 function App() {
   return (
@@ -78,6 +90,9 @@ function App() {
             />
             <Route path="/add-manage-banner" element={<AddAndManageBanner />} />
             <Route path="/add-manage-unit" element={<AddAndManageUnit />} />
+            <Route path="/add-manage-coupon" element={<AddAndManageCoupon />} />
+            <Route path="/add-manage-product" element={<AddAndManageProduct />} />
+            <Route path="/add-manage-orders" element={<AddAndManageOrders />} />
             <Route
               path="/apprroved-partner-list"
               element={<ApprovedPartnerList />}
@@ -93,6 +108,15 @@ function App() {
             <Route
               path="/add-manage-music-genre"
               element={<AddAndManageMusicGenre />}
+            />
+            <Route
+              path="/add-manage-music"
+              element={<AddAndManageMusic />}
+            />
+
+            <Route
+              path="/add-manage-music-album"
+              element={<AddAndManageMusicAlbum />}
             />
             <Route
               path="/add-manage-podcast-category"
@@ -112,6 +136,16 @@ function App() {
             <Route
               path="/add-and-manage-podcast-subscription"
               element={<AddAndMaangePodcastSubscription />}
+            />
+
+            <Route
+              path="/add-manage-podcast"
+              element={<AddAndManagePodcast />}
+            />
+
+            <Route
+              path="/add-manage-podcast-series"
+              element={<AddAndManagePodcastSeries />}
             />
 
             <Route
@@ -143,12 +177,21 @@ function App() {
               element={<AddAndManageExpertise />}
             />
 
+            <Route
+              path="/manage-course"
+              element={<AddAndManageCourse />}
+            />
+
+            <Route
+              path="/manage-ques-ans"
+              element={<AddAndManageQuesAns />}
+            />
 
             <Route
               path="/add-manage-subscription"
               element={<AddAndManageSubscription />}
             />
-                <Route
+            <Route
               path="/add-and-manage-main-banner"
               element={<AddAndManageMainBanner />}
             />
@@ -193,23 +236,32 @@ function App() {
 
             <Route
               path="/add-and-manage-speaker"
-              element={<AddAndManageSpeaker/>}
+              element={<AddAndManageSpeaker />}
             />
 
             <Route
               path="/add-and-manage-sponser"
-              element={<AddAndManageSponser/>}
+              element={<AddAndManageSponser />}
             />
 
             <Route
               path="/add-and-manage-booth"
-              element={<AddAndManageBooth/>}
+              element={<AddAndManageBooth />}
+            />
+            <Route
+              path="/update-question"
+              element={<EditAndUpdateQA />}
             />
 
 
-              <Route
+            <Route
               path="/add-and-manage-booth-product"
-              element={<AddAndManageBoothProduct/>}
+              element={<AddAndManageBoothProduct />}
+            />
+
+            <Route
+              path="/add-and-manage-about-bushido"
+              element={<AddAndManageAboutBushido />}
             />
 
           </Route>

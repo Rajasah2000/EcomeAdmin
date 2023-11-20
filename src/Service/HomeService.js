@@ -307,7 +307,7 @@ async function OTTPartnerApprovedByAdmin(id) {
 }
 async function AddLearningCategory(data) {
   let endpoind = "add-learning-category";
-  return HttpClientXml.post(endpoind,data);
+  return HttpClientXml.post(endpoind, data);
 }
 async function ViewLearningCategory() {
   let endpoind = "view-learning-category";
@@ -321,18 +321,18 @@ async function UpdateLearningCategory(id, data) {
   let endpoind = `update-learning-category/${id}`;
   return HttpClientXml.put(endpoind, data);
 }
-async function ViewLearningExpertise(){
-  let endpoint="view-learning-expertise";
+async function ViewLearningExpertise() {
+  let endpoint = "view-learning-expertise";
   return HttpClientXml.get(endpoint)
 }
-async function AddLearningExpertise(data){
-  let endpoint="add-learning-expertise"
-  return HttpClientXml.post(endpoint,data)
+async function AddLearningExpertise(data) {
+  let endpoint = "add-learning-expertise"
+  return HttpClientXml.post(endpoint, data)
 }
 
-async function EditLearningExpertise(id,data){
-  let endpoint=`update-learning-expertise/${id}`
-  return HttpClientXml.put(endpoint,data)
+async function EditLearningExpertise(id, data) {
+  let endpoint = `update-learning-expertise/${id}`
+  return HttpClientXml.put(endpoint, data)
 }
 
 async function DeleteLearningExpertise(id) {
@@ -342,18 +342,18 @@ async function DeleteLearningExpertise(id) {
 
 
 
-async function ViewOttSubscription(){
-  let endpoint="view-ott-subscription";
+async function ViewOttSubscription() {
+  let endpoint = "view-ott-subscription";
   return HttpClientXml.get(endpoint)
 }
-async function AddOttSubscription(data){
-  let endpoint="add-ott-subscription"
-  return HttpClientXml.post(endpoint,data)
+async function AddOttSubscription(data) {
+  let endpoint = "add-ott-subscription"
+  return HttpClientXml.post(endpoint, data)
 }
 
-async function EditOttSubscription(id,data){
-  let endpoint=`update-ott-subscription/${id}`
-  return HttpClientXml.put(endpoint,data)
+async function EditOttSubscription(id, data) {
+  let endpoint = `update-ott-subscription/${id}`
+  return HttpClientXml.put(endpoint, data)
 }
 
 async function DeleteOttSubscription(id) {
@@ -633,7 +633,7 @@ async function DeleteBooth(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
-async function EventWiseBooth(data){
+async function EventWiseBooth(data) {
   let endpoind = "event-wise-booth";
   return HttpClientXml.post(endpoind, data);
 }
@@ -659,8 +659,251 @@ async function DeleteBoothProduct(id) {
   return HttpClientXml.deletemethod(endpoind);
 }
 
+async function AddCoupon(data) {
+  let endpoind = "add-Coupon";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllCoupon() {
+  let endpoind = "view-Coupon";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdateCoupon(id, data) {
+  let endpoind = `update-Coupon/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteCoupon(id) {
+  let endpoind = `delete-Coupon/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+
+async function AddPodcast(data) {
+  let endpoind = "podcast-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllPodcast() {
+  let endpoind = "podcast-view";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdatePodcast(id, data) {
+  let endpoind = `podcast-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeletePodcast(id) {
+  let endpoind = `podcast-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function AddPodcastSeries(data) {
+  let endpoind = "podcast-series-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllPodcastSeries() {
+  let endpoind = "podcast-series-view";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdatePodcastSeries(id, data) {
+  let endpoind = `podcast-series-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeletePodcastSeries(id) {
+  let endpoind = `podcast-series-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+
+async function AddMusic(data) {
+  let endpoind = "music-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllMusic() {
+  let endpoind = "music-view";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdateMusic(id, data) {
+  let endpoind = `music-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteMusic(id) {
+  let endpoind = `music-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function AddMusicSeries(data) {
+  let endpoind = "music-album-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewMusicSeries() {
+  let endpoind = "music-album-view";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdateMusicSeries(id, data) {
+  let endpoind = `music-album-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteMusicSeries(id) {
+  let endpoind = `music-album-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function AddProduct(data) {
+  let endpoind = "product-add";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllProduct() {
+  let endpoind = "product-view";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateProduct(id, data) {
+  let endpoind = `product-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteProduct(id) {
+  let endpoind = `product-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function ViewAllAboutBushido() {
+  let endpoind = "view-about-bushido";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateAboutBushido(id, data) {
+  let endpoind = `update-about-bushido/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function ViewAllOrders() {
+  let endpoind = "fetch-Ordered-Product";
+  return HttpClientXml.get(endpoind);
+}
+
+async function ViewAcceptedOrders() {
+  let endpoind = "fetch-accepted-order";
+  return HttpClientXml.get(endpoind);
+}
+
+async function ViewCancelledOrders() {
+  let endpoind = "fetch-cancelled-product";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateAcceptRejectStatus(id, data) {
+  let endpoind = `admin-accept-reject-orderStatus/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function UpdateTrackOrderStatus(id, data) {
+  let endpoind = `admin-track-Order-Status/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function AddCourse(data) {
+  let endpoind = "course-add";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllCourse() {
+  let endpoind = "course-view";
+  return HttpClientXml.get(endpoind);
+}
+
+async function UpdateCourse(id, data) {
+  let endpoind = `course-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteCourse(id) {
+  let endpoind = `course-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function AddCatwiseCourses(data) {
+  let endpoind = "courses-cat-wise";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function AddQuestionAnswer(data) {
+  let endpoind = "question-answer-add";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewAllQuestionAnswers(data) {
+  let endpoind = "question-answer-view";
+  return HttpClientXml.post(endpoind, data);
+}
+
+async function ViewASingleQuestion(id) {
+  let endpoind = "question-single";
+  return HttpClientXml.post(endpoind);
+}
+
+async function UpdateSingleQuestion(id, data) {
+  let endpoind = `single-question-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteAllQuestions(id) {
+  let endpoind = `question-CourseWise-delete-all/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+
+async function DeleteSingleQuestion(id) {
+  let endpoind = `single-question-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
 
 export default {
+  AddQuestionAnswer,
+  ViewASingleQuestion,
+  ViewAllQuestionAnswers,
+  UpdateSingleQuestion,
+  DeleteAllQuestions,
+  DeleteSingleQuestion,
+  AddCourse,
+  AddCatwiseCourses,
+  ViewAllCourse,
+  UpdateCourse,
+  DeleteCourse,
+  UpdateTrackOrderStatus,
+  UpdateAcceptRejectStatus,
+  ViewAcceptedOrders,
+  ViewCancelledOrders,
+  ViewAllOrders,
+  ViewAllAboutBushido,
+  UpdateAboutBushido,
+  AddProduct,
+  ViewAllProduct,
+  UpdateProduct,
+  DeleteProduct,
+  AddMusicSeries,
+  ViewMusicSeries,
+  UpdateMusicSeries,
+  DeleteMusicSeries,
+  AddPodcastSeries,
+  ViewAllPodcastSeries,
+  UpdatePodcastSeries,
+  DeletePodcastSeries,
+  AddMusic,
+  ViewAllMusic,
+  UpdateMusic,
+  DeleteMusic,
+  AddPodcast,
+  ViewAllPodcast,
+  UpdatePodcast,
+  DeletePodcast,
+  AddCoupon,
+  ViewAllCoupon,
+  UpdateCoupon,
+  DeleteCoupon,
   ViewEventWiseSession,
   ViewAllBoothProduct,
   AddBoothProduct,
