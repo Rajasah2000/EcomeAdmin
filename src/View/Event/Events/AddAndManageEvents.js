@@ -91,7 +91,6 @@ const AddAndManageEvents = () => {
       });
       setDisable(true)
     } else {
-      // alert("Hui")
       setEventData({
         ...eventData, [e.target.name]: e.target.value
       })
@@ -686,7 +685,6 @@ const AddAndManageEvents = () => {
               </div>
             </div>
 
-
             {
               check ? <>
 
@@ -752,7 +750,6 @@ const AddAndManageEvents = () => {
                 null
             }
 
-
             <div class="row" style={{ marginBottom: "1rem" }}>
               <div class="col">
                 <label for="inputEmail4">
@@ -782,9 +779,6 @@ const AddAndManageEvents = () => {
                 />
               </div>
             </div>
-
-
-
 
 
             <div class="row" style={{ marginBottom: "1rem" }}>
