@@ -270,10 +270,13 @@ function App() {
 
             <Route path="/video-content" element={<ManageVideoContent/>}/>
             <Route path="/manage-season/:id" element={<ManageSeason/>}/>
+
             <Route path="/manage-episode/:show/:id" element={<ManageEpisode/>}/>
+            <Route
               path="/add-and-manage-about-bushido"
               element={<AddAndManageAboutBushido />}
             />
+
           </Route>
         </Route>
 
