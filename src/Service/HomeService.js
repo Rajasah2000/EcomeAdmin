@@ -732,7 +732,85 @@ async function DeleteMusic(id) {
   let endpoind = `music-delete/${id}`;
   return HttpClientXml.deletemethod(endpoind);
 }
+///Donation Events
+async function ViewAllDonationCategories() {
+  let endpoind = "donation-categories-view";
+  return HttpClientXml.get(endpoind);
+}
+async function AddDonationEvent(data) {
+  let endpoind = "donation-events-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllDonationEvents() {
+  let endpoind = "donation-events-view";
+  return HttpClientXml.get(endpoind);
+}
+async function DeleteDonationEvent(id) {
+  let endpoind = `donation-event-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+async function UpdateDonationEvent(id, data) {
+  let endpoind = `donation-event-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+async function ViewAllTimeZones() {
+  let endpoind = "timezone-view";
+  return HttpClientXml.get(endpoind);
+}
 
+///OTT Content
+async function ViewOTTCategories() {
+  let endpoind = "Ott-category-get";
+  return HttpClientXml.get(endpoind);
+}
+async function AddVideoContent(data) {
+  let endpoind = "OTT-content-video-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllVideoContents() {
+  let endpoind = "OTT-video-view-all";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdateVideoContent(id, data) {
+  let endpoind = `Ott-content-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+async function DeleteVideoContent(id) {
+  let endpoind = `OTT-content-video-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+async function AddOTTSesion(data) {
+  let endpoind = "Ott-season-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function UpdateOTTSesion(id, data) {
+  let endpoind = `Ott-season-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+async function ViewSeasonsByShow(id) {
+  let endpoind = `season-list-show-wise/${id}`;
+  return HttpClientXml.get(endpoind);
+}
+async function ViewEpisodesBySeason(id) {
+  let endpoind = `episode-list-season-wise/${id}`;
+  return HttpClientXml.get(endpoind);
+}
+async function DeleteSeason(id) {
+  let endpoind = `season-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
+async function AddEpisode(data) {
+  let endpoind = "Ott-episode-add";
+  return HttpClientXml.post(endpoind, data);
+}
+async function UpdateEpisode(id, data) {
+  let endpoind = `Ott-episode-update/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+async function DeleteEpisode(id) {
+  let endpoind = `Ott-episode-delete/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
 async function AddMusicSeries(data) {
   let endpoind = "music-album-add";
   return HttpClientXml.post(endpoind, data);
@@ -1039,4 +1117,27 @@ export default {
   PartnerApprovedByAdmin,
   ViewAllApprovedOTTPartnerShipList,
   ViewAllDisApprovedOTTPartnerShipList,
+  ///
+  ViewAllDonationCategories,
+  AddDonationEvent,
+  ViewAllDonationEvents,
+  DeleteDonationEvent,
+  UpdateDonationEvent,
+  ViewAllTimeZones,
+  ///OTT Content
+  ViewOTTCategories,
+  AddVideoContent,
+  ViewAllVideoContents,
+  UpdateVideoContent,
+  DeleteVideoContent,
+  AddOTTSesion,
+  UpdateOTTSesion,
+  ViewSeasonsByShow,
+  ViewEpisodesBySeason,
+  DeleteSeason,
+  AddEpisode,
+  UpdateEpisode,
+  DeleteEpisode,
+
+
 };

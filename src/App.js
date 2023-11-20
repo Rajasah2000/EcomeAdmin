@@ -56,6 +56,10 @@ import AddAndManagePodcast from "./View/PodCast/AddAndManagePodcast";
 import AddAndManagePodcastSeries from "./View/PodCast/AddAndManagePodcastSeries";
 import AddAndManageMusic from "./View/PodCast/AddAndManageMusic";
 import AddAndManageMusicAlbum from "./View/PodCast/AddAndManageMusicAlbum";
+import WalletEvent from "./View/BushidoWallet/WalletEvent";
+import ManageVideoContent from "./View/OTT/ManageVideoContent";
+import ManageSeason from "./View/OTT/ManageSeason";
+import ManageEpisode from "./View/OTT/ManageEpisode";
 import AddAndManageProduct from "./View/Category/AddAndManageProduct";
 import AddAndManageAboutBushido from "./View/AboutBushido/AddAndManageAboutBushido";
 import AddAndManageOrders from "./View/Category/AddAndManageOrders";
@@ -260,10 +264,16 @@ function App() {
             />
 
             <Route
+              path="/wallet-event"
+              element={<WalletEvent />}
+            />
+
+            <Route path="/video-content" element={<ManageVideoContent/>}/>
+            <Route path="/manage-season/:id" element={<ManageSeason/>}/>
+            <Route path="/manage-episode/:show/:id" element={<ManageEpisode/>}/>
               path="/add-and-manage-about-bushido"
               element={<AddAndManageAboutBushido />}
             />
-
           </Route>
         </Route>
 
