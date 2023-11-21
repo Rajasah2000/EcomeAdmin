@@ -915,7 +915,7 @@ export default function Sidebar() {
                         role="button"
                         data-toggle="collapse"
                         data-parent="#accordionMenu"
-                        href="#collapseTWO"
+                        href="#collapseT"
                         aria-expanded="false"
                         aria-controls="collapse78"
                         style={{ fontWeight: "700", fontSize: "medium" }}
@@ -926,7 +926,7 @@ export default function Sidebar() {
                     </div>
                   </div>
                   <div
-                    id="collapseTWO"
+                    id="collapseT"
                     className="panel-collapse collapse"
                     role="tabpanel"
                     aria-labelledby="collapse78"
