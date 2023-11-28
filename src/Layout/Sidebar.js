@@ -512,7 +512,153 @@ export default function Sidebar() {
             </div>
           </div>
 
+
           <div className="panel panel-default metismenu vertical-nav-menu">
+            <div
+              className="panel-heading metismenu-container"
+              role="tab"
+              id="heading50"
+            >
+              <div className="panel-title metismenu-item">
+                <a
+                  className="collapsed metismenu-link"
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordionMenu"
+                  href="#collapse80"
+                  aria-expanded="false"
+                  aria-controls="collapse80"
+                  style={{ fontWeight: "700", fontSize: "medium" }}
+                >
+                  Approved/Pending Section
+                </a>
+              </div>
+            </div>
+            <div
+              id="collapse80"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="heading50"
+            >
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse100"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapseTWO"
+                        aria-expanded="false"
+                        aria-controls="collapse100"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+
+                        E-store Partner
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapseTWO"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse100"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/apprroved-partner-list"
+                            className="metismenu-link"
+                          >
+                            Approved PartnerList
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/view-pending-for-approval"
+                            className="metismenu-link"
+                          >
+                            Pending ForApproval
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="collapse101"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapseAAA"
+                        aria-expanded="false"
+                        aria-controls="collapse101"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        OTT Partner
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapseAAA"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="collapse101"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/view-apprroved-partnership-list"
+                            className="metismenu-link"
+                          >
+                            Approved PartnerList
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/view-pending-for-approval"
+                            className="metismenu-link"
+                          >
+                            Pending ForApproval
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+
+          {/* <div className="panel panel-default metismenu vertical-nav-menu">
             <div
               className="panel-heading metismenu-container"
               role="tab"
@@ -562,7 +708,7 @@ export default function Sidebar() {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="panel panel-default metismenu vertical-nav-menu">
             <div
@@ -741,7 +887,6 @@ export default function Sidebar() {
                         aria-controls="collapseNine"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
                         Points
                       </a>
                     </div>
@@ -785,7 +930,6 @@ export default function Sidebar() {
                         aria-controls="collapseNine"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
                         Mood
                       </a>
                     </div>
@@ -829,7 +973,6 @@ export default function Sidebar() {
                         aria-controls="collapseNine"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
                         Podcast Genre
                       </a>
                     </div>
@@ -873,7 +1016,6 @@ export default function Sidebar() {
                         aria-controls="collapseNine"
                         style={{ fontWeight: "700", fontSize: "medium" }}
                       >
-                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
                         Subscription
                       </a>
                     </div>
@@ -1062,8 +1204,6 @@ export default function Sidebar() {
                   aria-controls="collapseTwo"
                   style={{ fontWeight: "700", fontSize: "medium" }}
                 >
-                  {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
-                  {/* <TbCategory/> */}
                   OTT Partner
                 </a>
               </div>
@@ -1133,7 +1273,7 @@ export default function Sidebar() {
             </div>
           </div>
 
-          <div className="panel panel-default metismenu vertical-nav-menu">
+          {/* <div className="panel panel-default metismenu vertical-nav-menu">
             <div
               className="panel-heading metismenu-container"
               role="tab"
@@ -1150,8 +1290,6 @@ export default function Sidebar() {
                   aria-controls="collapseTwo"
                   style={{ fontWeight: "700", fontSize: "medium" }}
                 >
-                  {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
-                  {/* <TbCategory/> */}
                   OTT Partner Approve
                 </a>
               </div>
@@ -1185,7 +1323,7 @@ export default function Sidebar() {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
 
 
           <div className="panel panel-default metismenu vertical-nav-menu">
@@ -1779,7 +1917,7 @@ export default function Sidebar() {
 
             </div>
 
-            
+
             <div
               id="collapse73"
               className="panel-collapse collapse"
