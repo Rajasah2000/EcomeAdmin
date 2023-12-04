@@ -34,10 +34,12 @@ const AddAndManageProduct = () => {
     const [AllProductData, setAllProductData] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [colorData, setColorData] = useState([]);
+    console.log("colorData", colorData);
     const [loading, setLoading] = useState(false);
     const [imageLoader, setImageLoader] = useState(false);
     const [hide, setHide] = useState(true);
     const [id, setId] = useState("");
+    // const [sizeData, setSizeData] = useState([])
 
 
     useEffect(() => {
@@ -63,9 +65,10 @@ const AddAndManageProduct = () => {
     // ];
 
     const PrimaryVarient = [
+        { label: "S", value: "S" },
+        { label: "M", value: "M" },
         { label: "L", value: "L" },
         { label: "XL", value: "XL" },
-        { label: "M", value: "M" },
         { label: "XXL", value: "XXL" },
     ];
 
@@ -110,7 +113,7 @@ const AddAndManageProduct = () => {
         setSelectedOptions(e);
         let arr = [];
         e?.map((item) => {
-            return arr.push(item?.value, "  ");
+            return arr.push(item?.value);
         });
         setFormData({
             ...formData,
@@ -158,6 +161,18 @@ const AddAndManageProduct = () => {
     }
 
     const onEdit = (item) => {
+        console.log("item", item);
+        let arr = [];
+        let arr1 = []
+        item?.size?.map((ele, index) => {
+            arr.push({ label: ele, value: ele })
+        });
+
+        item?.color?.map((item) => {
+            arr1.push({ color: item })
+        })
+
+
         window.scroll(0, 0);
         setFormData({
             ...formData,
@@ -165,8 +180,8 @@ const AddAndManageProduct = () => {
             subCatID: item?.subCatID,
             unitID: item?.unitID,
             weight: item?.weight,
-            size: item?.size,
-            color: item?.color,
+            // size: it,
+            // color: item?.color,
             brandName: item?.brandName,
             productDetails: item?.productDetails,
             discountPercentage: item?.discountPercentage,
@@ -175,6 +190,8 @@ const AddAndManageProduct = () => {
             ActualProductPrice: item?.ActualProductPrice,
             productImg: item?.productImg,
         });
+        setSelectedOptions(arr);
+        setColorData(arr1)
         setId(item?._id);
         setHide(false);
     };
@@ -210,6 +227,7 @@ const AddAndManageProduct = () => {
         setLoading(true);
         HomeService.ViewAllProduct()
             .then((res) => {
+                console.log("resres", res);
                 if (res && res?.status) {
                     setLoading(false);
                     let arr = res?.data?.map((item, index) => {

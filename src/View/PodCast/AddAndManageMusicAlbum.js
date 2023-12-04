@@ -20,13 +20,15 @@ const AddAndManageMusicAlbum = () => {
   const [hide, setHide] = useState(true);
   const [contentType, setcontentType] = useState("");
   const [musicType, setmusicType] = useState("");
+  const [albumThumbImg, setAlbumThumbImg] = useState("")
   const [moodID, setmoodID] = useState([]);
   const [moodData, setMoodData] = useState([]);
-  const [musicGenreID,setmusicGenreID]=useState([]);
-  const [genreData,setgenreData]=useState([])
+  const [musicGenreID, setmusicGenreID] = useState([]);
+  const [genreData, setgenreData] = useState([])
   const [listenFree, setlistenFree] = useState("");
   const [titleOfAlbum, settitleOfAlbum] = useState("");
   const [albumDescription, setalbumDescription] = useState("");
+  const [imageLoader, setImgLoader] = useState(false)
 
 
   ///Add Music
@@ -77,6 +79,28 @@ const AddAndManageMusicAlbum = () => {
   };
 
 
+  const HandleImages = async (e) => {
+
+    setImgLoader(true)
+    let file = e.target.files[0];
+    let data = new FormData();
+    data.append("image", file);
+
+    let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
+
+    if (res && res.status) {
+      console.log("UploadImageRes", res);
+
+
+      setAlbumThumbImg(res?.url)
+    } else {
+      toast.error(res?.message);
+    }
+
+    setImgLoader(false);
+  };
+
+
 
   const addFormFields = () => {
     // alert(formValues.length)
@@ -94,7 +118,7 @@ const AddAndManageMusicAlbum = () => {
     setFormValues(newFormValues);
   };
 
- 
+
   const HandleImage = async (i, e) => {
     setEpisodeImageLoader(true);
     let file = e.target.files[0];
@@ -109,7 +133,7 @@ const AddAndManageMusicAlbum = () => {
       let newFormValues = [...formValues];
       newFormValues[i].addMusic = res?.url;
       setFormValues(newFormValues);
-     
+
     } else {
       toast.error(res?.message);
     }
@@ -135,9 +159,10 @@ const AddAndManageMusicAlbum = () => {
       musicType: musicType,
       titleOfAlbum: titleOfAlbum,
       albumDescription: albumDescription,
-      musicGenreID:musicGenreID,
+      musicGenreID: musicGenreID,
       listenFree: listenFree,
       moodID: moodID,
+      uploadThumbnail: albumThumbImg,
       // listenFree:listenFree,
       // tailerUrl: tailerUrl,
       // uploadThumbload: uploadThumbload,
@@ -155,6 +180,7 @@ const AddAndManageMusicAlbum = () => {
             setmusicType("");
             setlistenFree("");
             setmoodID([]);
+            setAlbumThumbImg("")
             setmusicGenreID("")
             setalbumDescription("");
             settitleOfAlbum("");
@@ -216,7 +242,7 @@ const AddAndManageMusicAlbum = () => {
   // }
 
   // const UpdateData = () => {
-  
+
   //   let data = {
   //     contentType: contentType,
   //     musicType: musicType,
@@ -268,7 +294,8 @@ const AddAndManageMusicAlbum = () => {
       albumDescription: albumDescription,
       listenFree: listenFree,
       moodID: moodID,
-      musicGenreID:musicGenreID,
+      musicGenreID: musicGenreID,
+      uploadThumbnail: albumThumbImg,
       // listenFree:listenFree,
       // tailerUrl: tailerUrl,
       // uploadThumbload: uploadThumbload,
@@ -285,6 +312,7 @@ const AddAndManageMusicAlbum = () => {
           setFormValues([initialMusic]);
           setcontentType("");
           setmusicType("");
+          setAlbumThumbImg("")
           setlistenFree("");
           setmoodID([]);
           setalbumDescription("");
@@ -368,7 +396,7 @@ const AddAndManageMusicAlbum = () => {
       ),
       selector: (row) => row?.moodID,
     },
-   
+
     {
       name: (
         <div
@@ -521,12 +549,13 @@ const AddAndManageMusicAlbum = () => {
     setmusicType(item?.musicType);
     settitleOfAlbum(item?.titleOfAlbum);
     setalbumDescription(item?.albumDescription);
+    setAlbumThumbImg(item?.uploadThumbnail);
     setlistenFree(item?.listenFree);
     setmoodID(item?.moodID);
     setmusicGenreID(item?.musicGenreID)
     setFormValues(item?.AlbumMusics)
     // setFormValues(item?.music);
-  
+
 
     // setFormValues(item?.music)
     // // console.log("L422:",item);
@@ -788,10 +817,35 @@ const AddAndManageMusicAlbum = () => {
 
                     </div>
 
+                    <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
+                      Album Thumbnail Image :
+                    </label>
+                    <input
+                      class="form-control"
+                      onChange={(e) => HandleImages(e)}
+                      type="file"
+                      id="thumbnails"
+                      accept="image/*"
+                    />
 
+                    {
+                      imageLoader ? <ImageLoader /> : albumThumbImg && <img src={albumThumbImg} style={{ margin: "12px", height: "100px", width: "100px" }} />
+                    }
 
 
                     {/* Music */}
+
+
+                    <div className="button-section mt-2">
+                      <button
+                        className="btn btn-sm btn-success"
+                        type="button"
+                        onClick={() => addFormFields()}
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+
+                    </div>
 
                     <div className="row" data-aos="fade-up">
                       <div className="col-lg-12">
@@ -970,16 +1024,7 @@ const AddAndManageMusicAlbum = () => {
                         ))}
 
 
-                        <div className="button-section mt-2">
-                          <button
-                            className="btn btn-sm btn-success"
-                            type="button"
-                            onClick={() => addFormFields()}
-                          >
-                            <i class="fas fa-plus"></i>
-                          </button>
 
-                        </div>
                         {/* </form> */}
                       </div>
                     </div>
@@ -994,7 +1039,7 @@ const AddAndManageMusicAlbum = () => {
                       {hide ? (
                         <>
                           <button class="btn btn-primary" onClick={AddData}>
-                            Add
+                            Submit
                           </button>
 
                           {/* <button class="btn btn-primary" onClick={setInitialState}>

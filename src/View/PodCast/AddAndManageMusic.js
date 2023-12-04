@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
 import AddAndManageMusicAlbum from "./AddAndManageMusicAlbum";
+import moment from "moment";
 
 const INITIAL = {
     musicCategoryID: "",
@@ -135,10 +136,13 @@ const AddAndManageMusic = ({ musicval, setmusicval }) => {
     };
 
     const onEdit = (music) => {
+
+        console.log("music", music);
         window.scroll(0, 0);
         // setThumbnail(music?.uploadThumbnail);
         setHide(false);
         setSelectedmusicId(music._id);
+        setmusicData({ ...music, releaseYear: moment(music?.releaseYear).format("YYYY-MM-DD") })
         setmusicData({ ...music });
     };
 

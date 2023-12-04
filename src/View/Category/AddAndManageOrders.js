@@ -150,11 +150,14 @@ const AddAndManageOrders = () => {
                                         {
                                             (item?.productAcceptStatus === "Accept") ? (
                                                 <>
+
                                                     <button className="btn btn-success"
                                                         onClick={() => {
                                                             setIsOpen2(true)
                                                             setItemTo(item)
+                                                            console.log(item, "itemmmmeeett")
                                                         }}
+                                                        disabled={item?.orderStatus === "Delivered" ? true : false}
                                                     >
                                                         Track Order
                                                     </button>
@@ -184,7 +187,7 @@ const AddAndManageOrders = () => {
                                 </div>
                             ),
                             actions: (
-                                <button className="btn btn-warning">{item?.orderStatus}</button>
+                                <div style={{ width: "100px" }}>{(item?.productAcceptStatus === "Reject") ? (<h6>Cancel</h6>) : (<h6>{item?.orderStatus}</h6>)}</div>
                             )
 
                         };
@@ -716,7 +719,7 @@ const AddAndManageOrders = () => {
                                 contentLabel="Example Modal"
                             >
                                 <div>
-                                    <button className="btn btn-danger" style={{ marginLeft:"42rem" }} onClick={closeModal2}>X</button>
+                                    <button className="btn btn-danger" style={{ marginLeft: "42rem" }} onClick={closeModal2}>X</button>
                                     <OrderStatus item={itemTo} hide={setIsOpen2} AllOrderData={fetchAllOrdersData} />
                                 </div>
                             </Modal>

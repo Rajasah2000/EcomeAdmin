@@ -139,15 +139,18 @@ export default function OrderStatus({ item, hide, AllOrderData }) {
                             </Button>
                         )} */}
 
-                        <Button onClick={handleNext}>
+                        {/* <Button onClick={handleNext}>
                             {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                        </Button>
+                        </Button> */}
                     </Box>
 
                 </React.Fragment>
             )}
 
-            <Button sx={{ backgroundColor: "blue" }} onClick={() => HandleSubmit()}>Submit</Button>
+            <Button onClick={handleNext}>
+                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+            </Button>
+            <Button onClick={() => HandleSubmit()}>Submit</Button>
         </Box>
     );
 }
