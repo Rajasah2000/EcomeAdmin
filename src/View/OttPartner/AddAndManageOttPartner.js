@@ -310,7 +310,7 @@ const AddAndManageOttPartner = () => {
                   }}
                   className="card-title"
                 >
-                  Add OTT Partner
+                  Add OTT Category
                 </div>
               ) : (
                 <div
@@ -322,7 +322,7 @@ const AddAndManageOttPartner = () => {
                   }}
                   className="card-title"
                 >
-                  Edit Ott Partner
+                  Edit Ott Category
                 </div>
               )}
 
@@ -391,7 +391,7 @@ const AddAndManageOttPartner = () => {
                 </button>
               )}
 
-              {/* <div
+              <div
                 style={{
                   textAlign: "center",
                   fontSize: "20px",
@@ -400,9 +400,9 @@ const AddAndManageOttPartner = () => {
                 }}
                 className="card-title"
               >
-                Manage Ott Partner
-              </div> */}
-              {/* <DataTable columns={columns} data={allState} pagination /> */}
+                Manage Ott Category
+              </div>
+              <DataTable columns={columns} data={allState} pagination />
             </div>
           </div>
         </div>

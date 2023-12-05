@@ -151,8 +151,10 @@ const ManageSeason = () => {
 
 
     const setInitialState = () => {
+        setBannerImage("");
         setNumberOfSeason("")
         setDirectorName("")
+        setBannerImage("")
 
         // setAddCastName(initialCastNames)
 
@@ -181,6 +183,7 @@ const ManageSeason = () => {
                         toast.success(res.message);
                         FetchAllData()
                         setInitialState()
+                        setFormValues([initialEpisode]);
                     } else {
                         toast.error(res?.message);
                     }
@@ -211,6 +214,7 @@ const ManageSeason = () => {
                         toast.success(res.message);
                         FetchAllData()
                         setInitialState()
+                        // ("")
                         setHide(true)
                     } else {
                         toast.error(res?.message);
@@ -640,7 +644,7 @@ const ManageSeason = () => {
                                                             Episode Number:
                                                         </label>
                                                         <input
-                                                            type="text"
+                                                            type="number"
                                                             class="form-control"
                                                             name="episodeNumber"
                                                             placeholder={`Episode${index + 1} Number `}

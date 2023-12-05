@@ -391,7 +391,7 @@ const AddAndManageOrders = () => {
                 </div>
             ),
             selector: (row) => row.productName,
-            width: "15rem",
+            // width: "15rem",
         },
 
         {
@@ -557,109 +557,71 @@ const AddAndManageOrders = () => {
 
 
     const columns = [
-        {
-            name: (
-                <div
-                    style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-                >
-                    SL
-                </div>
-            ),
-            selector: (row) => row.sl,
-        },
-        {
-            name: (
-                <div
-                    style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-                >
-                    productName
-                </div>
-            ),
-            selector: (row) => row.productName,
-            width: "15rem",
-        },
+      {
+        name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>SL</div>,
+        selector: row => row.sl,
+      },
+      {
+        name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>productName</div>,
+        selector: row => row.productName,
+        width: '10rem',
+      },
 
-        {
-            name: (
-                <div
-                    style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-                >
-                    productDetails
-                </div>
-            ),
-            selector: (row) => row.productDetails,
-        },
+      {
+        name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>productDetails</div>,
+        selector: row => row.productDetails,
+        // width: 'rem',
+      },
 
-        {
-            name: (
-                <div
-                    style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-                >
-                    totalProductAmt
-                </div>
-            ),
-            selector: (row) => row.totalProductAmt,
-        },
-        {
-            name: (
-                <div
-                    style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-                >
-                    receiverName
-                </div>
-            ),
-            selector: (row) => row.receiverName,
-        },
-        {
-            name: (
-                <div
-                    style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-                >
-                    receiverMobileNO
-                </div>
-            ),
-            selector: (row) => row?.receiverMobileNO,
-        },
-        {
-            name: (
-                <div
-                    style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-                >
-                    productImg
-                </div>
-            ),
-            selector: (row) => row.productImg,
-        },
-        {
-            name: (
-                <div
-                    style={{
-                        fontSize: "14px",
-                        color: "#495057",
-                        marginLeft: "15px",
-                        fontWeight: "bolder",
-                    }}
-                >
-                    Product Status
-                </div>
-            ),
-            selector: (row) => row.action,
-        },
-        {
-            name: (
-                <div
-                    style={{
-                        fontSize: "14px",
-                        color: "#495057",
-                        marginLeft: "15px",
-                        fontWeight: "bolder",
-                    }}
-                >
-                    Order Status
-                </div>
-            ),
-            selector: (row) => row.actions,
-        },
+      {
+        name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>totalProductAmt</div>,
+        selector: row => row.totalProductAmt,
+      },
+      {
+        name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>receiverName</div>,
+        selector: row => row.receiverName,
+      },
+      {
+        name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>receiverMobileNO</div>,
+        selector: row => row?.receiverMobileNO,
+      },
+      {
+        name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>productImg</div>,
+        selector: row => row.productImg,
+      },
+      {
+        name: (
+          <div
+            style={{
+              fontSize: '14px',
+              color: '#495057',
+              marginLeft: '15px',
+              fontWeight: 'bolder',
+            }}
+          >
+            Product Status
+          </div>
+        ),
+        selector: row => row.action,
+        
+      },
+      {
+        name: (
+          <div
+            style={{
+              fontSize: '14px',
+              color: '#495057',
+              marginLeft: '15px',
+              fontWeight: 'bolder',
+            }}
+          >
+            Order Status
+          </div>
+        ),
+        selector: row => row.actions,
+        wrap : true,
+        // width: '9rem',
+      },
     ];
 
 

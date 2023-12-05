@@ -393,7 +393,8 @@ const AddAndManageCourse = () => {
             courseFee: courseFee,
             courseDetails: formValues
         }
-        console.log(data, "Addcourse")
+        // console.log(data, "Addcourse")
+        // return
         if (courseName && description && learningTopics && requirements && duration && completionCertificate && problemSovingSession && freeCourse && courseFee) {
             HomeService.AddCourse(data)
                 .then((res) => {
@@ -525,40 +526,52 @@ const AddAndManageCourse = () => {
             courseFee: courseFee,
             courseDetails: formValues,
         };
+        // console.log("DATA" , data);
+        // return
 
-        if (courseName && description && learningTopics && requirements && duration && completionCertificate && problemSovingSession && freeCourse && courseFee) {
-            HomeService.UpdateCourse(id, data)
-                .then((res) => {
-                    console.log("Response Update", res);
-                    if (res && res.status) {
-                        toast.success(res.message);
-                        setcourseName("");
-                        setdescription("")
-                        setcourseCatID("")
-                        // setCatId("")
-                        setlearningTopics([]);
-                        setrequirements([]);
-                        setduration("");
-                        setcourseFee("");
-                        setcompletionCertificate("");
-                        setproblemSovingSession("");
-                        setfreeCourse("");
-                        setthumbnailImage("");
-                        setintroVideo("");
-                        setFormValues([iniCourseDetails]);
-                        // setCategoryId("");
-                        fetchAllCourses();
-                        let file = document.querySelector("#images");
-                        file.value = "";
-                    } else {
-                        toast.error(res?.message);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+        if (
+          courseName &&
+          description &&
+          learningTopics &&
+          requirements &&
+          duration &&
+          completionCertificate &&
+          problemSovingSession &&
+          freeCourse &&
+          courseFee
+        ) {
+          HomeService.UpdateCourse(id, data)
+            .then(res => {
+              console.log('Response Update', res);
+              if (res && res.status) {
+                toast.success(res.message);
+                setcourseName('');
+                setdescription('');
+                setcourseCatID('');
+                // setCatId("")
+                setlearningTopics([]);
+                setrequirements([]);
+                setduration('');
+                setcourseFee('');
+                setcompletionCertificate('');
+                setproblemSovingSession('');
+                setfreeCourse('');
+                setthumbnailImage('');
+                setintroVideo('');
+                setFormValues([iniCourseDetails]);
+                // setCategoryId("");
+                fetchAllCourses();
+                let file = document.querySelector('#images');
+                file.value = '';
+              } else {
+                toast.error(res?.message);
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
         } else {
-            toast.error("All Fields Are Required");
+          toast.error('All Fields Are Required');
         }
     };
 

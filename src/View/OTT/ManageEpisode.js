@@ -178,7 +178,8 @@ const ManageEpisode = () => {
             addEpisode: formValues,
         };
 
-        // console.log("L179:",data);
+        console.log("L179:",data);
+        // return
         if (show && id) {
             HomeService.AddEpisode(data)
                 .then((res) => {
@@ -682,7 +683,7 @@ const ManageEpisode = () => {
                                                             Episode Number:
                                                         </label>
                                                         <input
-                                                            type="text"
+                                                            type="number"
                                                             class="form-control"
                                                             name="episodeNumber"
                                                             placeholder="Episode Number"
