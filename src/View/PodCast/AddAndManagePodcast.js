@@ -191,6 +191,7 @@ const AddAndManagePodcast = () => {
         setLoading(true);
         HomeService.ViewAllPodcast()
             .then((res) => {
+              
                 if (res && res?.status) {
                     setLoading(false);
                     let arr = res?.data?.map((item, index) => {
@@ -491,383 +492,363 @@ const AddAndManagePodcast = () => {
     ];
 
     return (
-        <>
-            {!musicComp ?
-                <div component="div" className="TabsAnimation appear-done enter-done">
-                    <div className="main-card mb-3 card">
-                        <div className="card-body">
-                            {podcastData.podcastType === "series" ? (
-                                <AddAndManagePodcastSeries />
-                            ) : (
-                                <>
-                                    <div>
-                                        {hide ? (
-                                            <div
-                                                style={{
-                                                    textAlign: "center",
-                                                    fontSize: "20px",
-                                                    color: "#868e96",
-                                                    margin: "35px",
-                                                }}
-                                                className="card-title"
-                                            >
-                                                Add Podcast
-                                            </div>
-                                        ) : (
-                                            <div
-                                                style={{
-                                                    textAlign: "center",
-                                                    fontSize: "20px",
-                                                    color: "#868e96",
-                                                    margin: "35px",
-                                                }}
-                                                className="card-title"
-                                            >
-                                                Edit PodCast
-                                            </div>
-                                        )}
-
-                                        <div className="row">
-                                            <div className="col">
-                                                <label htmlFor="formGroupExampleInput">
-                                                    Select ContentType
-                                                </label>
-                                                <select
-                                                    class="form-control"
-                                                    aria-label="Default select example"
-                                                    name="contentType"
-                                                    value={podcastData.contentType}
-                                                    onChange={(e) => handleChange(e, "music")}
-                                                >
-                                                    <option value={""}>Select contentType</option>
-                                                    <option value={"podcast"}>Podcast</option>
-                                                    <option value={"music"}>Music</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div className="row">
-                                            <div className="col">
-                                                <label htmlFor="formGroupExampleInput">
-                                                    Select PodcastType
-                                                </label>
-                                                <select
-                                                    class="form-control"
-                                                    aria-label="Default select example"
-                                                    name="podcastType"
-                                                    value={podcastData.podcastType}
-                                                    onChange={handleChange}
-                                                >
-                                                    <option value={""}>Select PodcastType</option>
-                                                    <option value={"single"}>single</option>
-                                                    <option value={"series"}>series</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div className="row">
-                                            <div className="col">
-                                                <label htmlFor="formGroupExampleInput">Select Category</label>
-                                                <select
-                                                    class="form-control"
-                                                    aria-label="Default select example"
-                                                    name="podcastCategoryID"
-                                                    value={podcastData.podcastCategoryID}
-                                                    onChange={handleChange}
-                                                >
-                                                    <option value={""} disabled>
-                                                        Select Category
-                                                    </option>
-                                                    {catData.map((item, i) => (
-                                                        <option key={i} value={item?._id}>
-                                                            {item?.catName}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </div>
-
-                                            <div className="col">
-                                                <label htmlFor="formGroupExampleInput">Select Genre</label>
-                                                <select
-                                                    class="form-control"
-                                                    aria-label="Default select example"
-                                                    name="podcastGenreID"
-                                                    value={podcastData.podcastGenreID}
-                                                    onChange={handleChange}
-                                                >
-                                                    <option value={""} disabled>
-                                                        Select Genre
-                                                    </option>
-                                                    {genreData.map((item, i) => (
-                                                        <option key={i} value={item?._id}>
-                                                            {item?.genreName}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div className="row">
-                                            <div className="col">
-                                                <label htmlFor="formGroupExampleInput">Select Mood</label>
-                                                <select
-                                                    class="form-control"
-                                                    aria-label="Default select example"
-                                                    name="moodID"
-                                                    value={podcastData.moodID}
-                                                    onChange={handleChange}
-                                                >
-                                                    <option value={""} disabled>
-                                                        Select Mood
-                                                    </option>
-                                                    {moodData.map((item, i) => (
-                                                        <option key={i} value={item?._id}>
-                                                            {item?.mood}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </div>
-
-                                            <div className="col">
-                                                <label htmlFor="formGroupExampleInput">Audio Name</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Audio Name"
-                                                    name="audioName"
-                                                    value={podcastData.audioName}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="row">
-                                            <div className="col">
-                                                <label htmlFor="formGroupExampleInput">Podcast Name</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Podcast Name"
-                                                    name="podcastName"
-                                                    value={podcastData.podcastName}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-
-                                            <div className="col">
-                                                <label htmlFor="formGroupExampleInput">Artist Name</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Artist Name"
-                                                    name="artistName"
-                                                    value={podcastData.artistName}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div class="row" style={{ marginBottom: "1rem" }}>
-                                            <div class="col">
-                                                <label for="inputEmail4">
-                                                    Release Year<span style={{ color: "red" }}></span> :
-                                                </label>
-                                                <input
-                                                    type="date"
-                                                    class="form-control"
-                                                    name="releaseYear"
-                                                    value={podcastData?.releaseYear}
-                                                    onChange={handleChange}
-                                                    placeholder="Enter release year"
-                                                />
-                                            </div>
-                                            <div class="col">
-                                                <label for="inputEmail4">
-                                                    Podcast Duration<span style={{ color: "red" }}></span> :
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    name="podcastDuration"
-                                                    value={podcastData?.podcastDuration}
-                                                    onChange={handleChange}
-                                                    placeholder="Enter podcast duration"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="col">
-                                            {/* <div className="d-flex flex-wrap"> */}
-                                            <div>
-                                                <label htmlFor="formGroupExampleInput">Listen Free</label>
-                                            </div>
-                                            <div className="d-flex flex-wrap">
-                                                <div
-                                                    classname="form-check form-check-inline"
-                                                    style={{ marginRight: "1rem" }}
-                                                >
-                                                    <input
-                                                        classname="form-check-input"
-                                                        type="radio"
-                                                        name="listenFree"
-                                                        id="inlineRadio1"
-                                                        value="true"
-                                                        onChange={() =>
-                                                            setPodcastData((prev) => ({
-                                                                ...prev,
-                                                                listenFree: "true",
-                                                            }))
-                                                        }
-                                                    />
-                                                    <label classname="form-check-label" for="inlineRadio1">
-                                                        Yes
-                                                    </label>
-                                                </div>
-
-                                                <div
-                                                    classname="form-check form-check-inline"
-                                                    style={{ marginRight: "1rem" }}
-                                                >
-                                                    <input
-                                                        classname="form-check-input"
-                                                        type="radio"
-                                                        name="listenFree"
-                                                        id="inlineRadio1"
-                                                        value="false"
-                                                        onChange={() =>
-                                                            setPodcastData((prev) => ({
-                                                                ...prev,
-                                                                listenFree: "false",
-                                                            }))
-                                                        }
-                                                    />
-                                                    <label classname="form-check-label" for="inlineRadio1">
-                                                        No
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <label for="exampleInputEmail1">
-                                            Thumbnail<span style={{ color: "red" }}></span> :
-                                        </label>
-
-                                        <input
-                                            class="form-control"
-                                            onChange={(e) => HandleImage(e)}
-                                            type="file"
-                                            id="thumbnail"
-                                            accept="image/*"
-                                        />
-                                        {imageLoader ? (
-                                            <>
-                                                <ImageLoader />{" "}
-                                            </>
-                                        ) : null}
-                                        {podcastData?.uploadThumbnail && (
-                                            <>
-                                                <div>
-                                                    <img
-                                                        style={{
-                                                            height: "10%",
-                                                            width: "10%",
-                                                            marginTop: "12px",
-                                                            borderRadius: "5px",
-                                                        }}
-                                                        src={podcastData?.uploadThumbnail}
-                                                    />
-                                                    <button
-                                                        onClick={() => HandleCrossClick()}
-                                                        style={{ color: "red" }}
-                                                        type="button"
-                                                        class="btn-close"
-                                                        aria-label="Close"
-                                                    ></button>
-                                                </div>
-                                            </>
-                                        )}
-
-                                        <label for="exampleInputEmail1">
-                                            AddPodcast<span style={{ color: "red" }}></span> :
-                                        </label>
-                                        <input
-                                            class="form-control"
-                                            onChange={(e) => HandlePodcastImage(e)}
-                                            type="file"
-                                            id="addPodcast"
-                                            accept="image/*"
-                                        />
-                                        {imageLoader2 ? (
-                                            <>
-                                                <ImageLoader />{" "}
-                                            </>
-                                        ) : null}
-                                        {podcastData?.AddPodcast && (
-                                            <>
-                                                <div>
-                                                    <img
-                                                        style={{
-                                                            height: "10%",
-                                                            width: "10%",
-                                                            marginTop: "12px",
-                                                            borderRadius: "5px",
-                                                        }}
-                                                        src={podcastData?.AddPodcast}
-                                                    />
-                                                    <button
-                                                        onClick={() => HandleCrossClick2()}
-                                                        style={{ color: "red" }}
-                                                        type="button"
-                                                        class="btn-close"
-                                                        aria-label="Close"
-                                                    ></button>
-                                                </div>
-                                            </>
-                                        )}
-
-                                        {hide ? (
-                                            <button
-                                                class="btn btn-primary"
-                                                style={{ marginTop: "1rem" }}
-                                                onClick={AddPodcast}
-                                            >
-                                                Submit
-                                            </button>
-                                        ) : (
-                                            <button
-                                                class="btn btn-primary"
-                                                style={{ marginTop: "1rem" }}
-                                                onClick={UpdatePodcast}
-                                            >
-                                                Update
-                                            </button>
-                                        )}
-                                    </div>
-
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            fontSize: "20px",
-                                            color: "#868e96",
-                                            margin: "35px",
-                                        }}
-                                        className="card-title"
-                                    >
-                                        Manage Podcast
-                                    </div>
-                                    <DataTable columns={columns} data={AllPodcastData} pagination />
-                                </>
-                            )}
-
-
+      <>
+        {!musicComp ? (
+          <div component="div" className="TabsAnimation appear-done enter-done">
+            <div className="main-card mb-3 card">
+              <div className="card-body">
+                {podcastData.podcastType === 'series' ? (
+                  <AddAndManagePodcastSeries />
+                ) : (
+                  <>
+                    <div>
+                      {hide ? (
+                        <div
+                          style={{
+                            textAlign: 'center',
+                            fontSize: '20px',
+                            color: '#868e96',
+                            margin: '35px',
+                          }}
+                          className="card-title"
+                        >
+                          Add Podcast
                         </div>
+                      ) : (
+                        <div
+                          style={{
+                            textAlign: 'center',
+                            fontSize: '20px',
+                            color: '#868e96',
+                            margin: '35px',
+                          }}
+                          className="card-title"
+                        >
+                          Edit PodCast
+                        </div>
+                      )}
+
+                      <div className="row">
+                        <div className="col">
+                          <label htmlFor="formGroupExampleInput">Select ContentType</label>
+                          <select
+                            class="form-control"
+                            aria-label="Default select example"
+                            name="contentType"
+                            value={podcastData.contentType}
+                            onChange={e => handleChange(e, 'music')}
+                          >
+                            <option value={''}>Select contentType</option>
+                            <option value={'podcast'}>Podcast</option>
+                            <option value={'music'}>Music</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        <div className="col">
+                          <label htmlFor="formGroupExampleInput">Select PodcastType</label>
+                          <select
+                            class="form-control"
+                            aria-label="Default select example"
+                            name="podcastType"
+                            value={podcastData.podcastType}
+                            onChange={handleChange}
+                          >
+                            <option value={''}>Select PodcastType</option>
+                            <option value={'single'}>single</option>
+                            <option value={'series'}>series</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        <div className="col">
+                          <label htmlFor="formGroupExampleInput">Select Category</label>
+                          <select
+                            class="form-control"
+                            aria-label="Default select example"
+                            name="podcastCategoryID"
+                            value={podcastData.podcastCategoryID}
+                            onChange={handleChange}
+                          >
+                            <option value={''} disabled>
+                              Select Category
+                            </option>
+                            {catData.map((item, i) => (
+                              <option key={i} value={item?._id}>
+                                {item?.catName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="col">
+                          <label htmlFor="formGroupExampleInput">Select Genre</label>
+                          <select
+                            class="form-control"
+                            aria-label="Default select example"
+                            name="podcastGenreID"
+                            value={podcastData.podcastGenreID}
+                            onChange={handleChange}
+                          >
+                            <option value={''} disabled>
+                              Select Genre
+                            </option>
+                            {genreData.map((item, i) => (
+                              <option key={i} value={item?._id}>
+                                {item?.genreName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        <div className="col">
+                          <label htmlFor="formGroupExampleInput">Select Mood</label>
+                          <select
+                            class="form-control"
+                            aria-label="Default select example"
+                            name="moodID"
+                            value={podcastData.moodID}
+                            onChange={handleChange}
+                          >
+                            <option value={''} disabled>
+                              Select Mood
+                            </option>
+                            {moodData.map((item, i) => (
+                              <option key={i} value={item?._id}>
+                                {item?.mood}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                              <div className="row"></div>
+                      <div className="col">
+                        <label htmlFor="formGroupExampleInput">Audio Name</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Audio Name"
+                          name="audioName"
+                          value={podcastData.audioName}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      {/* </div> */}
+
+                      <div className="row">
+                        <div className="col">
+                          <label htmlFor="formGroupExampleInput">Podcast Name</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Podcast Name"
+                            name="podcastName"
+                            value={podcastData.podcastName}
+                            onChange={handleChange}
+                          />
+                        </div>
+
+                        <div className="col">
+                          <label htmlFor="formGroupExampleInput">Artist Name</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Artist Name"
+                            name="artistName"
+                            value={podcastData.artistName}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row" style={{ marginBottom: '1rem' }}>
+                        <div class="col">
+                          <label for="inputEmail4">
+                            Release Year<span style={{ color: 'red' }}></span> :
+                          </label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            name="releaseYear"
+                            value={podcastData?.releaseYear}
+                            onChange={handleChange}
+                            placeholder="Enter release year"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="inputEmail4">
+                            Podcast Duration<span style={{ color: 'red' }}></span> :
+                          </label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="podcastDuration"
+                            value={podcastData?.podcastDuration}
+                            onChange={handleChange}
+                            placeholder="Enter podcast duration"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col">
+                        {/* <div className="d-flex flex-wrap"> */}
+                        <div>
+                          <label htmlFor="formGroupExampleInput">Listen Free</label>
+                        </div>
+                        <div className="d-flex flex-wrap">
+                          <div classname="form-check form-check-inline" style={{ marginRight: '1rem' }}>
+                            <input
+                              classname="form-check-input"
+                              type="radio"
+                              name="listenFree"
+                              id="inlineRadio1"
+                              value="true"
+                              onChange={() =>
+                                setPodcastData(prev => ({
+                                  ...prev,
+                                  listenFree: 'true',
+                                }))
+                              }
+                            />
+                            <label classname="form-check-label" for="inlineRadio1">
+                              Yes
+                            </label>
+                          </div>
+
+                          <div classname="form-check form-check-inline" style={{ marginRight: '1rem' }}>
+                            <input
+                              classname="form-check-input"
+                              type="radio"
+                              name="listenFree"
+                              id="inlineRadio1"
+                              value="false"
+                              onChange={() =>
+                                setPodcastData(prev => ({
+                                  ...prev,
+                                  listenFree: 'false',
+                                }))
+                              }
+                            />
+                            <label classname="form-check-label" for="inlineRadio1">
+                              No
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <label for="exampleInputEmail1">
+                        Thumbnail<span style={{ color: 'red' }}></span> :
+                      </label>
+
+                      <input
+                        class="form-control"
+                        onChange={e => HandleImage(e)}
+                        type="file"
+                        id="thumbnail"
+                        accept="image/*"
+                      />
+                      {imageLoader ? (
+                        <>
+                          <ImageLoader />{' '}
+                        </>
+                      ) : null}
+                      {podcastData?.uploadThumbnail && (
+                        <>
+                          <div>
+                            <img
+                              style={{
+                                height: '10%',
+                                width: '10%',
+                                marginTop: '12px',
+                                borderRadius: '5px',
+                              }}
+                              src={podcastData?.uploadThumbnail}
+                            />
+                            <button
+                              onClick={() => HandleCrossClick()}
+                              style={{ color: 'red' }}
+                              type="button"
+                              class="btn-close"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                        </>
+                      )}
+
+                      <label for="exampleInputEmail1">
+                        AddPodcast<span style={{ color: 'red' }}></span> :
+                      </label>
+                      <input
+                        class="form-control"
+                        onChange={e => HandlePodcastImage(e)}
+                        type="file"
+                        id="addPodcast"
+                        accept="image/*"
+                      />
+                      {imageLoader2 ? (
+                        <>
+                          <ImageLoader />{' '}
+                        </>
+                      ) : null}
+                      {podcastData?.AddPodcast && (
+                        <>
+                          <div>
+                            <img
+                              style={{
+                                height: '10%',
+                                width: '10%',
+                                marginTop: '12px',
+                                borderRadius: '5px',
+                              }}
+                              src={podcastData?.AddPodcast}
+                            />
+                            <button
+                              onClick={() => HandleCrossClick2()}
+                              style={{ color: 'red' }}
+                              type="button"
+                              class="btn-close"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                        </>
+                      )}
+
+                      {hide ? (
+                        <button class="btn btn-primary" style={{ marginTop: '1rem' }} onClick={AddPodcast}>
+                          Submit
+                        </button>
+                      ) : (
+                        <button class="btn btn-primary" style={{ marginTop: '1rem' }} onClick={UpdatePodcast}>
+                          Update
+                        </button>
+                      )}
                     </div>
-                </div>
 
-                : <AddAndManageMusic musicval={musicComp} setmusicval={setMusicComp} />
-            }
-
-        </>
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        fontSize: '20px',
+                        color: '#868e96',
+                        margin: '35px',
+                      }}
+                      className="card-title"
+                    >
+                      Manage Podcast
+                    </div>
+                    <DataTable columns={columns} data={AllPodcastData} pagination />
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <AddAndManageMusic musicval={musicComp} setmusicval={setMusicComp} />
+        )}
+      </>
     );
 };
 

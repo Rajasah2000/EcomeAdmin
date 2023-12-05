@@ -508,426 +508,404 @@ const AddAndManageProduct = () => {
     };
 
     return (
-        <>
-            {loading ? (
-                <div
+      <>
+        {loading ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '80vh',
+            }}
+          >
+            <PageLoader />
+          </div>
+        ) : (
+          <div component="div" className="TabsAnimation appear-done enter-done">
+            <div className="main-card mb-3 card">
+              <div className="card-body">
+                {hide ? (
+                  <div
                     style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "80vh",
+                      textAlign: 'center',
+                      fontSize: '20px',
+                      color: '#868e96',
+                      margin: '35px',
                     }}
-                >
-                    <PageLoader />
+                    className="card-title"
+                  >
+                    Add Product
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      textAlign: 'center',
+                      fontSize: '20px',
+                      color: '#868e96',
+                      margin: '35px',
+                    }}
+                    className="card-title"
+                  >
+                    Edit Product
+                  </div>
+                )}
+
+                <div class="row" style={{ marginBottom: '1rem' }}>
+                  <div className="col">
+                    <label htmlFor="formGroupExampleInput">Select Category</label>
+                    <select
+                      class="form-control"
+                      aria-label="Default select example"
+                      name="catID"
+                      value={formData.catID}
+                      onChange={e => {
+                        HandleChange(e);
+                        fetchAllsubCatData(e.target.value);
+                      }}
+                    >
+                      <option value={''} disabled>
+                        Select category
+                      </option>
+                      {catData?.map((item, i) => (
+                        <option key={i} value={item?._id}>
+                          {item?.catName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-            ) : (
-                <div component="div" className="TabsAnimation appear-done enter-done">
-                    <div className="main-card mb-3 card">
-                        <div className="card-body">
-                            {hide ? (
-                                <div
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: "20px",
-                                        color: "#868e96",
-                                        margin: "35px",
-                                    }}
-                                    className="card-title"
-                                >
-                                    Add Product
-                                </div>
-                            ) : (
-                                <div
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: "20px",
-                                        color: "#868e96",
-                                        margin: "35px",
-                                    }}
-                                    className="card-title"
-                                >
-                                    Edit Product
-                                </div>
-                            )}
 
-                            <div class="row" style={{ marginBottom: "1rem" }}>
-                                <div className="col">
-                                    <label htmlFor="formGroupExampleInput">Select Category</label>
-                                    <select
-                                        class="form-control"
-                                        aria-label="Default select example"
-                                        name="catID"
-                                        value={formData.catID}
-                                        onChange={(e) => {
-                                            HandleChange(e);
-                                            fetchAllsubCatData(e.target.value)
-                                        }}
-                                    >
-                                        <option value={""} disabled>
-                                            Select category
-                                        </option>
-                                        {catData?.map((item, i) => (
-                                            <option key={i} value={item?._id}>
-                                                {item?.catName}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                <div class="row" style={{ marginBottom: '1rem' }}>
+                  <div className="col">
+                    <label htmlFor="formGroupExampleInput">Select Sub-Category</label>
+                    <select
+                      class="form-control"
+                      aria-label="Default select example"
+                      name="subCatID"
+                      value={formData.subCatID}
+                      onChange={e => HandleChange(e)}
+                    >
+                      <option value={''} disabled>
+                        Select subcategory
+                      </option>
+                      {subcatData?.map((item, i) => (
+                        <option key={i} value={item?._id}>
+                          {item?.subCatName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
 
-                            </div>
+                <div class="row" style={{ marginBottom: '1rem' }}>
+                  <div className="col">
+                    <label htmlFor="formGroupExampleInput">Select Unit</label>
+                    <select
+                      class="form-control"
+                      aria-label="Default select example"
+                      name="unitID"
+                      value={formData.unitID}
+                      onChange={HandleChange}
+                    >
+                      <option value={''} disabled>
+                        Select Unit
+                      </option>
+                      {unitData?.map((item, i) => (
+                        <option key={i} value={item?._id}>
+                          {item?.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
 
-                            <div class="row" style={{ marginBottom: "1rem" }}>
-                                <div className="col">
-                                    <label htmlFor="formGroupExampleInput">Select Sub-Category</label>
-                                    <select
-                                        class="form-control"
-                                        aria-label="Default select example"
-                                        name="subCatID"
-                                        value={formData.subCatID}
-                                        onChange={(e) => HandleChange(e)}
-                                    >
-                                        <option value={""} disabled>
-                                            Select subcategory
-                                        </option>
-                                        {subcatData?.map((item, i) => (
-                                            <option key={i} value={item?._id}>
-                                                {item?.subCatName}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                <div class="row" style={{ marginBottom: '1rem' }}>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Product Name<span style={{ color: 'red' }}></span> :
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="productName"
+                      value={formData?.productName}
+                      onChange={e => HandleChange(e)}
+                      placeholder="Enter productName..."
+                    />
+                  </div>
 
-                            </div>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Product actual Price<span style={{ color: 'red' }}></span> :
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="ActualProductPrice"
+                      value={formData?.ActualProductPrice}
+                      onChange={e => HandleChange(e)}
+                      placeholder="Enter productPrice..."
+                    />
+                  </div>
+                </div>
 
-                            <div class="row" style={{ marginBottom: "1rem" }}>
-                                <div className="col">
-                                    <label htmlFor="formGroupExampleInput">Select Unit</label>
-                                    <select
-                                        class="form-control"
-                                        aria-label="Default select example"
-                                        name="unitID"
-                                        value={formData.unitID}
-                                        onChange={HandleChange}
-                                    >
-                                        <option value={""} disabled>
-                                            Select Unit
-                                        </option>
-                                        {unitData?.map((item, i) => (
-                                            <option key={i} value={item?._id}>
-                                                {item?.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                <div className="row">
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Brand Name<span style={{ color: 'red' }}></span> :
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="brandName"
+                      value={formData?.brandName}
+                      onChange={e => HandleChange(e)}
+                      placeholder="Enter brandName..."
+                    />
+                  </div>
 
-                            </div>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Product Weight<span style={{ color: 'red' }}></span> :
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="weight"
+                      value={formData?.weight}
+                      onChange={e => HandleChange(e)}
+                      placeholder="Enter weight..."
+                    />
+                  </div>
+                </div>
 
-                            <div class="row" style={{ marginBottom: "1rem" }}>
-                                <div class="col">
-                                    <label for="inputEmail4">
-                                        Product Name<span style={{ color: "red" }}></span> :
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        name="productName"
-                                        value={formData?.productName}
-                                        onChange={(e) => HandleChange(e)}
-                                        placeholder="Enter productName..."
-                                    />
-                                </div>
+                <div className="row">
+                  <div className="col">
+                    <label htmlFor="formGroupExampleInput">Select Size</label>
 
-                                <div class="col">
-                                    <label for="inputEmail4">
-                                        Product actual Price<span style={{ color: "red" }}></span> :
-                                    </label>
-                                    <input
-                                        type="number"
-                                        class="form-control"
-                                        name="ActualProductPrice"
-                                        value={formData?.ActualProductPrice}
-                                        onChange={(e) => HandleChange(e)}
-                                        placeholder="Enter productPrice..."
-                                    />
-                                </div>
-                            </div>
+                    <Select
+                      className="select"
+                      options={PrimaryVarient}
+                      value={selectedOptions}
+                      name="size"
+                      isMulti
+                      onChange={HandlePrimaryVarient}
+                    />
+                  </div>
 
-                            <div className="row">
-                                <div class="col">
-                                    <label for="inputEmail4">
-                                        Brand Name<span style={{ color: "red" }}></span> :
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        name="brandName"
-                                        value={formData?.brandName}
-                                        onChange={(e) => HandleChange(e)}
-                                        placeholder="Enter brandName..."
-                                    />
-                                </div>
+                  <div className="add_prdt" style={{ marginTop: '15px' }}>
+                    <div className="form-group">
+                      <div>
+                        <span
+                          style={{
+                            marginLeft: '0.1rem',
+                            fontSize: '.8rem',
+                            color: '#ada8a8',
+                          }}
+                        >
+                          {' '}
+                          Color :{' '}
+                        </span>
+                        <button
+                          type="button"
+                          className="btn btn-warning"
+                          style={{ fontSize: '9px', marginLeft: '12px' }}
+                          onClick={e => {
+                            e.preventDefault();
+                            setColorData(prev => {
+                              let update = JSON.parse(JSON.stringify(prev));
+                              update.push({
+                                color: '#000000',
+                              });
+                              return [...update];
+                            });
 
-                                <div class="col">
-                                    <label for="inputEmail4">
-                                        Product Weight<span style={{ color: "red" }}></span> :
-                                    </label>
-                                    <input
-                                        type="number"
-                                        class="form-control"
-                                        name="weight"
-                                        value={formData?.weight}
-                                        onChange={(e) => HandleChange(e)}
-                                        placeholder="Enter weight..."
-                                    />
-                                </div>
-                            </div>
+                            let arr = [];
+                            let tempArr = JSON.parse(JSON.stringify(colorData));
+                            tempArr.push({
+                              color: '#000000',
+                            });
+                            tempArr?.forEach(element => {
+                              arr.push(element?.color);
+                            });
+                            setFormData({ ...formData, color: arr });
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
 
-                            <div className="row">
-                                <div className="col">
-                                    <label htmlFor="formGroupExampleInput">
-                                        Select Size
-                                    </label>
-
-
-                                    <Select
-                                        className="select"
-                                        options={PrimaryVarient}
-                                        value={selectedOptions}
-                                        name="size"
-                                        isMulti
-                                        onChange={HandlePrimaryVarient}
-                                    />
-                                </div>
-
-
-                                <div className="add_prdt">
-                                    <div className="form-group">
-                                        <div>
-                                            <span
-                                                style={{
-                                                    marginLeft: "0.1rem",
-                                                    fontSize: ".8rem",
-                                                    color: "#ada8a8",
-                                                }}
-                                            >
-                                                {" "}
-                                                Color :{" "}
-                                            </span>
-                                            <button
-                                                type="button"
-                                                className="btn btn-warning"
-                                                style={{ fontSize: "9px", marginLeft: "12px" }}
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    setColorData((prev) => {
-                                                        let update = JSON.parse(JSON.stringify(prev));
-                                                        update.push({
-                                                            color: "#000000",
-                                                        });
-                                                        return [...update];
-                                                    });
-
-                                                    let arr = [];
-                                                    let tempArr = JSON.parse(JSON.stringify(colorData));
-                                                    tempArr.push({
-                                                        color: "#000000",
-                                                    });
-                                                    tempArr?.forEach((element) => {
-                                                        arr.push(element?.color);
-                                                    });
-                                                    setFormData({ ...formData, color: arr });
-                                                }}
-                                            >
-                                                +
-                                            </button>
-                                        </div>
-
-                                        {colorData.map((item, i) => {
-
-                                            return (
-                                                <div
-                                                    style={{
-                                                        display: "flex",
-                                                        margin: "12px  2px",
-                                                        flexDirection: "row",
-                                                    }}
-                                                >
-                                                    <input
-                                                        style={{ width: "14.5rem" }}
-                                                        name="color"
-                                                        value={item?.color}
-                                                        type="color"
-                                                        onChange={(e) => {
-                                                            HandleColorChange(e, i);
-                                                        }}
-                                                    />
-                                                    {i == 0 ? null : (
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-danger"
-                                                            style={{ fontSize: "10px", marginLeft: "12px" }}
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                setColorData((prv) => {
-                                                                    let update = JSON.parse(JSON.stringify(prv));
-                                                                    update.splice(i, 1);
-                                                                    return update;
-                                                                });
-                                                                let arr = [];
-                                                                let tempArr = JSON.parse(
-                                                                    JSON.stringify(colorData)
-                                                                );
-                                                                tempArr.splice(i, 1);
-                                                                tempArr?.forEach((element) => {
-                                                                    arr.push(element?.color);
-                                                                });
-                                                                setFormData({ ...formData, color: arr });
-                                                                setFormData({
-                                                                    ...formData,
-                                                                    color: arr,
-                                                                });
-                                                            }}
-                                                        >
-                                                            -
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div class="col">
-                                    <label for="inputEmail4">
-                                        productDetails<span style={{ color: "red" }}></span> :
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        name="productDetails"
-                                        value={formData?.productDetails}
-                                        onChange={(e) => HandleChange(e)}
-                                        placeholder="Enter productDetails..."
-                                    />
-                                </div>
-                                <div class="col">
-                                    <label for="inputEmail4">
-                                        Product discountPercentage<span style={{ color: "red" }}></span> :
-                                    </label>
-                                    <input
-                                        type="number"
-                                        class="form-control"
-                                        name="discountPercentage"
-                                        value={formData?.discountPercentage}
-                                        onChange={(e) => HandleChange(e)}
-                                        placeholder="Enter discountPercentage..."
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="col">
-                                    <label for="inputEmail4">
-                                        Product quantity<span style={{ color: "red" }}></span> :
-                                    </label>
-                                    <input
-                                        type="number"
-                                        class="form-control"
-                                        name="quantity"
-                                        value={formData?.quantity}
-                                        onChange={(e) => HandleChange(e)}
-                                        placeholder="Enter quantity..."
-                                    />
-                                </div>
-                            </div>
-
-
-                            <div className="row">
-                                <div className="col">
-                                    <label htmlFor="formGroupExampleInput">Image</label>
-                                    <input
-                                        type="file"
-                                        className="form-control"
-                                        placeholder="Image"
-                                        onChange={HandleImage}
-                                        name="image"
-                                        accept="image/*"
-                                        multiple
-                                    />
-
-                                    {imageLoader ? (
-                                        <>
-                                            <ImageLoader />{" "}
-                                        </>
-                                    ) : null}
-
-                                    {/* pictures */}
-                                    <div>
-                                        {formData?.productImg?.map((item, i) =>
-                                            <span key={i}>
-                                                < img
-                                                    src={item}
-                                                    className="img-fluid m-1"
-                                                    alt="Responsive image"
-                                                    style={{ height: "5rem", width: "5rem" }}
-                                                />
-                                                <span
-                                                    style={{ fontSize: "25px", cursor: "pointer" }}
-                                                    onClick={() => {
-                                                        let imgArr = formData?.productImg?.filter((item, ind) => ind !== i)
-                                                        setFormData(prev => ({ ...prev, productImg: imgArr }))
-                                                    }}
-                                                >
-                                                    x
-                                                </span>
-                                            </span>
-                                        )
-                                        }
-                                    </div>
-
-                                    {/* </div> */}
-                                </div>
-
-
-                            </div>
-
-                            {hide ? (
-                                <button
-                                    class="btn btn-primary"
-                                    style={{ marginTop: "1rem" }}
-                                    onClick={AddProductData}
-                                >
-                                    Submit
-                                </button>
-                            ) : (
-                                <button
-                                    class="btn btn-primary"
-                                    style={{ marginTop: "1rem" }}
-                                    onClick={UpdateProductData}
-                                >
-                                    Update
-                                </button>
-                            )}
-
-                            <div
-                                style={{
-                                    textAlign: "center",
-                                    fontSize: "20px",
-                                    color: "#868e96",
-                                    margin: "35px",
+                      {colorData.map((item, i) => {
+                        return (
+                          <div
+                            style={{
+                              display: 'flex',
+                              margin: '12px  2px',
+                              flexDirection: 'row',
+                            }}
+                          >
+                            <input
+                              style={{ width: '14.5rem' }}
+                              name="color"
+                              value={item?.color}
+                              type="color"
+                              onChange={e => {
+                                HandleColorChange(e, i);
+                              }}
+                            />
+                            {i == 0 ? null : (
+                              <button
+                                type="button"
+                                className="btn btn-danger"
+                                style={{ fontSize: '10px', marginLeft: '12px' }}
+                                onClick={e => {
+                                  e.preventDefault();
+                                  setColorData(prv => {
+                                    let update = JSON.parse(JSON.stringify(prv));
+                                    update.splice(i, 1);
+                                    return update;
+                                  });
+                                  let arr = [];
+                                  let tempArr = JSON.parse(JSON.stringify(colorData));
+                                  tempArr.splice(i, 1);
+                                  tempArr?.forEach(element => {
+                                    arr.push(element?.color);
+                                  });
+                                  setFormData({ ...formData, color: arr });
+                                  setFormData({
+                                    ...formData,
+                                    color: arr,
+                                  });
                                 }}
-                                className="card-title"
-                            >
-                                Manage Product
-                            </div>
-                            <DataTable columns={columns} data={AllProductData} pagination />
-                        </div>
+                              >
+                                -
+                              </button>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
+                  </div>
                 </div>
-            )}
-        </>
+
+                <div className="row">
+                  <div class="col">
+                    <label for="inputEmail4">
+                      productDetails<span style={{ color: 'red' }}></span> :
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="productDetails"
+                      value={formData?.productDetails}
+                      onChange={e => HandleChange(e)}
+                      placeholder="Enter productDetails..."
+                    />
+                  </div>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Product discountPercentage<span style={{ color: 'red' }}></span> :
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="discountPercentage"
+                      value={formData?.discountPercentage}
+                      onChange={e => HandleChange(e)}
+                      placeholder="Enter discountPercentage..."
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Product quantity<span style={{ color: 'red' }}></span> :
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="quantity"
+                      value={formData?.quantity}
+                      onChange={e => HandleChange(e)}
+                      placeholder="Enter quantity..."
+                    />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col">
+                    <label htmlFor="formGroupExampleInput">Image</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      placeholder="Image"
+                      onChange={HandleImage}
+                      name="image"
+                      accept="image/*"
+                      multiple
+                    />
+
+                    {imageLoader ? (
+                      <>
+                        <ImageLoader />{' '}
+                      </>
+                    ) : null}
+
+                    {/* pictures */}
+                    <div>
+                      {formData?.productImg?.map((item, i) => (
+                        <span key={i}>
+                          <img
+                            src={item}
+                            className="img-fluid m-1"
+                            alt="Responsive image"
+                            style={{ height: '5rem', width: '5rem' }}
+                          />
+                          <span
+                            style={{ fontSize: '25px', cursor: 'pointer' }}
+                            onClick={() => {
+                              let imgArr = formData?.productImg?.filter((item, ind) => ind !== i);
+                              setFormData(prev => ({ ...prev, productImg: imgArr }));
+                            }}
+                          >
+                            x
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* </div> */}
+                  </div>
+                </div>
+
+                {hide ? (
+                  <button class="btn btn-primary" style={{ marginTop: '1rem' }} onClick={AddProductData}>
+                    Submit
+                  </button>
+                ) : (
+                  <button class="btn btn-primary" style={{ marginTop: '1rem' }} onClick={UpdateProductData}>
+                    Update
+                  </button>
+                )}
+
+                <div
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '20px',
+                    color: '#868e96',
+                    margin: '35px',
+                  }}
+                  className="card-title"
+                >
+                  Manage Product
+                </div>
+                <DataTable columns={columns} data={AllProductData} pagination />
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     );
 };
 

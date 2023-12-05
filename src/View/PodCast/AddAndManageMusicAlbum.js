@@ -29,7 +29,10 @@ const AddAndManageMusicAlbum = () => {
   const [titleOfAlbum, settitleOfAlbum] = useState("");
   const [albumDescription, setalbumDescription] = useState("");
   const [imageLoader, setImgLoader] = useState(false)
-
+  
+  
+  console.log(Boolean(listenFree), 'listenFree');
+  
 
   ///Add Music
 
@@ -430,48 +433,44 @@ const AddAndManageMusicAlbum = () => {
               titleOfAlbum: item?.titleOfAlbum,
               contentType: item?.contentType,
               musicType: item?.musicType,
-              moodID: item?.moodID,
+              moodID: item?.moodName,
               musicGenreID: item?.musicGenreID,
               uploadThumbload: (
                 <>
                   {item?.formValues?.uploadThumbload ? (
                     <img
                       style={{
-
                         // width: "100%",
-                        maxHeight: "100px",
+                        maxHeight: '100px',
 
-                        margin: "5px",
+                        margin: '5px',
                       }}
                       src={item?.formValues?.uploadThumbload}
                     />
                   ) : (
                     <img
                       style={{
+                        width: '100%',
 
-                        width: "100%",
-
-                        margin: "5px",
+                        margin: '5px',
                       }}
                       src={
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+                        'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'
                       }
                     />
                   )}
                 </>
               ),
 
-
-
               action: (
-                <div style={{ display: "flex", flexDirection: "coloum" }}>
+                <div style={{ display: 'flex', flexDirection: 'coloum' }}>
                   <svg
                     onClick={() => onEdit(item)}
                     style={{
-                      height: "20px",
-                      width: "20px",
-                      cursor: "pointer",
-                      marginRight: "20px",
+                      height: '20px',
+                      width: '20px',
+                      cursor: 'pointer',
+                      marginRight: '20px',
                     }}
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -489,10 +488,10 @@ const AddAndManageMusicAlbum = () => {
                   <svg
                     onClick={() => onDelete(item?._id)}
                     style={{
-                      color: "red",
-                      height: "20px",
-                      cursor: "pointer",
-                      width: "20px",
+                      color: 'red',
+                      height: '20px',
+                      cursor: 'pointer',
+                      width: '20px',
                     }}
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -543,6 +542,7 @@ const AddAndManageMusicAlbum = () => {
   const onEdit = (item) => {
     console.log("ITEMedit", item);
     window.scroll(0, 0);
+     setlistenFree(String(item?.listenFree));
     setHide(false);
     setMusId(item?._id)
     setcontentType(item?.contentType);
@@ -550,7 +550,7 @@ const AddAndManageMusicAlbum = () => {
     settitleOfAlbum(item?.titleOfAlbum);
     setalbumDescription(item?.albumDescription);
     setAlbumThumbImg(item?.uploadThumbnail);
-    setlistenFree(item?.listenFree);
+   
     setmoodID(item?.moodID);
     setmusicGenreID(item?.musicGenreID)
     setFormValues(item?.AlbumMusics)
@@ -614,10 +614,10 @@ const AddAndManageMusicAlbum = () => {
       {loading ? (
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "80vh",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '80vh',
           }}
         >
           <PageLoader />
@@ -627,467 +627,422 @@ const AddAndManageMusicAlbum = () => {
           <div component="div" className="TabsAnimation appear-done enter-done">
             <div className="main-card mb-3 card">
               <div className="card-body">
-                {musicType === "music" ? <AddAndManageMusic /> : <div>
+                {musicType === 'music' ? (
+                  <AddAndManageMusic />
+                ) : (
+                  <div>
+                    {hide ? (
+                      <div
+                        style={{
+                          textAlign: 'center',
+                          fontSize: '20px',
+                          color: '#868e96',
+                          margin: '35px',
+                        }}
+                        className="card-title"
+                      >
+                        Add Music Album
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          textAlign: 'center',
+                          fontSize: '20px',
+                          color: '#868e96',
+                          margin: '35px',
+                        }}
+                        className="card-title"
+                      >
+                        Update Music Album
+                      </div>
+                    )}
 
-                  {hide ? (
-                    <div
-                      style={{
-                        textAlign: "center",
-                        fontSize: "20px",
-                        color: "#868e96",
-                        margin: "35px",
-                      }}
-                      className="card-title"
-                    >
-                      Add Music Album
-                    </div>
-                  ) : (
-                    <div
-                      style={{
-                        textAlign: "center",
-                        fontSize: "20px",
-                        color: "#868e96",
-                        margin: "35px",
-                      }}
-                      className="card-title"
-                    >
-                      Update Music Album
-                    </div>
-                  )}
+                    <div class="form-group">
+                      <div className="row">
+                        <div className="col">
+                          <label htmlFor="formGroupExampleInput">Select ContentType</label>
+                          <select
+                            class="form-control"
+                            aria-label="Default select example"
+                            name="contentType"
+                            value={contentType}
+                            onChange={e => setcontentType(e.target.value)}
+                          >
+                            <option value={''}>Select contentType</option>
+                            {/* <option value={"Music"}>Music</option> */}
+                            <option value={'music'}>Music</option>
+                          </select>
+                        </div>
+                      </div>
 
+                      <div className="row">
+                        <div className="col">
+                          <label htmlFor="formGroupExampleInput">Select MusicType</label>
+                          <select
+                            class="form-control"
+                            aria-label="Default select example"
+                            name="musicType"
+                            value={musicType}
+                            // onChange={(e) => setmusicType(e.target.value)}
+                            onChange={handleChangeType}
+                          >
+                            <option value={''}>Select MusicType</option>
+                            <option value={'music'}>music</option>
+                            <option value={'album'}>album</option>
+                          </select>
+                        </div>
+                      </div>
 
-
-                  <div class="form-group">
-
-
-                    <div className="row">
                       <div className="col">
-                        <label htmlFor="formGroupExampleInput">Select ContentType</label>
+                        <label htmlFor="formGroupExampleInput">Select Mood</label>
                         <select
                           class="form-control"
                           aria-label="Default select example"
-                          name="contentType"
-                          value={contentType}
-                          onChange={(e) => setcontentType(e.target.value)}
+                          name="moodID"
+                          value={moodID}
+                          onChange={e => setmoodID(e.target.value)}
                         >
-                          <option value={""}>Select contentType</option>
-                          {/* <option value={"Music"}>Music</option> */}
-                          <option value={"music"}>Music</option>
+                          <option value={''} disabled>
+                            Select Mood
+                          </option>
+                          {moodData?.map((item, i) => (
+                            <option key={i} value={item?._id}>
+                              {item?.mood}
+                            </option>
+                          ))}
                         </select>
                       </div>
-                    </div>
 
-
-                    <div className="row">
                       <div className="col">
-                        <label htmlFor="formGroupExampleInput">Select MusicType</label>
+                        <label htmlFor="formGroupExampleInput">Select Genre</label>
                         <select
                           class="form-control"
                           aria-label="Default select example"
-                          name="musicType"
-                          value={musicType}
-                          // onChange={(e) => setmusicType(e.target.value)}
-                          onChange={handleChangeType}
+                          name="musicGenreID"
+                          value={musicGenreID}
+                          onChange={e => setmusicGenreID(e.target.value)}
                         >
-                          <option value={""}>Select MusicType</option>
-                          <option value={"music"}>music</option>
-                          <option value={"album"}>album</option>
+                          <option value={''} disabled>
+                            Select Genre
+                          </option>
+                          {genreData?.map((item, i) => (
+                            <option key={i} value={item?._id}>
+                              {item?.genreName}
+                            </option>
+                          ))}
                         </select>
                       </div>
-                    </div>
 
-
-                    <div className="col">
-                      <label htmlFor="formGroupExampleInput">Select Mood</label>
-                      <select
-                        class="form-control"
-                        aria-label="Default select example"
-                        name="moodID"
-                        value={moodID}
-                        onChange={(e) => setmoodID(e.target.value)}
-                      >
-                        <option value={""} disabled>
-                          Select Mood
-                        </option>
-                        {moodData?.map((item, i) => (
-                          <option key={i} value={item?._id}>
-                            {item?.mood}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col">
-                      <label htmlFor="formGroupExampleInput">Select Genre</label>
-                      <select
-                        class="form-control"
-                        aria-label="Default select example"
-                        name="musicGenreID"
-                        value={musicGenreID}
-                        onChange={(e) => setmusicGenreID(e.target.value)}
-                      >
-                        <option value={""} disabled>
-                          Select Genre
-                        </option>
-                        {genreData?.map((item, i) => (
-                          <option key={i} value={item?._id}>
-                            {item?.genreName}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col">
-                      {/* <div className="d-flex flex-wrap"> */}
-                      <div>
-                        <label htmlFor="formGroupExampleInput">Listen Free</label>
-                      </div>
-                      <div className="d-flex flex-wrap">
-                        <div
-                          classname="form-check form-check-inline"
-                          style={{ marginRight: "1rem" }}
-                        >
-                          <input
-                            classname="form-check-input"
-                            type="radio"
-                            name="listenFree"
-                            id="inlineRadio1"
-                            checked={listenFree === false ? true : null}
-                            value={true}
-                            onChange={(e) =>
-                              setlistenFree(e.target.value)
-                            }
-                          />
-                          <label classname="form-check-label" for="inlineRadio1">
-                            Yes
-                          </label>
+                      <div className="col">
+                        {/* <div className="d-flex flex-wrap"> */}
+                        <div>
+                          <label htmlFor="formGroupExampleInput">Listen Free</label>
                         </div>
-
-                        <div
-                          classname="form-check form-check-inline"
-                          style={{ marginRight: "1rem" }}
-                        >
-                          <input
-                            classname="form-check-input"
-                            type="radio"
-                            name="listenFree"
-                            id="inlineRadio1"
-                            checked={listenFree === true ? false : null}
-                            value={false}
-                            onChange={(e) =>
-                              setlistenFree(e.target.value)
-                            }
-                          />
-                          <label classname="form-check-label" for="inlineRadio1">
-                            No
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-                    <div class="row" style={{ marginBottom: "1rem" }}>
-                      <div class="col">
-                        <label for="inputEmail4">
-                          Title Of Album:
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          value={titleOfAlbum}
-                          onChange={(e) => settitleOfAlbum(e.target.value)}
-                          placeholder=""
-                        />
-                      </div>
-
-                      <div class="col">
-                        <label for="inputEmail4">
-                          Album Description:
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          value={albumDescription}
-                          onChange={(e) => setalbumDescription(e.target.value)}
-                          placeholder=""
-                        />
-                      </div>
-
-
-                    </div>
-
-                    <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
-                      Album Thumbnail Image :
-                    </label>
-                    <input
-                      class="form-control"
-                      onChange={(e) => HandleImages(e)}
-                      type="file"
-                      id="thumbnails"
-                      accept="image/*"
-                    />
-
-                    {
-                      imageLoader ? <ImageLoader /> : albumThumbImg && <img src={albumThumbImg} style={{ margin: "12px", height: "100px", width: "100px" }} />
-                    }
-
-
-                    {/* Music */}
-
-
-                    <div className="button-section mt-2">
-                      <button
-                        className="btn btn-sm btn-success"
-                        type="button"
-                        onClick={() => addFormFields()}
-                      >
-                        <i class="fas fa-plus"></i>
-                      </button>
-
-                    </div>
-
-                    <div className="row" data-aos="fade-up">
-                      <div className="col-lg-12">
-                        {/* <form> */}
-
-
-                        {formValues && formValues?.map((element, index) => (
-
-                          <div style={{ border: "solid 1px #ced4da", padding: "1em", margin: "1em 0", borderRadius: "0.25rem" }} className="_form-inline" key={index}>
-                            <div className="form-group mb-2 mt-1">
-                              <label for="inputEmail4">
-                                Music Name:
-                              </label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                name="musicName"
-                                placeholder={`musicName ${index + 1}`}
-                                value={element.musicName || ""}
-                                onChange={(e) => handleChange(index, e)}
-                              />
-                            </div>
-
-                            <div className="form-group mb-2 mt-1">
-                              <label for="inputEmail4">
-                                Release Year:
-                              </label>
-                              <input
-                                type="date"
-                                class="form-control"
-                                name="releaseYear"
-                                placeholder={`releaseYear ${index + 1}`}
-                                value={moment(element.releaseYear).format("YYYY-MM-DD") || ""}
-                                onChange={(e) => handleChange(index, e)}
-                              />
-                            </div>
-
-
-
-                            {element.addMusic && (
-                              <>
-                                <div>
-                                  Uploaded Successfully
-
-                                </div>
-                              </>
-                            )}
-
-
-                            {/* Image Upload */}
-                            <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
-                              Thumbnail Image :
-                            </label>
+                        <div className="d-flex flex-wrap">
+                          <div classname="form-check form-check-inline" style={{ marginRight: '1rem' }}>
                             <input
-                              class="form-control"
-                              onChange={(e) => HandleEpisodeImage(index, e)}
-                              type="file"
-                              id="thumbnail"
-                              accept="image/*"
+                              classname="form-check-input"
+                              type="radio"
+                              name="listenFree"
+                              id="inlineRadio1"
+                              checked={listenFree == "true" ? true : false}
+                              value={true}
+                              onChange={e => {
+                                console.log('fefsdfcsdc', e.target.value);
+                                setlistenFree(e.target.value);
+                              }}
                             />
-                            {episodeImageLoad ? (
-                              <>
-                                <ImageLoader />
-                              </>
-                            ) : null}
-                            {element.uploadThumbload && (
-                              <>
-                                <div>
-                                  <img
-                                    style={{
-                                      height: "10%",
-                                      width: "10%",
-                                      marginTop: "12px",
-                                      borderRadius: "5px",
-                                    }}
-                                    src={element.uploadThumbload}
-                                  />
-
-                                </div>
-                              </>
-                            )}
-                            {/* //Image Upload */}
-
-
-
-
-
-                            <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
-                              addMusic Image :
+                            <label classname="form-check-label" for="inlineRadio1">
+                              Yes
                             </label>
-                            <input
-                              class="form-control"
-                              onChange={(e) => HandleImage(index, e)}
-                              type="file"
-                              id="thumbnail"
-                              accept="image/*"
-                            />
-                            {episodeImageLoader ? (
-                              <>
-                                <ImageLoader />
-                              </>
-                            ) : null}
-                            {element?.addMusic && (
-                              <>
-                                <div>
-                                  <img
-                                    style={{
-                                      height: "10%",
-                                      width: "10%",
-                                      marginTop: "12px",
-                                      borderRadius: "5px",
-                                    }}
-                                    src={element?.addMusic}
-                                  />
-
-                                </div>
-                              </>
-                            )}
-
-
-
-                            <div className="form-group mb-2 mt-1">
-                              <label for="inputEmail4">
-                                Music Duration:
-                              </label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                name="musicDuration"
-                                placeholder={`musicDuration ${index + 1}`}
-                                value={element.musicDuration || ""}
-                                onChange={(e) => handleChange(index, e)}
-                              />
-                            </div>
-
-                            <div className="form-group mb-2 mt-1">
-                              <label for="inputEmail4">
-                                Audio Name:
-                              </label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                name="audioName"
-                                placeholder={`audioName ${index + 1}`}
-                                value={element.audioName || ""}
-                                onChange={(e) => handleChange(index, e)}
-                              />
-                            </div>
-
-                            <div className="form-group mb-2 mt-1">
-                              <label for="inputEmail4">
-                                Singer Name:
-                              </label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                name="singerName"
-                                placeholder={`singerName ${index + 1}`}
-                                value={element.singerName || ""}
-                                onChange={(e) => handleChange(index, e)}
-                              />
-                            </div>
-
-
-                            {index ? (
-                              <button
-                                type="button"
-                                className="btn btn-sm btn-danger ml-1"
-                                onClick={() => removeFormFields(index)}
-                              >
-                                <i class="fas fa-trash"></i>
-                              </button>
-                            ) : null}
                           </div>
 
-                        ))}
+                          <div classname="form-check form-check-inline" style={{ marginRight: '1rem' }}>
+                            <input
+                              classname="form-check-input"
+                              type="radio"
+                              name="listenFree"
+                              id="inlineRadio1"
+                              checked={listenFree == "false" ? true : false}
+                              value={false}
+                              onChange={e => {
+                                console.log('fefsdfcsdc', e.target.value);
+                                setlistenFree(e.target.value)
+                              }}
+                            />
+                            <label classname="form-check-label" for="inlineRadio1">
+                              No
+                            </label>
+                          </div>
+                        </div>
+                      </div>
 
+                      <div class="row" style={{ marginBottom: '1rem' }}>
+                        <div class="col">
+                          <label for="inputEmail4">Title Of Album:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            value={titleOfAlbum}
+                            onChange={e => settitleOfAlbum(e.target.value)}
+                            placeholder=""
+                          />
+                        </div>
 
+                        <div class="col">
+                          <label for="inputEmail4">Album Description:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            value={albumDescription}
+                            onChange={e => setalbumDescription(e.target.value)}
+                            placeholder=""
+                          />
+                        </div>
+                      </div>
 
-                        {/* </form> */}
+                      <label for="exampleInputEmail1" style={{ marginTop: '1rem' }}>
+                        Album Thumbnail Image :
+                      </label>
+                      <input
+                        class="form-control"
+                        onChange={e => HandleImages(e)}
+                        type="file"
+                        id="thumbnails"
+                        accept="image/*"
+                      />
+
+                      {imageLoader ? (
+                        <ImageLoader />
+                      ) : (
+                        albumThumbImg && (
+                          <img src={albumThumbImg} style={{ margin: '12px', height: '100px', width: '100px' }} />
+                        )
+                      )}
+
+                      {/* Music */}
+
+                      <div className="button-section mt-2">
+                        <button className="btn btn-sm btn-success" type="button" onClick={() => addFormFields()}>
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+
+                      <div className="row" data-aos="fade-up">
+                        <div className="col-lg-12">
+                          {/* <form> */}
+
+                          {formValues &&
+                            formValues?.map((element, index) => (
+                              <div
+                                style={{
+                                  border: 'solid 1px #ced4da',
+                                  padding: '1em',
+                                  margin: '1em 0',
+                                  borderRadius: '0.25rem',
+                                }}
+                                className="_form-inline"
+                                key={index}
+                              >
+                                <div className="form-group mb-2 mt-1">
+                                  <label for="inputEmail4">Music Name:</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    name="musicName"
+                                    placeholder={`musicName ${index + 1}`}
+                                    value={element.musicName || ''}
+                                    onChange={e => handleChange(index, e)}
+                                  />
+                                </div>
+
+                                <div className="form-group mb-2 mt-1">
+                                  <label for="inputEmail4">Release Year:</label>
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    name="releaseYear"
+                                    placeholder={`releaseYear ${index + 1}`}
+                                    value={moment(element.releaseYear).format('YYYY-MM-DD') || ''}
+                                    onChange={e => handleChange(index, e)}
+                                  />
+                                </div>
+
+                                {element.addMusic && (
+                                  <>
+                                    <div>Uploaded Successfully</div>
+                                  </>
+                                )}
+
+                                {/* Image Upload */}
+                                <label for="exampleInputEmail1" style={{ marginTop: '1rem' }}>
+                                  Thumbnail Image :
+                                </label>
+                                <input
+                                  class="form-control"
+                                  onChange={e => HandleEpisodeImage(index, e)}
+                                  type="file"
+                                  id="thumbnail"
+                                  accept="image/*"
+                                />
+                                {episodeImageLoad ? (
+                                  <>
+                                    <ImageLoader />
+                                  </>
+                                ) : null}
+                                {element.uploadThumbload && (
+                                  <>
+                                    <div>
+                                      <img
+                                        style={{
+                                          height: '10%',
+                                          width: '10%',
+                                          marginTop: '12px',
+                                          borderRadius: '5px',
+                                        }}
+                                        src={element.uploadThumbload}
+                                      />
+                                    </div>
+                                  </>
+                                )}
+                                {/* //Image Upload */}
+
+                                <label for="exampleInputEmail1" style={{ marginTop: '1rem' }}>
+                                  addMusic Image :
+                                </label>
+                                <input
+                                  class="form-control"
+                                  onChange={e => HandleImage(index, e)}
+                                  type="file"
+                                  id="thumbnail"
+                                  accept="image/*"
+                                />
+                                {episodeImageLoader ? (
+                                  <>
+                                    <ImageLoader />
+                                  </>
+                                ) : null}
+                                {element?.addMusic && (
+                                  <>
+                                    <div>
+                                      <img
+                                        style={{
+                                          height: '10%',
+                                          width: '10%',
+                                          marginTop: '12px',
+                                          borderRadius: '5px',
+                                        }}
+                                        src={element?.addMusic}
+                                      />
+                                    </div>
+                                  </>
+                                )}
+
+                                <div className="form-group mb-2 mt-1">
+                                  <label for="inputEmail4">Music Duration:</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    name="musicDuration"
+                                    placeholder={`musicDuration ${index + 1}`}
+                                    value={element.musicDuration || ''}
+                                    onChange={e => handleChange(index, e)}
+                                  />
+                                </div>
+
+                                <div className="form-group mb-2 mt-1">
+                                  <label for="inputEmail4">Audio Name:</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    name="audioName"
+                                    placeholder={`audioName ${index + 1}`}
+                                    value={element.audioName || ''}
+                                    onChange={e => handleChange(index, e)}
+                                  />
+                                </div>
+
+                                <div className="form-group mb-2 mt-1">
+                                  <label for="inputEmail4">Singer Name:</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    name="singerName"
+                                    placeholder={`singerName ${index + 1}`}
+                                    value={element.singerName || ''}
+                                    onChange={e => handleChange(index, e)}
+                                  />
+                                </div>
+
+                                {index ? (
+                                  <button
+                                    type="button"
+                                    className="btn btn-sm btn-danger ml-1"
+                                    onClick={() => removeFormFields(index)}
+                                  >
+                                    <i class="fas fa-trash"></i>
+                                  </button>
+                                ) : null}
+                              </div>
+                            ))}
+
+                          {/* </form> */}
+                        </div>
+                      </div>
+
+                      {/* //Music */}
+
+                      <div style={{ marginTop: '1rem' }}>
+                        {hide ? (
+                          <>
+                            <button class="btn btn-primary" onClick={AddData}>
+                              Submit
+                            </button>
+
+                            {/* <button class="btn btn-primary" onClick={setInitialState}>
+                                        Reset
+                                    </button> */}
+                          </>
+                        ) : (
+                          <button class="btn btn-primary" onClick={UpdateData}>
+                            Update
+                          </button>
+                        )}
                       </div>
                     </div>
 
-                    {/* //Music */}
-
-
-
-
-
-                    <div style={{ marginTop: "1rem" }}>
-                      {hide ? (
-                        <>
-                          <button class="btn btn-primary" onClick={AddData}>
-                            Submit
-                          </button>
-
-                          {/* <button class="btn btn-primary" onClick={setInitialState}>
-                                        Reset
-                                    </button> */}
-                        </>
-                      ) : (
-                        <button class="btn btn-primary" onClick={UpdateData}>
-                          Update
-                        </button>
-                      )}
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        fontSize: '20px',
+                        color: '#868e96',
+                        margin: '35px',
+                      }}
+                      className="card-title"
+                    >
+                      Music Series
                     </div>
+                    <DataTable
+                      columns={columns}
+                      data={allData}
+                      pagination
+                      highlightOnHover
+                      paginationPerPage={3}
+                      paginationRowsPerPageOptions={[5, 15, 25, 50]}
+                      paginationComponentOptions={{
+                        rowsPerPageText: 'Records per page:',
+                        rangeSeparatorText: 'out of',
+                      }}
+                    />
                   </div>
-
-                  <div
-                    style={{
-                      textAlign: "center",
-                      fontSize: "20px",
-                      color: "#868e96",
-                      margin: "35px",
-                    }}
-                    className="card-title"
-                  >
-                    Music Series
-                  </div>
-                  <DataTable
-                    columns={columns}
-                    data={allData}
-                    pagination
-                    highlightOnHover
-                    paginationPerPage={3}
-                    paginationRowsPerPageOptions={[5, 15, 25, 50]}
-                    paginationComponentOptions={{
-                      rowsPerPageText: "Records per page:",
-                      rangeSeparatorText: "out of",
-                    }}
-                  />
-
-                </div>
-                }
-
+                )}
               </div>
             </div>
           </div>
         </>
       )}
     </>
-  )
+  );
 }
 
 export default AddAndManageMusicAlbum
