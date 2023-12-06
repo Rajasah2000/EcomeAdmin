@@ -6,7 +6,7 @@ import DataTable from "react-data-table-component";
 import Swal from "sweetalert2";
 import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
-import PageLoader from "../../Loader/PageLoader";
+import PageLoader from "../../Loader/PageLoader"
 
 const AddAndManageMood = () => {
   const [name, setName] = useState("");
