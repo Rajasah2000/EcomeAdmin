@@ -3,7 +3,7 @@ import Authservice from "../Service/Authservice"
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { reactLocalStorage } from "reactjs-localstorage";
-
+import bgimage from '../images/bgcover.jpg'
 
 var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -75,8 +75,8 @@ const SubmitHandler = async (e) => {
 };
 
   return (
-    <section >
-      <h2 style={{margin:"2rem", textAlign:"center" , fontFamily:"auto" , }}>LOGIN HERE</h2>
+    <section style={{backgroundImage:`url('${bgimage}')`}} className="adminlogin">
+     
 
       <div className="container py-5 ">
         <div className="row d-flex align-items-center justify-content-center ">
@@ -88,6 +88,7 @@ const SubmitHandler = async (e) => {
             />
           </div>
           <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          <h2 style={{margin:"2rem", textAlign:"center" , fontFamily:"auto" , color:'#6983cf',fontWeight:'700'}}>LOGIN HERE</h2>
             <form>
     
               <div className="form-outline mb-4">
@@ -124,13 +125,13 @@ const SubmitHandler = async (e) => {
               >
                 Sign in
               </button>
-              <div
+              {/* <div
                 className="divider d-flex align-items-center my-4"
                 style={{ justifyContent: "center" }}
               >
                 <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-              </div>
-
+              </div> */}
+{/* 
               <p  style={{ color: "#393f81" , marginRight:"0.4rem" }}>
                 Don't have an account?{" "}
                 <a
@@ -139,7 +140,7 @@ const SubmitHandler = async (e) => {
                 >
                   Register here
                 </a>
-              </p>
+              </p> */}
             </form>
           </div>
         </div>
