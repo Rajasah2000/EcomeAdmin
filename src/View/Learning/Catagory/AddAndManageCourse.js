@@ -393,40 +393,67 @@ const AddAndManageCourse = () => {
             courseFee: courseFee,
             courseDetails: formValues
         }
-        // console.log(data, "Addcourse")
-        // return
-        if (courseName && description && learningTopics && requirements && duration && completionCertificate && problemSovingSession && freeCourse && courseFee) {
-            HomeService.AddCourse(data)
-                .then((res) => {
-                    if (res && res.status) {
-                        toast.success(res.message);
-                        setcourseName("");
-                        setdescription("");
-                        setcourseCatID("");
-                        setlearningTopics([]);
-                        setrequirements([]);
-                        setduration("");
-                        setcourseFee("")
-                        setcompletionCertificate("");
-                        setproblemSovingSession("");
-                        setfreeCourse("");
-                        setthumbnailImage("");
-                        setintroVideo("");
-                        setFormValues([iniCourseDetails]);
-                        // setCategoryId("");
-                        fetchAllCourses();
-                        // let file = document.querySelector("#images");
-                        // file.value = "";
-                    } else {
-                        toast.error(res?.message);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        } else {
-            toast.error("All Fields Are Required");
+        // console.log(data, "Addcourse" , );
+        if (learningTopics.length == 0){
+         return toast.error("Press Enter after write each learning topic")
         }
+
+        if (requirements.length == 0) {
+          return toast.error('Press Enter after write each requirements topic');
+        }
+          if (
+            courseName &&
+            description &&
+            duration &&
+            problemSovingSession &&
+            courseFee
+          ) {
+            HomeService.AddCourse(data)
+              .then(res => {
+                if (res && res.status) {
+                  toast.success(res.message);
+                  setcourseName('');
+                  setdescription('');
+                  setcourseCatID('');
+                  setlearningTopics([]);
+                  setrequirements([]);
+                  setduration('');
+                  setcourseFee('');
+                  setcompletionCertificate('');
+                  setproblemSovingSession('');
+                  setfreeCourse('');
+                  setcompletionCertificate("")
+                  setthumbnailImage('');
+                  setfreeCourse("")
+                  setintroVideo('');
+                  setFormValues([iniCourseDetails]);
+                  
+                  fetchAllCourses();
+
+
+                  let file = document.querySelector('#images');
+                  file.value = '';
+                  let files = document.querySelector('#imagess');
+                  files.value = '';
+
+
+                  let filee = document.querySelector('#docVideo');
+                  filee.value = '';
+                  let filesw = document.querySelector('#docFile');
+                  filesw.value = '';
+
+                  
+                  
+                } else {
+                  toast.error(res?.message);
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          } else {
+            toast.error('All Fields Are Required');
+          }
     }
 
 
@@ -529,22 +556,22 @@ const AddAndManageCourse = () => {
         // console.log("DATA" , data);
         // return
 
-        if (
-          courseName &&
-          description &&
-          learningTopics &&
-          requirements &&
-          duration &&
-          completionCertificate &&
-          problemSovingSession &&
-          freeCourse &&
-          courseFee
-        ) {
+
+         if (learningTopics.length == 0) {
+           return toast.error('Press Enter after write each learning topic');
+         }
+
+         if (requirements.length == 0) {
+           return toast.error('Press Enter after write each requirements topic');
+         }
+
+        if (courseName && description && duration && problemSovingSession && courseFee) {
           HomeService.UpdateCourse(id, data)
             .then(res => {
               console.log('Response Update', res);
               if (res && res.status) {
                 toast.success(res.message);
+                setHide(true)
                 setcourseName('');
                 setdescription('');
                 setcourseCatID('');
@@ -563,6 +590,14 @@ const AddAndManageCourse = () => {
                 fetchAllCourses();
                 let file = document.querySelector('#images');
                 file.value = '';
+                let files = document.querySelector('#imagess');
+                files.value = '';
+
+                  let filee = document.querySelector('#docVideo');
+                  filee.value = '';
+                  let filesw = document.querySelector('#docFile');
+                  filesw.value = '';
+
               } else {
                 toast.error(res?.message);
               }
@@ -619,278 +654,267 @@ const AddAndManageCourse = () => {
     };
 
     return (
-        <>
-            {imageLoader3 ? (
-                <div
+      <>
+        {imageLoader3 ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '80vh',
+            }}
+          >
+            <PageLoader />
+          </div>
+        ) : (
+          <div component="div" className="TabsAnimation appear-done enter-done">
+            <div className="main-card mb-3 card">
+              <div className="card-body">
+                {hide ? (
+                  <div
                     style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "80vh",
+                      textAlign: 'center',
+                      fontSize: '20px',
+                      color: '#868e96',
+                      margin: '35px',
                     }}
-                >
-                    <PageLoader />
-                </div>
-            ) : (
-                <div component="div" className="TabsAnimation appear-done enter-done">
-                    <div className="main-card mb-3 card">
-                        <div className="card-body">
-                            {hide ? (
-                                <div
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: "20px",
-                                        color: "#868e96",
-                                        margin: "35px",
-                                    }}
-                                    className="card-title"
-                                >
-                                    Add Course
-                                </div>
-                            ) : (
-                                <div
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: "20px",
-                                        color: "#868e96",
-                                        margin: "35px",
-                                    }}
-                                    className="card-title"
-                                >
-                                    Edit Course
-                                </div>
-                            )}
+                    className="card-title"
+                  >
+                    Add Course
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      textAlign: 'center',
+                      fontSize: '20px',
+                      color: '#868e96',
+                      margin: '35px',
+                    }}
+                    className="card-title"
+                  >
+                    Edit Course
+                  </div>
+                )}
 
-                            <form>
-                                <div class="row" style={{ marginBottom: "1rem" }}>
-                                    <div class="col">
-                                        <label for="inputEmail4">
-                                            Category Id<span style={{ color: "red" }}>*</span> :
-                                        </label>
+                <form>
+                  <div class="row" style={{ marginBottom: '1rem' }}>
+                    <div class="col">
+                      <label for="inputEmail4">
+                        Category Id<span style={{ color: 'red' }}>*</span> :
+                      </label>
 
-                                        <select
-                                            style={{ marginBottom: "21px" }}
-                                            class="form-select"
-                                            aria-label="select category"
-                                            value={courseCatID}
-                                            onChange={(e) => setcourseCatID(e?.target?.value)}
-                                        >
-                                            <option value={""}>Select a category name.......</option>
-                                            {CategoryData?.map((item) => {
-                                                return (
-                                                    <option id={item?._id} value={item?._id}>
-                                                        {item?.catName}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
+                      <select
+                        style={{ marginBottom: '21px' }}
+                        class="form-select"
+                        aria-label="select category"
+                        value={courseCatID}
+                        onChange={e => setcourseCatID(e?.target?.value)}
+                      >
+                        <option value={''}>Select a category name.......</option>
+                        {CategoryData?.map(item => {
+                          return (
+                            <option id={item?._id} value={item?._id}>
+                              {item?.catName}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
 
-                                    <div class="col">
-                                        <label for="inputEmail4">
-                                            Course Name<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Enter course name..."
-                                            name="courseName"
-                                            value={courseName}
-                                            onChange={(e) => setcourseName(e.target.value)}
-                                        />
-                                    </div>
-                                </div>
+                    <div class="col">
+                      <label for="inputEmail4">
+                        Course Name<span style={{ color: 'red' }}>*</span> :
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter course name..."
+                        name="courseName"
+                        value={courseName}
+                        onChange={e => setcourseName(e.target.value)}
+                      />
+                    </div>
+                  </div>
 
-                                <div className="row">
-                                    <div class="col">
-                                        <label for="inputEmail4">
-                                            Course Fee<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            placeholder="Enter courseFee..."
-                                            value={courseFee}
-                                            onChange={(e) => setcourseFee(e.target.value)}
-                                        />
-                                    </div>
-                                    <div class="col">
-                                        <label for="inputEmail4">
-                                            Description<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Enter description..."
-                                            value={description}
-                                            onChange={(e) => setdescription(e.target.value)}
-                                        />
-                                    </div>
-                                </div>
-                                <br />
-                                <div className="row">
-                                    <div class="col">
-                                        <SelectableInput
-                                            title="Add learningTopics "
-                                            value={learningTopics}
-                                            onChange={(val) => setlearningTopics(val)}
-                                            className="form-group"
-                                            placeholder="Enter learningTopics"
-                                        />
-                                    </div>
-                                    <div class="col">
-                                        <SelectableInput
-                                            title="Add requirements "
-                                            value={requirements}
-                                            onChange={(val) => setrequirements(val)}
-                                            className="form-group"
-                                            placeholder="Enter requirements"
-                                        />
-                                    </div>
-                                </div>
+                  <div className="row">
+                    <div class="col">
+                      <label for="inputEmail4">
+                        Course Fee<span style={{ color: 'red' }}>*</span> :
+                      </label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Enter courseFee..."
+                        value={courseFee}
+                        onChange={e => setcourseFee(e.target.value)}
+                      />
+                    </div>
+                    <div class="col">
+                      <label for="inputEmail4">
+                        Description<span style={{ color: 'red' }}>*</span> :
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter description..."
+                        value={description}
+                        onChange={e => setdescription(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <br />
+                  <div className="row">
+                    <div class="col">
+                      <SelectableInput
+                        title="Add learningTopics "
+                        value={learningTopics}
+                        onChange={val => setlearningTopics(val)}
+                        className="form-group"
+                        placeholder="Enter learningTopics"
+                      />
+                    </div>
+                    <div class="col">
+                      <SelectableInput
+                        title="Add requirements "
+                        value={requirements}
+                        onChange={val => setrequirements(val)}
+                        className="form-group"
+                        placeholder="Enter requirements"
+                      />
+                    </div>
+                  </div>
 
-                                <div className="row">
-                                    <div class="col">
-                                        <label for="inputEmail4">
-                                            Duration<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Enter duration..."
-                                            value={duration}
-                                            onChange={(e) => setduration(e.target.value)}
-                                        />
-                                    </div>
+                  <div className="row">
+                    <div class="col">
+                      <label for="inputEmail4">
+                        Duration<span style={{ color: 'red' }}>*</span> :
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter duration..."
+                        value={duration}
+                        onChange={e => setduration(e.target.value)}
+                      />
+                    </div>
 
+                    <div className="col">
+                      <div>
+                        <label htmlFor="formGroupExampleInput">Completion Certificate</label>
+                      </div>
+                      <div className="d-flex flex-wrap">
+                        <div classname="form-check form-check-inline" style={{ marginRight: '1rem' }}>
+                          <input
+                            classname="form-check-input"
+                            type="radio"
+                            name="completionCertificate"
+                            id="inlineRadio1"
+                            value="true"
+                            onChange={() => setcompletionCertificate('true')}
+                          />
+                          <label classname="form-check-label" for="inlineRadio1">
+                            Yes
+                          </label>
+                        </div>
 
-                                    <div className="col">
-                                        <div>
-                                            <label htmlFor="formGroupExampleInput">Completion Certificate</label>
-                                        </div>
-                                        <div className="d-flex flex-wrap">
-                                            <div
-                                                classname="form-check form-check-inline"
-                                                style={{ marginRight: "1rem" }}
-                                            >
-                                                <input
-                                                    classname="form-check-input"
-                                                    type="radio"
-                                                    name="completionCertificate"
-                                                    id="inlineRadio1"
-                                                    value="true"
-                                                    onChange={() =>
-                                                        setcompletionCertificate("true")
-                                                    }
-                                                />
-                                                <label classname="form-check-label" for="inlineRadio1">
-                                                    Yes
-                                                </label>
-                                            </div>
+                        <div classname="form-check form-check-inline" style={{ marginRight: '1rem' }}>
+                          <input
+                            classname="form-check-input"
+                            type="radio"
+                            name="completionCertificate"
+                            id="inlineRadio1"
+                            value="false"
+                            onChange={() => setcompletionCertificate('false')}
+                          />
+                          <label classname="form-check-label" for="inlineRadio1">
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div className="row">
+                    <div class="col">
+                      <label for="inputEmail4">
+                        Problem Soving Session<span style={{ color: 'red' }}>*</span> :
+                      </label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Enter no. of problemSovingSession..."
+                        value={problemSovingSession}
+                        onChange={e => setproblemSovingSession(e.target.value)}
+                      />
+                    </div>
 
-                                            <div
-                                                classname="form-check form-check-inline"
-                                                style={{ marginRight: "1rem" }}
-                                            >
-                                                <input
-                                                    classname="form-check-input"
-                                                    type="radio"
-                                                    name="completionCertificate"
-                                                    id="inlineRadio1"
-                                                    value="false"
-                                                    onChange={() =>
-                                                        setcompletionCertificate("false")
-                                                    }
-                                                />
-                                                <label classname="form-check-label" for="inlineRadio1">
-                                                    No
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div className="col">
+                      <div>
+                        <label htmlFor="formGroupExampleInput">Free Course</label>
+                      </div>
+                      <div className="d-flex flex-wrap">
+                        <div classname="form-check form-check-inline" style={{ marginRight: '1rem' }}>
+                          <input
+                            classname="form-check-input"
+                            type="radio"
+                            name="freeCourse"
+                            id="inlineRadio1"
+                            value="true"
+                            onChange={() => setfreeCourse(true)}
+                          />
+                          <label classname="form-check-label" for="inlineRadio1">
+                            Yes
+                          </label>
+                        </div>
 
-                                </div>
-                                <br />
-                                <div className="row">
-                                    <div class="col">
-                                        <label for="inputEmail4">
-                                            Problem Soving Session<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            placeholder="Enter no. of problemSovingSession..."
-                                            value={problemSovingSession}
-                                            onChange={(e) => setproblemSovingSession(e.target.value)}
-                                        />
-                                    </div>
+                        <div classname="form-check form-check-inline" style={{ marginRight: '1rem' }}>
+                          <input
+                            classname="form-check-input"
+                            type="radio"
+                            name="freeCourse"
+                            id="inlineRadio1"
+                            value="false"
+                            onChange={() => setfreeCourse(false)}
+                          />
+                          <label classname="form-check-label" for="inlineRadio1">
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row" style={{ marginBottom: '1rem' }}>
+                    <div class="col">
+                      <label for="inputEmail4">
+                        Intro Video<span style={{ color: 'red' }}>*</span> :
+                      </label>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <input
+                          class="form-control"
+                          type="file"
+                          onChange={e => HandleVideo(e)}
+                          accept="video/*"
+                          id="images"
+                        />
+                        {imageLoad ? (
+                          <>
+                            <ImageLoader />{' '}
+                          </>
+                        ) : null}
 
-
-                                    <div className="col">
-                                        <div>
-                                            <label htmlFor="formGroupExampleInput">Free Course</label>
-                                        </div>
-                                        <div className="d-flex flex-wrap">
-                                            <div
-                                                classname="form-check form-check-inline"
-                                                style={{ marginRight: "1rem" }}
-                                            >
-                                                <input
-                                                    classname="form-check-input"
-                                                    type="radio"
-                                                    name="freeCourse"
-                                                    id="inlineRadio1"
-                                                    value="true"
-                                                    onChange={() =>
-                                                        setfreeCourse(true)
-                                                    }
-                                                />
-                                                <label classname="form-check-label" for="inlineRadio1">
-                                                    Yes
-                                                </label>
-                                            </div>
-
-                                            <div
-                                                classname="form-check form-check-inline"
-                                                style={{ marginRight: "1rem" }}
-                                            >
-                                                <input
-                                                    classname="form-check-input"
-                                                    type="radio"
-                                                    name="freeCourse"
-                                                    id="inlineRadio1"
-                                                    value="false"
-                                                    onChange={() =>
-                                                        setfreeCourse(false)
-                                                    }
-                                                />
-                                                <label classname="form-check-label" for="inlineRadio1">
-                                                    No
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row" style={{ marginBottom: "1rem" }}>
-                                    <div class="col">
-                                        <label for="inputEmail4">
-                                            Intro Video<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <div style={{ display: "flex", flexDirection: "column" }}>
-                                            <input
-                                                class="form-control"
-                                                type="file"
-                                                onChange={(e) => HandleVideo(e)}
-                                                accept="video/*"
-                                                id="images"
-                                            />
-                                            {imageLoad ? (
-                                                <>
-                                                    <ImageLoader />{" "}
-                                                </>
-                                            ) : null}
-                                            {/* {introVideo && (
+                        {introVideo && (
+                          <img
+                            style={{
+                              height: '20%',
+                              width: '20%',
+                              marginTop: '12px',
+                              borderRadius: '5px',
+                            }}
+                            src="https://cdn.pixabay.com/photo/2014/10/09/13/14/video-481821_1280.png"
+                          />
+                        )}
+                        {/* {introVideo && (
                                                 <>
                                                     <div>
                                                         <img
@@ -912,258 +936,271 @@ const AddAndManageCourse = () => {
                                                     </div>
                                                 </>
                                             )} */}
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col">
-                                        <label for="inputEmail4">
-                                            Thumbnail Image<span style={{ color: "red" }}>*</span> :
-                                        </label>
-                                        <div style={{ display: "flex", flexDirection: "column" }}>
-                                            <input
-                                                class="form-control"
-                                                type="file"
-                                                onChange={(e) => HandleImage(e)}
-                                                accept="image/*"
-                                                id="images"
-                                            />
-                                            {imageLoader ? (
-                                                <>
-                                                    <ImageLoader />{" "}
-                                                </>
-                                            ) : null}
-                                            {thumbnailImage && (
-                                                <>
-                                                    <div>
-                                                        <img
-                                                            style={{
-                                                                height: "20%",
-                                                                width: "20%",
-                                                                marginTop: "12px",
-                                                                borderRadius: "5px",
-                                                            }}
-                                                            src={thumbnailImage}
-                                                        />
-                                                        <button
-                                                            onClick={() => HandleCrossClick()}
-                                                            style={{ color: "red" }}
-                                                            type="button"
-                                                            class="btn-close"
-                                                            aria-label="Close"
-                                                        ></button>
-                                                    </div>
-                                                </>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div className="row" data-aos="fade-up">
-                                    <div className="col-lg-12">
-
-                                        {formValues.map((element, ind) => (
-
-                                            <div style={{ border: "solid 1px #ced4da", padding: "1em", margin: "1em 0", borderRadius: "0.25rem" }} className="_form-inline" key={ind}>
-                                                <div className="form-group mb-2 mt-1">
-                                                    <label for="inputEmail4">
-                                                        Document Title:
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        name="docTitle"
-                                                        placeholder={`docTitle ${ind + 1}`}
-                                                        value={element.docTitle || ""}
-                                                        onChange={(e) => handleChange(ind, e)}
-                                                    />
-                                                </div>
-                                                <div className="form-group mb-2 mt-1">
-                                                    <label for="inputEmail4">
-                                                        Document Description:
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        name="docDescription"
-                                                        placeholder={`docDescription ${ind + 1}`}
-                                                        value={element.docDescription || ""}
-                                                        onChange={(e) => handleChange(ind, e)}
-                                                    />
-                                                </div>
-                                                <div style={{ border: "1.5px solid rgb(206, 212, 218)", padding: "1rem 1rem 1rem 1rem" }}>
-                                                    <div className="row" data-aos="fade-up">
-                                                        <div className="col-lg-12">
-                                                            {element?.documents?.map((element, index) => (
-                                                                <div key={index} className="_form-inline">
-                                                                    <div className="row">
-                                                                        <div className="col">
-                                                                            <label for="inputEmail4">
-                                                                                Lecture Title:
-                                                                            </label>
-                                                                            <input
-                                                                                type="text"
-                                                                                class="form-control"
-                                                                                name="lectureTitle"
-                                                                                placeholder={`Lecture Title ${index + 1}`}
-                                                                                value={element.lectureTitle}
-                                                                                onChange={(e) => handleDocumentChange(ind, index, e)}
-                                                                            />
-                                                                        </div>
-
-                                                                        <div className="col">
-                                                                            <label for="inputEmail4">
-                                                                                Lecture Description:
-                                                                            </label>
-                                                                            <input
-                                                                                type="text"
-                                                                                class="form-control"
-                                                                                name="lectureDescription"
-                                                                                placeholder={`Lecture Description ${index + 1}`}
-                                                                                value={element.lectureDescription}
-                                                                                onChange={(e) => handleDocumentChange(ind, index, e)}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className="row">
-                                                                        <div className="col">
-                                                                            <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
-                                                                                Document file :
-                                                                            </label>
-                                                                            <input
-                                                                                class="form-control"
-                                                                                onChange={(e) => HandleDocImage(ind, index, e)}
-                                                                                type="file"
-                                                                                id="docFile"
-                                                                            />
-                                                                            {imageLoader4 ? (
-                                                                                <>
-                                                                                    <ImageLoader />
-                                                                                </>
-                                                                            ) : null}
-                                                                            {element?.docFile && (
-                                                                                <>
-                                                                                    <div>
-                                                                                        <img
-                                                                                            style={{
-                                                                                                height: "10%",
-                                                                                                width: "10%",
-                                                                                                marginTop: "12px",
-                                                                                                borderRadius: "5px",
-                                                                                            }}
-                                                                                            src={element?.docFile}
-                                                                                        />
-
-                                                                                    </div>
-                                                                                </>
-                                                                            )}
-
-                                                                        </div>
-
-                                                                        <div className="col">
-                                                                            <label for="exampleInputEmail1" style={{ marginTop: "1rem" }}>
-                                                                                Document Video :
-                                                                            </label>
-                                                                            <input
-                                                                                class="form-control"
-                                                                                onChange={(e) => HandleDocVideo(ind, index, e)}
-                                                                                type="file"
-                                                                                id="docVideo"
-                                                                                accept="video/*"
-                                                                            />
-                                                                            {imageLoader5 ? (
-                                                                                <>
-                                                                                    <ImageLoader />
-                                                                                </>
-                                                                            ) : null}
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                    {index ? (
-                                                                        <button
-                                                                            type="button"
-                                                                            className="btn btn-sm btn-danger ml-1"
-                                                                            onClick={() => removeDocumentFields(ind)}
-                                                                        >
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button>
-                                                                    ) : null}
-                                                                </div>
-                                                            ))}
-                                                            <div>
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn btn-sm btn-success"
-                                                                    onClick={() => addDocumentFields(ind)}
-                                                                >
-                                                                    Add More Documents
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {ind ? (
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-sm btn-danger ml-1"
-                                                        onClick={() => removeFormFields(ind)}
-                                                    >
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                ) : null}
-                                            </div>
-                                        ))}
-                                        <div className="button-section mt-2">
-                                            <button
-                                                className="btn btn-sm btn-success"
-                                                type="button"
-                                                onClick={() => addFormFields()}
-                                            >
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </form>
-
-                            {hide ? (
-                                <button class="btn btn-primary" onClick={AddSubCategory}>
-                                    Submit
-                                </button>
-                            ) : (
-                                <button class="btn btn-primary" onClick={UpdateCategory}>
-                                    Update
-                                </button>
-                            )}
-
-
-                            <div
-                                style={{
-                                    textAlign: "center",
-                                    fontSize: "20px",
-                                    color: "#868e96",
-                                    margin: "35px",
-                                }}
-                                className="card-title"
-                            >
-                                Manage Course
-                            </div>
-
-                            <DataTable
-                                columns={columns}
-                                data={courseData}
-                                pagination
-                            />
-
-                        </div>
+                      </div>
                     </div>
+
+                    <div class="col">
+                      <label for="inputEmail4">
+                        Thumbnail Image<span style={{ color: 'red' }}>*</span> :
+                      </label>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <input
+                          class="form-control"
+                          type="file"
+                          onChange={e => HandleImage(e)}
+                          accept="image/*"
+                          id="imagess"
+                        />
+                        {imageLoader ? (
+                          <>
+                            <ImageLoader />{' '}
+                          </>
+                        ) : null}
+                        {thumbnailImage && (
+                          <>
+                            <div>
+                              <img
+                                style={{
+                                  height: '20%',
+                                  width: '20%',
+                                  marginTop: '12px',
+                                  borderRadius: '5px',
+                                }}
+                                src={thumbnailImage}
+                              />
+                              <button
+                                onClick={() => HandleCrossClick()}
+                                style={{ color: 'red' }}
+                                type="button"
+                                class="btn-close"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="button-section mt-2">
+                    <button className="btn btn-sm btn-success" type="button" onClick={() => addFormFields()}>
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+
+                  <div className="row" data-aos="fade-up">
+                    <div className="col-lg-12">
+                      {formValues.map((element, ind) => (
+                        <div
+                          style={{
+                            border: 'solid 1px #ced4da',
+                            padding: '1em',
+                            margin: '1em 0',
+                            borderRadius: '0.25rem',
+                            background: 'aliceblue',
+                          }}
+                          className="_form-inline"
+                          key={ind}
+                        >
+                          <div className="form-group mb-2 mt-1">
+                            <label for="inputEmail4">Document Title:</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="docTitle"
+                              placeholder={`docTitle ${ind + 1}`}
+                              value={element.docTitle || ''}
+                              onChange={e => handleChange(ind, e)}
+                            />
+                          </div>
+                          <div className="form-group mb-2 mt-1">
+                            <label for="inputEmail4">Document Description:</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="docDescription"
+                              placeholder={`docDescription ${ind + 1}`}
+                              value={element.docDescription || ''}
+                              onChange={e => handleChange(ind, e)}
+                            />
+                          </div>
+
+                          <div>
+                            <button
+                              type="button"
+                              style={{ margin: '12px' }}
+                              className="btn btn-sm btn-success"
+                              onClick={() => addDocumentFields(ind)}
+                            >
+                              Add More Documents
+                            </button>
+                          </div>
+                          <div>
+                            <div className="row" data-aos="fade-up">
+                              <div className="col-lg-12">
+                                {element?.documents?.map((element, index) => (
+                                  <div
+                                    style={{
+                                      border: '1.5px solid rgb(206, 212, 218)',
+                                      margin: '9px',
+                                      padding: '1rem 1rem 1rem 1rem',
+                                      backgroundColor: 'lightblue',
+                                    }}
+                                    key={index}
+                                    className="_form-inline"
+                                  >
+                                    <div className="row">
+                                      <div className="col">
+                                        <label for="inputEmail4">Lecture Title:</label>
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          name="lectureTitle"
+                                          placeholder={`Lecture Title ${index + 1}`}
+                                          value={element.lectureTitle}
+                                          onChange={e => handleDocumentChange(ind, index, e)}
+                                        />
+                                      </div>
+
+                                      <div className="col">
+                                        <label for="inputEmail4">Lecture Description:</label>
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          name="lectureDescription"
+                                          placeholder={`Lecture Description ${index + 1}`}
+                                          value={element.lectureDescription}
+                                          onChange={e => handleDocumentChange(ind, index, e)}
+                                        />
+                                      </div>
+                                    </div>
+
+                                    <div className="row">
+                                      <div className="col">
+                                        <label for="exampleInputEmail1" style={{ marginTop: '1rem' }}>
+                                          Document file :
+                                        </label>
+                                        <input
+                                          class="form-control"
+                                          onChange={e => HandleDocImage(ind, index, e)}
+                                          type="file"
+                                          id="docFile"
+                                        />
+                                        {imageLoader4 ? (
+                                          <>
+                                            <ImageLoader />
+                                          </>
+                                        ) : null}
+                                        {element?.docFile && (
+                                          <>
+                                            <div>
+                                              <img
+                                                style={{
+                                                  height: '10%',
+                                                  width: '10%',
+                                                  marginTop: '12px',
+                                                  borderRadius: '5px',
+                                                }}
+                                                src="https://png.pngtree.com/png-vector/20190403/ourmid/pngtree-doc-file-document-icon-png-image_909930.jpg"
+                                              />
+                                            </div>
+                                          </>
+                                        )}
+                                      </div>
+
+                                      <div className="col">
+                                        <label for="exampleInputEmail1" style={{ marginTop: '1rem' }}>
+                                          Document Video :
+                                        </label>
+                                        <input
+                                          class="form-control"
+                                          onChange={e => HandleDocVideo(ind, index, e)}
+                                          type="file"
+                                          id="docVideo"
+                                          accept="video/*"
+                                        />
+                                        {imageLoader5 ? (
+                                          <>
+                                            <ImageLoader />
+                                          </>
+                                        ) : null}
+
+                                        {element?.docVideo && (
+                                          <>
+                                            <div>
+                                              <img
+                                                style={{
+                                                  height: '10%',
+                                                  width: '10%',
+                                                  marginTop: '12px',
+                                                  borderRadius: '5px',
+                                                }}
+                                                src="https://cdn.pixabay.com/photo/2014/10/09/13/14/video-481821_1280.png"
+                                              />
+                                            </div>
+                                          </>
+                                        )}
+                                      </div>
+                                    </div>
+
+                                    {index ? (
+                                      <button
+                                        type="button"
+                                        className="btn btn-sm btn-danger ml-1"
+                                        onClick={() => removeDocumentFields(ind)}
+                                        style={{ marginTop: '9px' }}
+                                      >
+                                        <i class="fas fa-trash"></i>
+                                      </button>
+                                    ) : null}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                          {ind ? (
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-danger ml-1"
+                              onClick={() => removeFormFields(ind)}
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          ) : null}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </form>
+
+                {hide ? (
+                  <button class="btn btn-primary" onClick={AddSubCategory}>
+                    Submit
+                  </button>
+                ) : (
+                  <button class="btn btn-primary" onClick={UpdateCategory}>
+                    Update
+                  </button>
+                )}
+
+                <div
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '20px',
+                    color: '#868e96',
+                    margin: '35px',
+                  }}
+                  className="card-title"
+                >
+                  Manage Course
                 </div>
-            )}
-        </>
+
+                <DataTable columns={columns} data={courseData} pagination />
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     );
 };
 

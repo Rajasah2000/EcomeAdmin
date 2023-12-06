@@ -397,7 +397,7 @@ const AddAndManageCategory = () => {
             Update
           </button> */}
 
-              <div
+              {/* <div
                 style={{
                   textAlign: "center",
                   fontSize: "20px",
@@ -413,7 +413,7 @@ const AddAndManageCategory = () => {
                 columns={columns}
                 data={addLearningCategory}
                 pagination
-              />
+              /> */}
             </div>
           </div>
         </div>

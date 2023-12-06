@@ -56,9 +56,18 @@ const AddAndManageQuesAns = () => {
       questionAns: formValues,
     };
     console.log("gfgfgfgfgfgf", data);
-    if (courseID && duration && formValues) {
+    if (
+      courseID &&
+      duration &&
+      formValues[0].question &&
+      formValues[0].a &&
+      formValues[0].b &&
+      formValues[0].c &&
+      formValues[0].d &&
+      formValues[0].correctAns
+    ) {
       HomeService.AddQuestionAnswer(data)
-        .then((res) => {
+        .then(res => {
           if (res && res.status) {
             toast.success(res.message);
             FetchAllData();
@@ -69,11 +78,11 @@ const AddAndManageQuesAns = () => {
             toast.error(res?.message);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     } else {
-      toast.error("Error Occured!");
+      toast.error('All fields are required');
     }
   }
 
@@ -91,16 +100,16 @@ const AddAndManageQuesAns = () => {
       selector: (row) => row.sl,
     },
 
-    {
-      name: (
-        <div
-          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-        >
-          courseID
-        </div>
-      ),
-      selector: (row) => row?.courseID,
-    },
+    // {
+    //   name: (
+    //     <div
+    //       style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+    //     >
+    //       courseID
+    //     </div>
+    //   ),
+    //   selector: (row) => row?.courseID,
+    // },
 
     {
       name: (
@@ -295,10 +304,10 @@ const AddAndManageQuesAns = () => {
       {loading ? (
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "80vh",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '80vh',
           }}
         >
           <PageLoader />
@@ -308,229 +317,200 @@ const AddAndManageQuesAns = () => {
           <div component="div" className="TabsAnimation appear-done enter-done">
             <div className="main-card mb-3 card">
               <div className="card-body">
-                {
-                  check ? (
-                    <>
-                      <div
-                        style={{
-                          textAlign: "center",
-                          fontSize: "20px",
-                          color: "#868e96",
-                          margin: "35px",
-                        }}
-                        className="card-title"
-                      >
-                        Add Questions and Answers
+                {check ? (
+                  <>
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        fontSize: '20px',
+                        color: '#868e96',
+                        margin: '35px',
+                      }}
+                      className="card-title"
+                    >
+                      Add Questions and Answers
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row" style={{ marginBottom: '1rem' }}>
+                        <div className="col">
+                          <label htmlFor="formGroupExampleInput">Select Course</label>
+                          <select
+                            class="form-control"
+                            aria-label="Default select example"
+                            name="courseID"
+                            value={courseID}
+                            onChange={e => setcourseID(e.target.value)}
+                          >
+                            <option value={''} disabled>
+                              Select Course
+                            </option>
+                            {courseData?.map((item, i) => (
+                              <option key={i} value={item?._id}>
+                                {item?.courseName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       </div>
 
+                      <div class="row" style={{ marginBottom: '1rem' }}>
+                        <div class="col">
+                          <label for="inputEmail4">Duration:</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            value={duration}
+                            onChange={e => setduration(e.target.value)}
+                            placeholder=""
+                          />
+                        </div>
+                      </div>
 
-                      <div class="form-group">
+                      <div className="button-section mt-2">
+                        <button className="btn btn-sm btn-success" type="button" onClick={() => addFormFields()}>
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
 
-                        <div class="row" style={{ marginBottom: "1rem" }}>
-                          <div className="col">
-                            <label htmlFor="formGroupExampleInput">Select Course</label>
-                            <select
-                              class="form-control"
-                              aria-label="Default select example"
-                              name="courseID"
-                              value={courseID}
-                              onChange={(e) => setcourseID(e.target.value)}
+                      <div className="row" data-aos="fade-up">
+                        <div className="col-lg-12">
+                          {formValues?.map((element, index) => (
+                            <div
+                              style={{
+                                border: 'solid 1px #ced4da',
+                                padding: '1em',
+                                margin: '1em 0',
+                                borderRadius: '0.25rem',
+                              }}
+                              className="_form-inline"
+                              key={index}
                             >
-                              <option value={""} disabled>
-                                Select Course
-                              </option>
-                              {courseData?.map((item, i) => (
-                                <option key={i} value={item?._id}>
-                                  {item?.courseName}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-
-                        <div class="row" style={{ marginBottom: "1rem" }}>
-                          <div class="col">
-                            <label for="inputEmail4">
-                              Duration:
-                            </label>
-                            <input
-                              type="number"
-                              class="form-control"
-                              value={duration}
-                              onChange={(e) => setduration(e.target.value)}
-                              placeholder=""
-                            />
-                          </div>
-
-                        </div>
-
-
-                        <div className="row" data-aos="fade-up">
-                          <div className="col-lg-12">
-
-
-                            {formValues?.map((element, index) => (
-
-                              <div style={{ border: "solid 1px #ced4da", padding: "1em", margin: "1em 0", borderRadius: "0.25rem" }} className="_form-inline" key={index}>
-                                <div className="form-group mb-2 mt-1">
-                                  <label for="inputEmail4">
-                                    Question:
-                                  </label>
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    name="question"
-                                    placeholder={`question ${index + 1}`}
-                                    value={element.question || ""}
-                                    onChange={(e) => handleChange(index, e)}
-                                  />
-                                </div>
-
-                                <div className="form-group mb-2 mt-1">
-
-                                  <label for="inputEmail4">
-                                    a:
-                                  </label>
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    name="a"
-                                    placeholder={`Enter option a ${index + 1}`}
-                                    value={element.a || ""}
-                                    onChange={(e) => handleChange(index, e)}
-                                  />
-
-                                </div>
-
-                                <div className="form-group mb-2 mt-1">
-                                  <label for="inputEmail4">
-                                    b:
-                                  </label>
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    name="b"
-                                    placeholder={`Enter option b ${index + 1}`}
-                                    value={element.b || ""}
-                                    onChange={(e) => handleChange(index, e)}
-                                  />
-                                </div>
-
-                                <div className="form-group mb-2 mt-1">
-                                  <label for="inputEmail4">
-                                    c:
-                                  </label>
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    name="c"
-                                    placeholder={`Enter option c ${index + 1}`}
-                                    value={element.c || ""}
-                                    onChange={(e) => handleChange(index, e)}
-                                  />
-                                </div>
-
-                                <div className="form-group mb-2 mt-1">
-                                  <label for="inputEmail4">
-                                    d:
-                                  </label>
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    name="d"
-                                    placeholder={`Enter option d ${index + 1}`}
-                                    value={element.d || ""}
-                                    onChange={(e) => handleChange(index, e)}
-                                  />
-                                </div>
-
-                                <div className="form-group mb-2 mt-1">
-                                  <label for="inputEmail4">
-                                    Correct Answer:
-                                  </label>
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    name="correctAns"
-                                    placeholder={`Choose correctAns option ${index + 1}`}
-                                    value={element.correctAns || ""}
-                                    onChange={(e) => handleChange(index, e)}
-                                  />
-                                </div>
-
-                                {index ? (
-                                  <button
-                                    type="button"
-                                    className="btn btn-sm btn-danger ml-1"
-                                    onClick={() => removeFormFields(index)}
-                                  >
-                                    <i class="fas fa-trash"></i>
-                                  </button>
-                                ) : null}
+                              <div className="form-group mb-2 mt-1">
+                                <label for="inputEmail4">Question:</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="question"
+                                  placeholder={`question ${index + 1}`}
+                                  value={element.question || ''}
+                                  onChange={e => handleChange(index, e)}
+                                />
                               </div>
 
-                            ))}
+                              <div className="form-group mb-2 mt-1">
+                                <label for="inputEmail4">a:</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="a"
+                                  placeholder={`Enter option a ${index + 1}`}
+                                  value={element.a || ''}
+                                  onChange={e => handleChange(index, e)}
+                                />
+                              </div>
 
+                              <div className="form-group mb-2 mt-1">
+                                <label for="inputEmail4">b:</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="b"
+                                  placeholder={`Enter option b ${index + 1}`}
+                                  value={element.b || ''}
+                                  onChange={e => handleChange(index, e)}
+                                />
+                              </div>
 
-                            <div className="button-section mt-2">
-                              <button
-                                className="btn btn-sm btn-success"
-                                type="button"
-                                onClick={() => addFormFields()}
-                              >
-                                <i class="fas fa-plus"></i>
-                              </button>
+                              <div className="form-group mb-2 mt-1">
+                                <label for="inputEmail4">c:</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="c"
+                                  placeholder={`Enter option c ${index + 1}`}
+                                  value={element.c || ''}
+                                  onChange={e => handleChange(index, e)}
+                                />
+                              </div>
 
+                              <div className="form-group mb-2 mt-1">
+                                <label for="inputEmail4">d:</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="d"
+                                  placeholder={`Enter option d ${index + 1}`}
+                                  value={element.d || ''}
+                                  onChange={e => handleChange(index, e)}
+                                />
+                              </div>
+
+                              <div className="form-group mb-2 mt-1">
+                                <label for="inputEmail4">Correct Answer:</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="correctAns"
+                                  placeholder={`Choose correctAns option ${index + 1}`}
+                                  value={element.correctAns || ''}
+                                  onChange={e => handleChange(index, e)}
+                                />
+                              </div>
+
+                              {index ? (
+                                <button
+                                  type="button"
+                                  className="btn btn-sm btn-danger ml-1"
+                                  onClick={() => removeFormFields(index)}
+                                >
+                                  <i class="fas fa-trash"></i>
+                                </button>
+                              ) : null}
                             </div>
-
-                          </div>
+                          ))}
                         </div>
-
-
-                        <div style={{ marginTop: "1rem" }}>
-
-                          <button class="btn btn-primary" onClick={AddData}>
-                            Add
-                          </button>
-
-                        </div>
-
                       </div>
-                    </>
-                  ) : (
-                    <EditAndUpdateQA />
-                  )
-                }
 
+                      <div style={{ marginTop: '1rem' }}>
+                        <button class="btn btn-primary" onClick={AddData}>
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <EditAndUpdateQA />
+                )}
 
                 <div
                   style={{
-                    textAlign: "center",
-                    fontSize: "20px",
-                    color: "#868e96",
-                    margin: "35px",
+                    textAlign: 'center',
+                    fontSize: '20px',
+                    color: '#868e96',
+                    margin: '35px',
                   }}
                   className="card-title"
                 >
-                  Manage Questions&Answers
+                  Manage Questions & Answers
                 </div>
 
                 <label for="inputEmail4">
-                  Course Name<span style={{ color: "red" }}>*</span> :
+                  Course Name<span style={{ color: 'red' }}>*</span> :
                 </label>
 
                 <select
-                  style={{ marginBottom: "21px" }}
+                  style={{ marginBottom: '21px' }}
                   class="form-select"
                   aria-label="select course"
                   value={courseid}
-                  onChange={(e) => {
+                  onChange={e => {
                     setcourseid(e?.target?.value);
                     e.target.value && FetchAllData(e?.target?.value);
                   }}
                 >
-                  <option value={""}>Select a Course name.......</option>
-                  {courseData?.map((item) => {
+                  <option value={''}>Select a Course name.......</option>
+                  {courseData?.map(item => {
                     return (
                       <option id={item?._id} value={item?._id}>
                         {item?.courseName}
@@ -539,42 +519,31 @@ const AddAndManageQuesAns = () => {
                   })}
                 </select>
 
-                <div>
-                  <button className="btn btn-danger"
+                {/* <div>
+                  <button
+                    className="btn btn-danger"
                     onClick={() => onDeleteAll(courseid)}
                     style={{
-                      color: "white",
-                      height: "40px",
-                      cursor: "pointer",
-                      width: "100px",
+                      color: 'white',
+                      height: '40px',
+                      cursor: 'pointer',
+                      width: '100px',
                     }}
-                    // xmlns="http://www.w3.org/2000/svg"
-                    // width="16"
-                    // height="16"
-                    // fill="currentColor"
-                    // class="bi bi-trash3"
-                    // viewBox="0 0 16 16"
+                   
                   >
                     Delete All
-                    {/* <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" /> */}
+                   
                   </button>
-                </div>
+                </div> */}
 
-                {courseID && (
-                  <DataTable
-                    columns={columns}
-                    data={allData}
-                    pagination
-                  />
-                )}
-
+                {courseID && <DataTable columns={columns} data={allData} pagination />}
               </div>
             </div>
           </div>
         </>
       )}
     </>
-  )
+  );
 }
 
 export default AddAndManageQuesAns

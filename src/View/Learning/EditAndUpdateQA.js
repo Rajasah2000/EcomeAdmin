@@ -64,31 +64,32 @@ const EditAndUpdateQA = () => {
             d: d,
             correctAns: correctAns
         };
-        // console.log("gfgfgfgfgfgf", data);
-        HomeService.UpdateSingleQuestion(podId, data)
-            .then((res) => {
-                if (res && res.status) {
-                    toast.success(res?.message);
-                    FetchAllData();
-                    setcourseID("");
-                    setquestion("");
-                    setcorrectAns("");
-                    seta("");
-                    setb("");
-                    setc("");
-                    setd("");
-                    toast.success(res?.message)
-                    navigate("/manage-ques-ans")
-                } else {
-                    toast.error(res?.message);
-                }
+        if (courseID && duration && question && a && b && c && d && correctAns){
+          HomeService.UpdateSingleQuestion(podId, data)
+            .then(res => {
+              if (res && res.status) {
+                // toast.success(res?.message);
+                FetchAllData();
+                setcourseID('');
+                setquestion('');
+                setcorrectAns('');
+                seta('');
+                setb('');
+                setc('');
+                setd('');
+                toast.success(res?.message);
+                navigate('/manage-ques-ans');
+              } else {
+                toast.error(res?.message);
+              }
             })
-            .catch((err) => {
-                console.log(err);
+            .catch(err => {
+              console.log(err);
             });
-        // } else {
-        //   toast.error("Error Occured!");
-        // }
+        }
+        else {
+          toast.error("All fields are required");
+        }
     }
 
     const [allData, setAllData] = useState([]);
