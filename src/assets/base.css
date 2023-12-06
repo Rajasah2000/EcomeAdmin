@@ -288,7 +288,18 @@ samp {
   direction: ltr /* rtl:ignore */;
   unicode-bidi: bidi-override;
 }
-
+.adminlogin{
+  width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background-position: center;
+    background-size: 107%;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 pre {
   display: block;
   margin-top: 0;
