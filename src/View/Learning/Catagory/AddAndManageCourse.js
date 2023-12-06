@@ -984,7 +984,8 @@ const AddAndManageCourse = () => {
 
                   <div className="button-section mt-2">
                     <button className="btn btn-sm btn-success" type="button" onClick={() => addFormFields()}>
-                      <i class="fas fa-plus"></i>
+                      {/* <i class="fas fa-plus"></i> */}
+                      + Add More Documents
                     </button>
                   </div>
 
@@ -997,7 +998,7 @@ const AddAndManageCourse = () => {
                             padding: '1em',
                             margin: '1em 0',
                             borderRadius: '0.25rem',
-                            background: 'aliceblue',
+                            background: '#6666',
                           }}
                           className="_form-inline"
                           key={ind}
@@ -1032,7 +1033,7 @@ const AddAndManageCourse = () => {
                               className="btn btn-sm btn-success"
                               onClick={() => addDocumentFields(ind)}
                             >
-                              Add More Documents
+                              + Add More Lecture
                             </button>
                           </div>
                           <div>
