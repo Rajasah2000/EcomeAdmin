@@ -144,7 +144,7 @@ const AddAndManageAboutBushido = () => {
                                 </>
                             ),
                             action: (
-                                <div style={{ display: "flex", flexDirection: "coloum" }}>
+                                <div style={{ display: "flex", flexDirection: "coloum" , marginLeft:"12px" }}>
                                     <svg
                                         onClick={() => onEdit(item)}
                                         style={{
@@ -363,7 +363,7 @@ const AddAndManageAboutBushido = () => {
                 <div component="div" className="TabsAnimation appear-done enter-done">
                     <div className="main-card mb-3 card">
                         <div className="card-body">
-                            {hide ? (
+                           
                                 <div
                                     style={{
                                         textAlign: "center",
@@ -373,21 +373,9 @@ const AddAndManageAboutBushido = () => {
                                     }}
                                     className="card-title"
                                 >
-                                    Add About Bushido
+                                    Update About Bushido
                                 </div>
-                            ) : (
-                                <div
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: "20px",
-                                        color: "#868e96",
-                                        margin: "35px",
-                                    }}
-                                    className="card-title"
-                                >
-                                    Edit About Bushido
-                                </div>
-                            )}
+                           
 
 
                             <div class="row" style={{ marginBottom: "1rem" }}>
@@ -500,15 +488,7 @@ const AddAndManageAboutBushido = () => {
 
                             </div>
 
-                            {hide ? (
-                                <button
-                                    class="btn btn-primary"
-                                    style={{ marginTop: "1rem" }}
-                                    onClick={AddAboutBushidoData}
-                                >
-                                    Submit
-                                </button>
-                            ) : (
+                       
                                 <button
                                     class="btn btn-primary"
                                     style={{ marginTop: "1rem" }}
@@ -516,7 +496,7 @@ const AddAndManageAboutBushido = () => {
                                 >
                                     Update
                                 </button>
-                            )}
+                       
 
                             <div
                                 style={{
