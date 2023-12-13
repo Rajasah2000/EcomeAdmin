@@ -348,10 +348,10 @@ const AddAndManageSubCategory = () => {
       {imageLoader3 ? (
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "80vh",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '80vh',
           }}
         >
           <PageLoader />
@@ -363,10 +363,10 @@ const AddAndManageSubCategory = () => {
               {hide ? (
                 <div
                   style={{
-                    textAlign: "center",
-                    fontSize: "20px",
-                    color: "#868e96",
-                    margin: "35px",
+                    textAlign: 'center',
+                    fontSize: '20px',
+                    color: '#868e96',
+                    margin: '35px',
                   }}
                   className="card-title"
                 >
@@ -375,10 +375,10 @@ const AddAndManageSubCategory = () => {
               ) : (
                 <div
                   style={{
-                    textAlign: "center",
-                    fontSize: "20px",
-                    color: "#868e96",
-                    margin: "35px",
+                    textAlign: 'center',
+                    fontSize: '20px',
+                    color: '#868e96',
+                    margin: '35px',
                   }}
                   className="card-title"
                 >
@@ -387,21 +387,21 @@ const AddAndManageSubCategory = () => {
               )}
 
               <form>
-                <div class="row" style={{ marginBottom: "1rem" }}>
+                <div class="row" style={{ marginBottom: '1rem' }}>
                   <div class="col">
                     <label for="inputEmail4">
-                      Category Name<span style={{ color: "red" }}>*</span> :
+                      Category Name<span style={{ color: 'red' }}>*</span> :
                     </label>
 
                     <select
-                      style={{ marginBottom: "21px" }}
+                      style={{ marginBottom: '21px' }}
                       class="form-select"
                       aria-label="select category"
                       value={CategoryId}
-                      onChange={(e) => setCategoryId(e?.target?.value)}
+                      onChange={e => setCategoryId(e?.target?.value)}
                     >
-                      <option value={""}>Select a category name.......</option>
-                      {CategoryData.map((item) => {
+                      <option value={''}>Select a category name.......</option>
+                      {CategoryData.map(item => {
                         return (
                           <option id={item?._id} value={item?._id}>
                             {item?.catName}
@@ -413,45 +413,52 @@ const AddAndManageSubCategory = () => {
 
                   <div class="col">
                     <label for="inputEmail4">
-                      Position<span style={{ color: "red" }}>*</span> :
+                      Priority<span style={{ color: 'red' }}>*</span> :
                     </label>
                     <input
                       type="number"
                       class="form-control"
-                      placeholder="Enter position..."
+                      placeholder="Enter priority..."
                       value={position}
-                      onChange={(e) => setPosition(e.target.value)}
+                      onChange={e => {
+                        if (e.target.value > 0) {
+                          setPosition(e.target.value);
+                        } else {
+                          toast.error('Priority value cannot be negative or empty');
+                          setPosition('');
+                        }
+                      }}
                     />
                   </div>
                 </div>
-                <div class="row" style={{ marginBottom: "1rem" }}>
+                <div class="row" style={{ marginBottom: '1rem' }}>
                   <div class="col">
                     <label for="inputEmail4">
-                      SubCategory Name<span style={{ color: "red" }}>*</span> :
+                      SubCategory Name<span style={{ color: 'red' }}>*</span> :
                     </label>
                     <input
                       type="text"
                       class="form-control"
                       value={subCategoryName}
-                      onChange={(e) => setSubCategoryName(e.target.value)}
+                      onChange={e => setSubCategoryName(e.target.value)}
                       placeholder="Enter subcategory name..."
                     />
                   </div>
                   <div class="col">
                     <label for="inputEmail4">
-                      Image<span style={{ color: "red" }}>*</span> :
+                      Image<span style={{ color: 'red' }}>*</span> :
                     </label>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <input
                         class="form-control"
                         type="file"
-                        onChange={(e) => HandleImage(e)}
+                        onChange={e => HandleImage(e)}
                         accept="image/*"
                         id="images"
                       />
                       {imageLoader ? (
                         <>
-                          <ImageLoader />{" "}
+                          <ImageLoader />{' '}
                         </>
                       ) : null}
                       {image && (
@@ -459,16 +466,16 @@ const AddAndManageSubCategory = () => {
                           <div>
                             <img
                               style={{
-                                height: "20%",
-                                width: "20%",
-                                marginTop: "12px",
-                                borderRadius: "5px",
+                                height: '20%',
+                                width: '20%',
+                                marginTop: '12px',
+                                borderRadius: '5px',
                               }}
                               src={image}
                             />
                             <button
                               onClick={() => HandleCrossClick()}
-                              style={{ color: "red" }}
+                              style={{ color: 'red' }}
                               type="button"
                               class="btn-close"
                               aria-label="Close"
@@ -493,31 +500,31 @@ const AddAndManageSubCategory = () => {
 
               <div
                 style={{
-                  textAlign: "center",
-                  fontSize: "20px",
-                  color: "#868e96",
-                  margin: "35px",
+                  textAlign: 'center',
+                  fontSize: '20px',
+                  color: '#868e96',
+                  margin: '35px',
                 }}
                 className="card-title"
               >
                 Manage SubCategory
               </div>
               <label for="inputEmail4">
-                Category Name<span style={{ color: "red" }}>*</span> :
+                Category Name<span style={{ color: 'red' }}>*</span> :
               </label>
 
               <select
-                style={{ marginBottom: "21px" }}
+                style={{ marginBottom: '21px' }}
                 class="form-select"
                 aria-label="select category"
                 value={catId}
-                onChange={(e) => {
+                onChange={e => {
                   setCatId(e?.target?.value);
                   e.target.value && fetchSubCategory(e?.target?.value);
                 }}
               >
-                <option value={""}>Select a category name.......</option>
-                {CategoryData.map((item) => {
+                <option value={''}>Select a category name.......</option>
+                {CategoryData.map(item => {
                   return (
                     <option id={item?._id} value={item?._id}>
                       {item?.catName}
@@ -525,13 +532,7 @@ const AddAndManageSubCategory = () => {
                   );
                 })}
               </select>
-              {catId && (
-                <DataTable
-                  columns={columns}
-                  data={subCategoryData}
-                  pagination
-                />
-              )}
+              {catId && <DataTable columns={columns} data={subCategoryData} pagination />}
             </div>
           </div>
         </div>

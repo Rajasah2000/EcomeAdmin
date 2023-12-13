@@ -20,8 +20,8 @@ export default function Sidebar() {
           <div className="metismenu vertical-nav-menu">
             <ul className="metismenu-container">
               <li className="metismenu-item">
-                <Link className="metismenu-link" to="/" style={{ fontWeight: '700', fontSize: 'medium' }}>
-                  Dashboard
+                <Link className="metismenu-link" to="/" style={{ fontWeight: '700', fontSize:"18px", fontSize: 'medium' }}>
+                  DASHBOARD
                 </Link>
               </li>
             </ul>
@@ -104,14 +104,14 @@ export default function Sidebar() {
                       <ul className="metismenu-container">
                         <li className="metismenu-item">
                           <Link to="/apprroved-partner-list" className="metismenu-link">
-                            Approved PartnerList
+                            Approved Partner List
                           </Link>
                         </li>
                       </ul>
                       <ul className="metismenu-container">
                         <li className="metismenu-item">
                           <Link to="/view-pending-for-approval" className="metismenu-link">
-                            Pending ForApproval
+                            Pending For Approval
                           </Link>
                         </li>
                       </ul>
@@ -180,7 +180,7 @@ export default function Sidebar() {
                   aria-controls="collapseEleven"
                   style={{ fontWeight: '700', fontSize: 'medium' }}
                 >
-                  Explore(E-Store)
+                  E-Store
                 </a>
               </div>
             </div>
@@ -841,7 +841,7 @@ export default function Sidebar() {
                         style={{ fontWeight: '700', fontSize: 'medium' }}
                       >
                         {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
-                        PodCast/Music Add/Manage
+                        Music Add/Manage
                       </a>
                     </div>
                   </div>

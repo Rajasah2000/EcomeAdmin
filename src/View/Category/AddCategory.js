@@ -27,6 +27,7 @@ const AddCategory = () => {
   const [imageLoader2, setImageLoader2] = useState(false);
   const [imageLoader3, setImageLoader3] = useState(false);
 
+
   useEffect(() => {
     fetchCategory();
   }, []);
@@ -339,6 +340,17 @@ const AddCategory = () => {
     },
   ];
 
+
+  const handleChange = (e) => {
+if(e.target.value > 0  ){
+setPosition(e.target.value);
+}else{
+  toast.error('Priority value cannot be negative or empty');
+  setPosition("");
+}
+ 
+  }
+
   const UpdateCategory = () => {
     console.log("ID", id);
     let data = {
@@ -439,10 +451,10 @@ const AddCategory = () => {
       {imageLoader3 ? (
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "80vh",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '80vh',
           }}
         >
           <PageLoader />
@@ -454,10 +466,10 @@ const AddCategory = () => {
               {hide ? (
                 <div
                   style={{
-                    textAlign: "center",
-                    fontSize: "20px",
-                    color: "#868e96",
-                    margin: "35px",
+                    textAlign: 'center',
+                    fontSize: '20px',
+                    color: '#868e96',
+                    margin: '35px',
                   }}
                   className="card-title"
                 >
@@ -466,10 +478,10 @@ const AddCategory = () => {
               ) : (
                 <div
                   style={{
-                    textAlign: "center",
-                    fontSize: "20px",
-                    color: "#868e96",
-                    margin: "35px",
+                    textAlign: 'center',
+                    fontSize: '20px',
+                    color: '#868e96',
+                    margin: '35px',
                   }}
                   className="card-title"
                 >
@@ -478,49 +490,50 @@ const AddCategory = () => {
               )}
 
               <form>
-                <div class="row" style={{ marginBottom: "1rem" }}>
+                <div class="row" style={{ marginBottom: '1rem' }}>
                   <div class="col">
                     <label for="inputEmail4">
-                      Category Name<span style={{ color: "red" }}>*</span> :
+                      Category Name<span style={{ color: 'red' }}>*</span> :
                     </label>
                     <input
                       type="text"
                       class="form-control"
                       value={CategoryName}
-                      onChange={(e) => SetCategoryName(e.target.value)}
+                      onChange={e => SetCategoryName(e.target.value)}
                       placeholder="Enter name..."
                     />
                   </div>
 
                   <div class="col">
                     <label for="inputEmail4">
-                      Position<span style={{ color: "red" }}>*</span> :
+                      Priority<span style={{ color: 'red' }}>*</span> :
                     </label>
                     <input
                       type="number"
                       class="form-control"
-                      placeholder="Enter position..."
+                      placeholder="Enter Priority..."
+                      min="0"
                       value={position}
-                      onChange={(e) => setPosition(e.target.value)}
+                      onChange={e => handleChange(e)}
                     />
                   </div>
                 </div>
-                <div class="row" style={{ marginBottom: "1rem" }}>
+                <div class="row" style={{ marginBottom: '1rem' }}>
                   <div class="col">
                     <label for="inputEmail4">
-                      Image<span style={{ color: "red" }}>*</span> :
+                      Image<span style={{ color: 'red' }}>*</span> :
                     </label>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <input
                         class="form-control"
                         type="file"
-                        onChange={(e) => HandleImage(e, "image")}
+                        onChange={e => HandleImage(e, 'image')}
                         accept="image/*"
                         id="images"
                       />
                       {imageLoader ? (
                         <>
-                          <ImageLoader />{" "}
+                          <ImageLoader />{' '}
                         </>
                       ) : null}
                       {image && (
@@ -528,16 +541,16 @@ const AddCategory = () => {
                           <div>
                             <img
                               style={{
-                                height: "20%",
-                                width: "20%",
-                                marginTop: "12px",
-                                borderRadius: "5px",
+                                height: '20%',
+                                width: '20%',
+                                marginTop: '12px',
+                                borderRadius: '5px',
                               }}
                               src={image}
                             />
                             <button
                               onClick={() => HandleCrossClick()}
-                              style={{ color: "red" }}
+                              style={{ color: 'red' }}
                               type="button"
                               class="btn-close"
                               aria-label="Close"
@@ -548,21 +561,23 @@ const AddCategory = () => {
                     </div>
                   </div>
 
+                 
+
                   <div class="col">
                     <label for="inputEmail4">
-                      Banner Image 1<span style={{ color: "red" }}>*</span> :
+                      Banner Image 1<span style={{ color: 'red' }}>*</span> :
                     </label>
 
                     <input
                       class="form-control"
-                      onChange={(e) => HandleImage(e, "bannerImage1")}
+                      onChange={e => HandleImage(e, 'bannerImage1')}
                       type="file"
                       id="bannerImage1"
                       accept="image/*"
                     />
                     {imageLoader1 ? (
                       <>
-                        <ImageLoader />{" "}
+                        <ImageLoader />{' '}
                       </>
                     ) : null}
                     {bannerImage1 && (
@@ -570,16 +585,16 @@ const AddCategory = () => {
                         <div>
                           <img
                             style={{
-                              height: "20%",
-                              width: "20%",
-                              marginTop: "12px",
-                              borderRadius: "5px",
+                              height: '20%',
+                              width: '20%',
+                              marginTop: '12px',
+                              borderRadius: '5px',
                             }}
                             src={bannerImage1}
                           />
                           <button
                             onClick={() => HandleCrossClick1()}
-                            style={{ color: "red" }}
+                            style={{ color: 'red' }}
                             type="button"
                             class="btn-close"
                             aria-label="Close"
@@ -591,19 +606,19 @@ const AddCategory = () => {
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">
-                    Banner Image 2<span style={{ color: "red" }}>*</span> :
+                    Banner Image 2<span style={{ color: 'red' }}>*</span> :
                   </label>
 
                   <input
                     class="form-control"
-                    onChange={(e) => HandleImage(e, "bannerImage2")}
+                    onChange={e => HandleImage(e, 'bannerImage2')}
                     type="file"
                     id="bannerImage2"
                     accept="image/*"
                   />
                   {imageLoader2 ? (
                     <>
-                      <ImageLoader />{" "}
+                      <ImageLoader />{' '}
                     </>
                   ) : null}
                   {bannerImage2 && (
@@ -611,16 +626,16 @@ const AddCategory = () => {
                       <div>
                         <img
                           style={{
-                            height: "10%",
-                            width: "10%",
-                            marginTop: "12px",
-                            borderRadius: "5px",
+                            height: '10%',
+                            width: '10%',
+                            marginTop: '12px',
+                            borderRadius: '5px',
                           }}
                           src={bannerImage2}
                         />
                         <button
                           onClick={() => HandleCrossClick2()}
-                          style={{ color: "red" }}
+                          style={{ color: 'red' }}
                           type="button"
                           class="btn-close"
                           aria-label="Close"
@@ -643,10 +658,10 @@ const AddCategory = () => {
 
               <div
                 style={{
-                  textAlign: "center",
-                  fontSize: "20px",
-                  color: "#868e96",
-                  margin: "35px",
+                  textAlign: 'center',
+                  fontSize: '20px',
+                  color: '#868e96',
+                  margin: '35px',
                 }}
                 className="card-title"
               >

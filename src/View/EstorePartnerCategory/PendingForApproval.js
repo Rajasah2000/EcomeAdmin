@@ -3,6 +3,7 @@ import DataTable from "react-data-table-component";
 import HomeService from "../../Service/HomeService";
 import { toast } from "react-hot-toast";
 import PageLoader from "../../Loader/PageLoader";
+import Swal from "sweetalert2";
 
 const PendingForApproval = () => {
   const [allPendingPartnerList, setAllPendingPArtnerList] = useState([]);
@@ -56,18 +57,34 @@ const PendingForApproval = () => {
   ];
 
   const HandleClick = (id) => {
-    HomeService.PartnerApprovedByAdmin(id)
-      .then((res) => {
-        if (res && res?.status) {
-          toast.success(res?.message);
-          FetchPendingPartnerList();
-        } else {
-          toast.error(res?.message);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+
+     Swal.fire({
+       title: 'Are you sure?',
+
+       icon: 'warning',
+       showCancelButton: true,
+       confirmButtonColor: '#3085d6',
+       cancelButtonColor: '#d33',
+       confirmButtonText: 'Yes',
+     }).then(result => {
+       if (result.isConfirmed) {
+         HomeService.PartnerApprovedByAdmin(id)
+           .then(res => {
+             if (res && res?.status) {
+               toast.success(res?.message);
+               FetchPendingPartnerList();
+             } else {
+               toast.error(res?.message);
+             }
+           })
+           .catch(err => {
+             console.log(err);
+           });
+       }
+     });
+
+   
   };
 
   const FetchPendingPartnerList = () => {
@@ -82,12 +99,8 @@ const PendingForApproval = () => {
               ownerName: item?.ownerName,
               cmpanyName: item?.cmpanyName,
               action: (
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  onClick={() => HandleClick(item?._id)}
-                >
-                  DisApproved
+                <button type="button" class="btn btn-success" onClick={() => HandleClick(item?._id)}>
+                  APPROVE
                 </button>
               ),
             };

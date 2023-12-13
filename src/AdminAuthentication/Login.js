@@ -4,6 +4,8 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { reactLocalStorage } from "reactjs-localstorage";
 import bgimage from '../images/bgcover.jpg'
+import { FaEyeSlash } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
 
 var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -12,6 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [emailError , setEmailError] = useState("");
   const [passwordError , setPasswordError] = useState("");
+  const [show , setShow] = useState(false)
   
   const navigate = useNavigate();
 
@@ -54,7 +57,7 @@ const SubmitHandler = async (e) => {
         Authservice.login(data)
         .then((res)=>{
             if(res && res?.status){
-                toast.success(res?.message)
+                toast.success('Admin Logged In Successfully');
                 setEmail("");
                 setPassword("");
                 reactLocalStorage.set("loginStatus", true);
@@ -74,10 +77,12 @@ const SubmitHandler = async (e) => {
    
 };
 
-  return (
-    <section style={{backgroundImage:`url('${bgimage}')`}} className="adminlogin">
-     
+  const togglePasswordVisibility = () => {
+    setShow(!show);
+  };
 
+  return (
+    <section style={{ backgroundImage: `url('${bgimage}')` }} className="adminlogin">
       <div className="container py-5 ">
         <div className="row d-flex align-items-center justify-content-center ">
           <div className="col-md-8 col-lg-7 col-xl-6">
@@ -88,41 +93,44 @@ const SubmitHandler = async (e) => {
             />
           </div>
           <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-          <h2 style={{margin:"2rem", textAlign:"center" , fontFamily:"auto" , color:'#6983cf',fontWeight:'700'}}>LOGIN HERE</h2>
+            <h2
+              style={{ margin: '2rem', textAlign: 'center', fontFamily: 'auto', color: '#6983cf', fontWeight: '700' }}
+            >
+              Bushido Admin Panel
+            </h2>
             <form>
-    
               <div className="form-outline mb-4">
                 <input
                   type="text"
                   id="form1Example13"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                   className="form-control form-control-lg"
                   placeholder="Enter Email"
                 />
               </div>
-              {emailError && <p style={{ color: "red" }}>{emailError}</p>}
+              {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
 
-              <div className="form-outline mb-4">
+              <div className="form-outline inptown mb-4">
                 <input
-                  type="password"
+                  type={show ? 'text' : 'password'}
                   id="form1Example23"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={e => setPassword(e.target.value)}
                   className="form-control form-control-lg"
                   placeholder="Enter Password"
                 />
+            
+                  <div className="shwhd" style={{ border: 'none', borderRadius: '2px' }} onClick={togglePasswordVisibility}>
+                    {show ? <FaEyeSlash /> : <FaEye />}
+                  </div>
+            
               </div>
-              {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
-              <div className="d-flex justify-content-around align-items-center mb-4">
 
-              </div>
+              {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
+              <div className="d-flex justify-content-around align-items-center mb-4"></div>
 
-              <button
-                type="submit"
-                className="btn btn-primary btn-lg btn-block"
-                onClick={(e) => SubmitHandler(e)}
-              >
+              <button type="submit" className="btn btn-primary btn-lg btn-block" onClick={e => SubmitHandler(e)}>
                 Sign in
               </button>
               {/* <div
@@ -131,7 +139,7 @@ const SubmitHandler = async (e) => {
               >
                 <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
               </div> */}
-{/* 
+              {/* 
               <p  style={{ color: "#393f81" , marginRight:"0.4rem" }}>
                 Don't have an account?{" "}
                 <a

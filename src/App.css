@@ -183,3 +183,18 @@ th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.eyeButon{
+  top: 50%;
+  right: 0%;
+  transform: translate(-50%,-50%);
+}
+.inptown input{
+  position: relative;
+}
+.shwhd{
+    position: absolute;
+    top: 60%;
+    left: 92%;
+    z-index: 9;
+}

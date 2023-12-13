@@ -13,36 +13,49 @@ const ApprovedPartnerList = () => {
 
   const columns = [
     {
-      name: (
-        <div
-          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-        >
-          SL
-        </div>
-      ),
-      selector: (row) => row.sl,
+      name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>SL</div>,
+      selector: row => row.sl,
     },
     {
-      name: (
-        <div
-          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-        >
-          Owner Name
-        </div>
-      ),
-      selector: (row) => row.ownerName,
+      name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>Owner Name</div>,
+      selector: row => row.ownerName,
     },
     {
-      name: (
-        <div
-          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-        >
-          Company Name
-        </div>
-      ),
-      selector: (row) => row.cmpanyName,
+      name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>Company Name</div>,
+      selector: row => row.cmpanyName,
     },
+    // {
+    //   name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>Action</div>,
+    //   selector: row => row.action,
+    // },
   ];
+
+  //  const HandleClick = id => {
+  //    Swal.fire({
+  //      title: 'Are you sure?',
+
+  //      icon: 'warning',
+  //      showCancelButton: true,
+  //      confirmButtonColor: '#3085d6',
+  //      cancelButtonColor: '#d33',
+  //      confirmButtonText: 'Yes',
+  //    }).then(result => {
+  //      if (result.isConfirmed) {
+  //        HomeService.PartnerApprovedByAdmin(id)
+  //          .then(res => {
+  //            if (res && res?.status) {
+  //              toast.success(res?.message);
+  //              FetchApprovedPartnerList();
+  //            } else {
+  //              toast.error(res?.message);
+  //            }
+  //          })
+  //          .catch(err => {
+  //            console.log(err);
+  //          });
+  //      }
+  //    });
+  //  };
 
   const FetchApprovedPartnerList = () => {
     setLoading(true);
@@ -55,6 +68,7 @@ const ApprovedPartnerList = () => {
               sl: index + 1,
               ownerName: item?.ownerName,
               cmpanyName: item?.cmpanyName,
+             
             };
           });
           setAllApprovedPArtnerList(resArr);

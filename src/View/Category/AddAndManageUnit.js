@@ -136,7 +136,7 @@ const AddAndManageUnit = () => {
             fetchAllUnitData();
             setName("");
           } else {
-            toast.error(res?.message);
+            toast.error("Unit name already exists");
           }
         })
         .catch((err) => {

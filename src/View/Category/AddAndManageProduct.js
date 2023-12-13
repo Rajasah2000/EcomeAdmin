@@ -349,6 +349,8 @@ const AddAndManageProduct = () => {
                         setSelectedOptions([]);
                         setColorData([])
                         fetchAllProductData();
+                        let file = document.querySelector('#productImage');
+                        file.value = ""
                     } else {
                         toast.error(res?.message);
                     }
@@ -494,6 +496,8 @@ const AddAndManageProduct = () => {
                         setSelectedOptions([]);
                         setColorData([]);
                         fetchAllProductData();
+                         let file = document.querySelector('#productImage');
+                         file.value = '';
                         setHide(true);
                     } else {
                         toast.error(res?.message);
@@ -636,14 +640,27 @@ const AddAndManageProduct = () => {
 
                   <div class="col">
                     <label for="inputEmail4">
-                      Product actual Price<span style={{ color: 'red' }}></span> :
+                      Product actual price<span style={{ color: 'red' }}></span> :
                     </label>
                     <input
                       type="number"
                       class="form-control"
                       name="ActualProductPrice"
                       value={formData?.ActualProductPrice}
-                      onChange={e => HandleChange(e)}
+                      onChange={e => {
+                         if (e.target.value > 0) {
+                           setFormData({
+                             ...formData,
+                             ActualProductPrice: e.target.value,
+                           });
+                         } else {
+                           toast.error('Actual Product Price value cannot be negative or empty');
+                           setFormData({
+                             ...formData,
+                             ActualProductPrice: '',
+                           });
+                         }
+                      }}
                       placeholder="Enter productPrice..."
                     />
                   </div>
@@ -673,7 +690,20 @@ const AddAndManageProduct = () => {
                       class="form-control"
                       name="weight"
                       value={formData?.weight}
-                      onChange={e => HandleChange(e)}
+                      onChange={e => {
+                         if (e.target.value > 0) {
+                           setFormData({
+                             ...formData,
+                             weight: e.target.value,
+                           });
+                         } else {
+                           toast.error('Weight value cannot be negative or empty');
+                           setFormData({
+                             ...formData,
+                             weight: '',
+                           });
+                         }
+                      }}
                       placeholder="Enter weight..."
                     />
                   </div>
@@ -793,13 +823,13 @@ const AddAndManageProduct = () => {
                     <label for="inputEmail4">
                       productDetails<span style={{ color: 'red' }}></span> :
                     </label>
-                    <input
-                      type="text"
+                    <textarea
+                      // type="text"
                       class="form-control"
                       name="productDetails"
                       value={formData?.productDetails}
                       onChange={e => HandleChange(e)}
-                      placeholder="Enter productDetails..."
+                      // placeholder="Enter productDetails..."
                     />
                   </div>
                   <div class="col">
@@ -811,7 +841,21 @@ const AddAndManageProduct = () => {
                       class="form-control"
                       name="discountPercentage"
                       value={formData?.discountPercentage}
-                      onChange={e => HandleChange(e)}
+                      onChange={e => {
+                                 if (e.target.value > 0) {
+                          setFormData({
+                            ...formData,
+                            discountPercentage: e.target.value,
+                          });
+                          
+                        } else {
+                          toast.error('Discount Percentage value cannot be negative or empty');
+                           setFormData({
+                             ...formData,
+                             discountPercentage: '',
+                           });
+                        }
+                      }}
                       placeholder="Enter discountPercentage..."
                     />
                   </div>
@@ -827,7 +871,20 @@ const AddAndManageProduct = () => {
                       class="form-control"
                       name="quantity"
                       value={formData?.quantity}
-                      onChange={e => HandleChange(e)}
+                      onChange={e => {
+                        if (e.target.value > 0) {
+                          setFormData({
+                            ...formData , quantity: e.target.value
+                          })
+                          
+                        } else {
+                          toast.error('Quantity value cannot be negative or empty');
+                           setFormData({
+                             ...formData,
+                             quantity: "",
+                           });
+                        }
+                      }}
                       placeholder="Enter quantity..."
                     />
                   </div>
@@ -839,6 +896,7 @@ const AddAndManageProduct = () => {
                     <input
                       type="file"
                       className="form-control"
+                      id="productImage"
                       placeholder="Image"
                       onChange={HandleImage}
                       name="image"
