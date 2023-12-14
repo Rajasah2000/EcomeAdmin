@@ -237,7 +237,7 @@ const AddAndManageProduct = () => {
                             subCatID: item?.subCatID,
                             unitID: item?.unitID,
                             weight: item?.weight,
-                            size: item?.size,
+                            size: item?.size.join(","),
                             color: item?.color,
                             productDetails: item?.productDetails,
                             brandName: item?.brandName,
@@ -601,6 +601,8 @@ const AddAndManageProduct = () => {
                   </div>
                 </div>
 
+               
+
                 <div class="row" style={{ marginBottom: '1rem' }}>
                   <div className="col">
                     <label htmlFor="formGroupExampleInput">Select Unit</label>
@@ -621,6 +623,35 @@ const AddAndManageProduct = () => {
                       ))}
                     </select>
                   </div>
+
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Product Weight<span style={{ color: 'red' }}></span> :
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="weight"
+                      value={formData?.weight}
+                      onChange={e => {
+                        if (e.target.value > 0) {
+                          setFormData({
+                            ...formData,
+                            weight: e.target.value,
+                          });
+                        } else {
+                          toast.error('Weight value cannot be negative or empty');
+                          setFormData({
+                            ...formData,
+                            weight: '',
+                          });
+                        }
+                      }}
+                      placeholder="Enter weight..."
+                    />
+                  </div>
+
+                
                 </div>
 
                 <div class="row" style={{ marginBottom: '1rem' }}>
@@ -648,18 +679,18 @@ const AddAndManageProduct = () => {
                       name="ActualProductPrice"
                       value={formData?.ActualProductPrice}
                       onChange={e => {
-                         if (e.target.value > 0) {
-                           setFormData({
-                             ...formData,
-                             ActualProductPrice: e.target.value,
-                           });
-                         } else {
-                           toast.error('Actual Product Price value cannot be negative or empty');
-                           setFormData({
-                             ...formData,
-                             ActualProductPrice: '',
-                           });
-                         }
+                        if (e.target.value > 0) {
+                          setFormData({
+                            ...formData,
+                            ActualProductPrice: e.target.value,
+                          });
+                        } else {
+                          toast.error('Actual Product Price value cannot be negative or empty');
+                          setFormData({
+                            ...formData,
+                            ActualProductPrice: '',
+                          });
+                        }
                       }}
                       placeholder="Enter productPrice..."
                     />
@@ -678,33 +709,6 @@ const AddAndManageProduct = () => {
                       value={formData?.brandName}
                       onChange={e => HandleChange(e)}
                       placeholder="Enter brandName..."
-                    />
-                  </div>
-
-                  <div class="col">
-                    <label for="inputEmail4">
-                      Product Weight<span style={{ color: 'red' }}></span> :
-                    </label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="weight"
-                      value={formData?.weight}
-                      onChange={e => {
-                         if (e.target.value > 0) {
-                           setFormData({
-                             ...formData,
-                             weight: e.target.value,
-                           });
-                         } else {
-                           toast.error('Weight value cannot be negative or empty');
-                           setFormData({
-                             ...formData,
-                             weight: '',
-                           });
-                         }
-                      }}
-                      placeholder="Enter weight..."
                     />
                   </div>
                 </div>
@@ -842,18 +846,17 @@ const AddAndManageProduct = () => {
                       name="discountPercentage"
                       value={formData?.discountPercentage}
                       onChange={e => {
-                                 if (e.target.value > 0) {
+                        if (e.target.value > 0) {
                           setFormData({
                             ...formData,
                             discountPercentage: e.target.value,
                           });
-                          
                         } else {
                           toast.error('Discount Percentage value cannot be negative or empty');
-                           setFormData({
-                             ...formData,
-                             discountPercentage: '',
-                           });
+                          setFormData({
+                            ...formData,
+                            discountPercentage: '',
+                          });
                         }
                       }}
                       placeholder="Enter discountPercentage..."
@@ -874,15 +877,15 @@ const AddAndManageProduct = () => {
                       onChange={e => {
                         if (e.target.value > 0) {
                           setFormData({
-                            ...formData , quantity: e.target.value
-                          })
-                          
+                            ...formData,
+                            quantity: e.target.value,
+                          });
                         } else {
                           toast.error('Quantity value cannot be negative or empty');
-                           setFormData({
-                             ...formData,
-                             quantity: "",
-                           });
+                          setFormData({
+                            ...formData,
+                            quantity: '',
+                          });
                         }
                       }}
                       placeholder="Enter quantity..."

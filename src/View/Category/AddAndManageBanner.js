@@ -247,7 +247,7 @@ const AddAndManageBanner = () => {
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          Category Banner
+        Banner
         </div>
       ),
       selector: (row) => row.CategoryBanner,
@@ -327,7 +327,7 @@ const AddAndManageBanner = () => {
                   }}
                   className="card-title"
                 >
-                  Add Category Banner
+                  Add  Banner
                 </div>
               ) : (
                 <div
@@ -339,7 +339,7 @@ const AddAndManageBanner = () => {
                   }}
                   className="card-title"
                 >
-                  Edit Category Banner
+                  Edit Banner
                 </div>
               )}
 
@@ -431,7 +431,7 @@ const AddAndManageBanner = () => {
                 }}
                 className="card-title"
               >
-                Manage Category Banner
+                Manage  Banner
               </div>
               <DataTable columns={columns} data={allState} pagination />
             </div>

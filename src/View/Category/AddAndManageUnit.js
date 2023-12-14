@@ -266,7 +266,7 @@ const AddAndManageUnit = () => {
                   aria-describedby="emailHelp"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter country name..."
+                  placeholder="Enter unit name..."
                 />
               </div>
 
