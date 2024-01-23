@@ -1,6 +1,8 @@
 import { reactLocalStorage } from "reactjs-localstorage";
-const BASE_URL = "http://137.184.218.7:5051/v1/admin/";
-const ALLOW_ORIGIN = "137.184.218.7";
+const BASE_URL = 'https://admin.bushidophilanthropy.org/v1/admin/';
+// https://admin.bushidophilanthropy.org
+// http://137.184.218.7:5051
+const ALLOW_ORIGIN = 'admin.bushidophilanthropy.org';
 const USER_TYPE = "Admin";
 
 function get(endpoint, params) {
