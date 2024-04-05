@@ -5,66 +5,28 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "../src/View/Dashboard/Index";
 import "../src/assets/base.css";
 import Main from "./Layout/Main";
-
 import Login from "./AdminAuthentication/Login";
-import EditAndUpdateQA from "./View/Learning/EditAndUpdateQA";
 import Register from "./AdminAuthentication/Register";
-import AddAndManageCountry from "./View/Category/AddAndManageCountry";
-import AddAndManageCategoryBanner from "./View/Category/AddAndManageCategoryBanner";
-import AddAndManageLanguage from "./View/Category/AddAndManageLanguage";
-import AddAndManageSubCategory from "./View/Category/AddAndManageSubCategory";
-import AddAndManageBanner from "./View/Category/AddAndManageBanner";
-import AddAndManageUnit from "./View/Category/AddAndManageUnit";
-import AddAndManageCoupon from "./View/Category/AddAndManageCoupon";
-import ApprovedPartnerList from "./View/EstorePartnerCategory/ApprovedPartnerList";
-import PendingForApproval from "./View/EstorePartnerCategory/PendingForApproval";
-import AddAndMAnageMusicCategory from "./View/PodCast/AddAndMAnageMusicCategory";
-import AddAndManageMusicGenre from "./View/PodCast/AddAndManageMusicGenre";
-import AddAndManagePodCastCategory from "./View/PodCast/AddAndManagePodCastCategory";
-import AddAndManagePoints from "./View/PodCast/AddAndManagePoints";
-import AddAndManageMood from "./View/PodCast/AddAndManageMood";
-import PodcastGenre from "./View/PodCast/PodcastGenre";
-import AddAndMaangePodcastSubscription from "./View/PodCast/AddAndMaangePodcastSubscription";
-import AddAndManageOttPartner from "./View/OttPartner/AddAndManageOttPartner";
-import AddAndManageOTTContentLanguage from "./View/OTTContentLanguage/AddAndManageOTTContentLanguage";
-import ApprovedOTTPartnershipList from "./View/OTTPartnerList/ApprovedOTTPartnershipList";
-import DisApprovedOTTPartnerShipList from "./View/OTTPartnerList/DisApprovedOTTPartnerShipList";
-import AddAndManageCategory from "./View/Learning/Catagory/AddAndManageCategory";
-
+// import AddAndManageCountry from "./View/Category/AddAndManageCountry";
 import { Toaster } from "react-hot-toast";
-
-import AddState from "./View/State/AddState";
-import AddCategory from "./View/Category/AddCategory";
-import AddAndManageExpertise from "./View/Learning/Catagory/AddAndManageExpertise";
-import AddAndManageSubscription from "./View/OTT/AddAndManageSubscription";
-import AddAndManageMainBanner from "./View/OTT/AddAndManageMainBanner";
-import AddAndManagePoinsts from "./View/OTT/AddAndManagePoinsts";
-import Donation from "./View/BushidoWallet/Donation";
-import SocialWallet from "./View/BushidoWallet/SocialWallet"
-import TimeZone from "./View/BushidoWallet/TimeZone";
-import AndAndManageNewsCategory from "./View/News/AndAndManageNewsCategory";
-import AddAndManageNews from "./View/News/AddAndManageNews";
-import AddAndManageCommission from "./View/CommissionForPartner/AddAndManageCommission";
-import AddAndManageEvents from "./View/Event/Events/AddAndManageEvents";
-import AddAndManageSession from "./View/Event/Session/AddAndManageSession";
-import AddAndManageSpeaker from "./View/Event/Speaker/AddAndManageSpeaker";
-import AddAndManageSponser from "./View/Event/Sponser/AddAndManageSponser";
-import AddAndManageBooth from "./View/Event/Booth/AddAndManageBooth";
-import AddAndManageBoothProduct from "./View/Event/BoothProduct/AddAndManageBoothProduct";
-import AddAndManagecoupon from "./View/Category/AddAndManageCoupon";
-import AddAndManagePodcast from "./View/PodCast/AddAndManagePodcast";
-import AddAndManagePodcastSeries from "./View/PodCast/AddAndManagePodcastSeries";
-import AddAndManageMusic from "./View/PodCast/AddAndManageMusic";
-import AddAndManageMusicAlbum from "./View/PodCast/AddAndManageMusicAlbum";
-import WalletEvent from "./View/BushidoWallet/WalletEvent";
-import ManageVideoContent from "./View/OTT/ManageVideoContent";
-import ManageSeason from "./View/OTT/ManageSeason";
-import ManageEpisode from "./View/OTT/ManageEpisode";
-import AddAndManageProduct from "./View/Category/AddAndManageProduct";
-import AddAndManageAboutBushido from "./View/AboutBushido/AddAndManageAboutBushido";
-import AddAndManageOrders from "./View/Category/AddAndManageOrders";
-import AddAndManageCourse from "./View/Learning/Catagory/AddAndManageCourse";
-import AddAndManageQuesAns from "./View/Learning/AddAndManageQuesAns";
+// import AddCategory from "./View/Category/AddCategory";
+// import AddAndManageAboutBushido from "./View/AboutBushido/AddAndManageAboutBushido";
+import ResetPassword from "./AdminAuthentication/ResetPassword";
+import SendEmail from "./SendEmail";
+import AddandManageCategory from "./Component/Category/AddAndManageCategory";
+import AddProduct from "./Component/Product/AddProduct";
+import ManageProduct from "./Component/Product/ManageProduct";
+import EditProduct from "./Component/Product/EditProduct";
+import DealsOnAudioProduct from "./Component/DealsOnAudioProduct/DealsOnAudioProduct";
+import ManageDealsonAudio from "./Component/DealsOnAudioProduct/ManageDealsonAudio";
+import UpdateDealsOnAudio from "./Component/DealsOnAudioProduct/UpdateDealsOnAudio";
+import AddBestSellingProduct from "./Component/BestSellingProduct/AddBestSellingProduct";
+import ManageBestSellingProduct from "./Component/BestSellingProduct/ManageBestSellingProduct";
+import UpdateBestSellingProduct from "./Component/BestSellingProduct/UpdateBestSellingProduct";
+import AddTrendingProduct from "./Component/TrendingProduct/AddTrendingProduct";
+import ManageTrendingProduct from "./Component/TrendingProduct/ManageTrendingProduct";
+import UpdateTrendingProduct from "./Component/TrendingProduct/UpdateTrendingProduct";
+// import AddandManageCategory from "./Component/Category/AddandManageCategory";
 
 function App() {
   return (
@@ -73,215 +35,44 @@ function App() {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route element={<Main />}>
+
+            {/* Product  */}
+
             <Route path="/" element={<Dashboard />} />
-            <Route path="/add-state" element={<AddState />} />
-            <Route path="/add-manage-category" element={<AddCategory />} />
-            <Route
-              path="/add-manage-language"
-              element={<AddAndManageLanguage />}
-            />
-            <Route
-              path="/add-manage-country"
-              element={<AddAndManageCountry />}
-            />
-            <Route
-              path="/add-manage-category-banner"
-              element={<AddAndManageCategoryBanner />}
-            />
-            <Route
-              path="/add-manage-subcategory"
-              element={<AddAndManageSubCategory />}
-            />
-            <Route path="/add-manage-banner" element={<AddAndManageBanner />} />
-            <Route path="/add-manage-unit" element={<AddAndManageUnit />} />
-            <Route path="/add-manage-coupon" element={<AddAndManageCoupon />} />
-            <Route path="/add-manage-product" element={<AddAndManageProduct />} />
-            <Route path="/add-manage-orders" element={<AddAndManageOrders />} />
-            <Route
-              path="/apprroved-partner-list"
-              element={<ApprovedPartnerList />}
-            />
-            <Route
-              path="/view-pending-for-approval"
-              element={<PendingForApproval />}
-            />
-            <Route
-              path="/add-manage-music-category"
-              element={<AddAndMAnageMusicCategory />}
-            />
-            <Route
-              path="/add-manage-music-genre"
-              element={<AddAndManageMusicGenre />}
-            />
-            <Route
-              path="/add-manage-music"
-              element={<AddAndManageMusic />}
-            />
+            <Route path="/add-product" element={<AddProduct />} />
+            <Route path="/manage-product" element={<ManageProduct />} />
+            <Route path="/edit-product" element={<EditProduct />} />
 
-            <Route
-              path="/add-manage-music-album"
-              element={<AddAndManageMusicAlbum />}
-            />
-            <Route
-              path="/add-manage-podcast-category"
-              element={<AddAndManagePodCastCategory />}
-            />
+            {/* Trending Product */}
 
-            <Route
-              path="/add-and-view-points"
-              element={<AddAndManagePoints />}
-            />
+         
+            <Route path="/add-trending-product" element={<AddTrendingProduct />} />
+            <Route path="/manage-trending-product" element={<ManageTrendingProduct />} />
+            <Route path="/edit-trending-product" element={<UpdateTrendingProduct />} />
 
-            <Route
-              path="/add-and-manage-podcast-genre"
-              element={<PodcastGenre />}
-            />
+            {/* Best Selling Product */}
 
-            <Route
-              path="/add-and-manage-podcast-subscription"
-              element={<AddAndMaangePodcastSubscription />}
-            />
+          
+            <Route path="/add-best-product" element={<AddBestSellingProduct />} />
+            <Route path="/manage-best-product" element={<ManageBestSellingProduct />} />
+            <Route path="/edit-best-product" element={<UpdateBestSellingProduct />} />
 
-            <Route
-              path="/add-manage-podcast"
-              element={<AddAndManagePodcast />}
-            />
+            {/* Deals On Product */}
 
-            <Route
-              path="/add-manage-podcast-series"
-              element={<AddAndManagePodcastSeries />}
-            />
+            <Route path="/add-deals-product" element={<DealsOnAudioProduct />} />
+            <Route path="/manage-deals-product" element={<ManageDealsonAudio />} />
+            <Route path="/edit-deals-product" element={<UpdateDealsOnAudio />} />
 
-            <Route
-              path="/add-and-manage-ott-partner"
-              element={<AddAndManageOttPartner />}
-            />
-            <Route
-              path="/add-and-manage-ott-content-language"
-              element={<AddAndManageOTTContentLanguage />}
-            />
-            <Route
-              path="/view-apprroved-partnership-list"
-              element={<ApprovedOTTPartnershipList />}
-            />
-            <Route
-              path="/view-disapproved-partnership-list"
-              element={<DisApprovedOTTPartnerShipList />}
-            />
-            <Route path="/add-and-manage-mood" element={<AddAndManageMood />} />
-
-
-            <Route
-              path="/manage-category"
-              element={<AddAndManageCategory />}
-            />
-
-            <Route
-              path="/manage-expertise"
-              element={<AddAndManageExpertise />}
-            />
-
-            <Route
-              path="/manage-course"
-              element={<AddAndManageCourse />}
-            />
-
-            <Route
-              path="/manage-ques-ans"
-              element={<AddAndManageQuesAns />}
-            />
-
-            <Route
-              path="/add-manage-subscription"
-              element={<AddAndManageSubscription />}
-            />
-            <Route
-              path="/add-and-manage-main-banner"
-              element={<AddAndManageMainBanner />}
-            />
-            <Route
-              path="/add-and-manage-points"
-              element={<AddAndManagePoinsts />}
-            />
-
-            <Route
-              path="/add-manage-social-wallet"
-              element={<SocialWallet />}
-            />
-            <Route
-              path="/add-and-manage-donation"
-              element={<Donation />}
-            />
-            <Route
-              path="/add-and-manage-time-zone"
-              element={<TimeZone />}
-            />
-
-            <Route
-              path="/add-manage-news-category"
-              element={<AndAndManageNewsCategory />}
-            />
-            <Route
-              path="/add-and-manage-news"
-              element={<AddAndManageNews />}
-            />
-            <Route
-              path="/add-and-manage-commission"
-              element={<AddAndManageCommission />}
-            />
-            <Route
-              path="/add-and-manage-events"
-              element={<AddAndManageEvents />}
-            />
-            <Route
-              path="/add-and-manage-session"
-              element={<AddAndManageSession />}
-            />
-
-            <Route
-              path="/add-and-manage-speaker"
-              element={<AddAndManageSpeaker />}
-            />
-
-            <Route
-              path="/add-and-manage-sponser"
-              element={<AddAndManageSponser />}
-            />
-
-            <Route
-              path="/add-and-manage-booth"
-              element={<AddAndManageBooth />}
-            />
-            <Route
-              path="/update-question"
-              element={<EditAndUpdateQA />}
-            />
-
-
-            <Route
-              path="/add-and-manage-booth-product"
-              element={<AddAndManageBoothProduct />}
-            />
-
-            <Route
-              path="/wallet-event"
-              element={<WalletEvent />}
-            />
-
-            <Route path="/video-content" element={<ManageVideoContent/>}/>
-            <Route path="/manage-season/:id" element={<ManageSeason/>}/>
-
-            <Route path="/manage-episode/:show/:id" element={<ManageEpisode/>}/>
-            <Route
-              path="/add-and-manage-about-bushido"
-              element={<AddAndManageAboutBushido />}
-            />
-
+            {/* Category  */}
+            <Route path="/add-and-manage-category" element={<AddandManageCategory />} />
+            {/* <Route path="/add-and-manage-about-bushido" element={<AddAndManageAboutBushido />} /> */}
           </Route>
         </Route>
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/sendemail" element={<SendEmail />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </React.Fragment>
   );

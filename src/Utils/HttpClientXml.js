@@ -1,7 +1,6 @@
 import { reactLocalStorage } from "reactjs-localstorage";
-const BASE_URL = 'https://admin.bushidophilanthropy.org/v1/admin/';
-// https://admin.bushidophilanthropy.org
-// http://137.184.218.7:5051
+const BASE_URL = 'localhost:4000/api/admin/';
+
 const ALLOW_ORIGIN = 'admin.bushidophilanthropy.org';
 const USER_TYPE = "Admin";
 

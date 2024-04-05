@@ -9,7 +9,6 @@ export const userSlice = createSlice({
   reducers: {
     setUser(state,action) {
       const user = action.payload;
-      console.log('mypayload',user)
       return {...state, userData:user,login_status:true}
     },
     setImg: (state, action) => void(state.userData.image = action.payload),

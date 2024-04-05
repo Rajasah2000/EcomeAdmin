@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { MDBDataTable } from 'mdbreact';
-import Modal from './Modal/Modal';
+// import Modal from './Modal/ModalA';
 export default function Table() {
     const [modal, setModal] = useState(false);
     const openModal = () => {
@@ -185,7 +185,7 @@ export default function Table() {
 
             />
         </div>
-          { modal && <Modal closeModal={setModal}/> }
+          {/* { modal && <Modal closeModal={setModal}/> } */}
 
           </>
     );

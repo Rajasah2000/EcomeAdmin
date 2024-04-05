@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { reactLocalStorage } from "reactjs-localstorage";
 import Authservice from "../Service/Authservice";
+import toast from "react-hot-toast";
+import Helpers from "../Utils/Helpers";
 
 const AuthContext = createContext();
 
@@ -14,36 +16,28 @@ const ContextProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // console.log(userDetails,"userDetails")
-  useEffect(() => {
-    fetchUserDetails();
-  }, [loginStatus]);
+  // useEffect(() => {
+  //  let id = reactLocalStorage.get("id");
+  //  console.log('idfsfsdfdsf', id);
+  //   fetchUserDetails(id);
+  // }, []);
 
-  const fetchUserDetails = async () => {
-    console.log("LOginSTATAUS", loginStatus);
-    Authservice.AdminProfile()
-      .then((res) => {
-        console.log("PROFILERES", res);
-        if (res && res.status) {
-          setUserDetails(res?.data[0]);
-          setLoginStatus(true);
-        } else {
-          setUserDetails(null);
-          setLoginStatus(false);
-          localStorage.clear();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setUserDetails(null);
-        setLoginStatus(false);
-        localStorage.clear();
-      });
-  };
+  // const fetchUserDetails = async (id) => {
+  //   try {
+  //     const res = await Helpers(`http://localhost:3004/api/admin/user-profile/${id}`, 'GET');
+  //     if (res && res?.status) {
+  //       console.log("UserData", res);
+  //     } else {
+  //       console.log("Error to fetch profile data");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <AuthContext.Provider
-      value={{ loginStatus, setLoginStatus, userDetails, loading, setLoading }}
+      value={{ loginStatus, setLoginStatus, userDetails,setUserDetails, loading, setLoading }}
     >
       {children}
     </AuthContext.Provider>

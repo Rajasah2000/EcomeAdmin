@@ -192,9 +192,10 @@ tr:nth-child(even) {
 .inptown input{
   position: relative;
 }
+
 .shwhd{
     position: absolute;
-    top: 60%;
+    top: 53%;
     left: 92%;
     z-index: 9;
 }

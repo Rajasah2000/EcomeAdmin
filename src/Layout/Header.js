@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import $ from "jquery";
 import Sidebar from "./Sidebar";
 import { useDispatch } from "react-redux";
@@ -6,8 +6,58 @@ import { removeUser } from "../Redux/Reducer/User";
 import { useNavigate } from "react-router-dom";
 import { reactLocalStorage } from "reactjs-localstorage";
 import Swal from "sweetalert2";
+import { useContextProvider } from "../Context/ContextProvider";
+import Helpers from "../Utils/Helpers";
+import Modal from "react-modal";
+import ModalA from "../Component/Modal/ModalA";
 export default function Header() {
   const [accountModal, setAccountModal] = useState(false);
+  const {UserData} = useContextProvider();
+  const { userDetails, setUserDetails } = useContextProvider();
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  useEffect(() => {
+    fetchUserDetails(reactLocalStorage?.get('id'));
+  }, [reactLocalStorage?.get('id')]);
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
+  const fetchUserDetails = async id => {
+    try {
+      const res = await Helpers(`http://localhost:3004/api/admin/user-profile/${id}`, 'GET');
+
+      if (res && res?.status) {
+        // console.log('UserDatasdfdsfsdfsdfsdfsdf', res);
+        setUserDetails(res?.data);
+      } else {
+        console.log('Error to fetch profile data');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+    function openModal() {
+      setModalIsOpen(true);
+    }
+
+    function afterOpenModal() {
+      // references are now sync'd and can be accessed.
+      // subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+      setModalIsOpen(false);
+    }
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const hankclickModal = () => {
@@ -80,20 +130,17 @@ export default function Header() {
           <div
             className="logo_"
             style={{
-              marginLeft: "52px",
-              fontStyle: "italic",
-              fontSize: "large",
+              marginLeft: '52px',
+              fontStyle: 'italic',
+              fontSize: 'large',
             }}
           >
-            <span>Bushido</span>
+            <span>E-Commerce</span>
           </div>
 
           <div className="header__pane ms-auto">
             <div>
-              <button
-                className="jsx-2200192874 BurgerSlider Burger"
-                onClick={drawyer}
-              >
+              <button className="jsx-2200192874 BurgerSlider Burger" onClick={drawyer}>
                 <div className="jsx-2200192874 BurgerBox">
                   <div className="jsx-2200192874 BurgerInner" />
                 </div>
@@ -103,10 +150,7 @@ export default function Header() {
         </div>
         <div className="app-header__mobile-menu">
           <div>
-            <button
-              className="jsx-3928250682 BurgerSlider Burger"
-              onClick={drawyerMob}
-            >
+            <button className="jsx-3928250682 BurgerSlider Burger" onClick={drawyerMob}>
               <div className="jsx-3928250682 BurgerBox">
                 <div className="jsx-3928250682 BurgerInner" />
               </div>
@@ -143,7 +187,7 @@ export default function Header() {
                           role="img"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 448 512"
-                          style={{ height: "1em" }}
+                          style={{ height: '1em' }}
                         >
                           <path
                             fill="currentColor"
@@ -162,9 +206,7 @@ export default function Header() {
                           <li className="nav-item">
                             <a href="#" className="nav-link">
                               Chat
-                              <div className="ms-auto badge bg-pill bg-info">
-                                8
-                              </div>
+                              <div className="ms-auto badge bg-pill bg-info">8</div>
                             </a>
                           </li>
                           <li className="nav-item">
@@ -172,23 +214,17 @@ export default function Header() {
                               Recover Password
                             </a>
                           </li>
-                          <li className="nav-item-header nav-item">
-                            My Account
-                          </li>
+                          <li className="nav-item-header nav-item">My Account</li>
                           <li className="nav-item">
                             <a href="#" className="nav-link">
                               Settings
-                              <div className="ms-auto badge bg-success">
-                                New
-                              </div>
+                              <div className="ms-auto badge bg-success">New</div>
                             </a>
                           </li>
                           <li className="nav-item">
                             <a href="#" className="nav-link">
                               Messages
-                              <div className="ms-auto badge bg-warning">
-                                512
-                              </div>
+                              <div className="ms-auto badge bg-warning">512</div>
                             </a>
                           </li>
                           <li className="nav-item">
@@ -201,7 +237,7 @@ export default function Header() {
                     </div>
                   </div>
                   <div className="widget-content-left  ms-3 header-user-info">
-                    <div className="widget-heading">Admin</div>
+                    <div className="widget-heading">{userDetails?.firstname}</div>
                     {/* <div className="widget-subheading">VP People Manager</div> */}
                   </div>
                   {/* <div className="widget-content-right header-user-info ms-3">
@@ -229,26 +265,36 @@ export default function Header() {
             className="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-end show"
             data-popper-placement="bottom-end"
             style={{
-              position: "absolute",
-              inset: "14px 38px auto auto",
-              transform: "translate(0px, 44px)",
+              position: 'absolute',
+              inset: '14px 38px auto auto',
+              transform: 'translate(0px, 44px)',
             }}
           >
             <ul className="nav flex-column">
-              {/* <li className="nav-item">
-                <a href="#" className="nav-link">
-                  Edit Profile
-                </a>
-              </li> */}
-              <hr style={{ margin: "5px" }} />
+              <h5
+                style={{
+                  fontSize: '20px',
+                  fontFamily: 'Arial, sans-serif',
+                  fontWeight: 'bold',
+                  color: 'darkgrey',
+                  marginLeft: '2.5rem',
+                }}
+              >
+                {`${userDetails?.firstname} ${userDetails?.lastname}`}
+              </h5>
+              <hr style={{ margin: '5px' }} />
               {/* <li className="nav-item-header nav-item">My Account</li> */}
 
               <li className="nav-item">
                 <a className="nav-link">
                   <div
                     className="ms-auto badge bg-warning"
-                    onClick={logouthandeler}
+                    style={{ margin: '3px' }}
+                    onClick={() =>{ setModalIsOpen(true); setAccountModal(false);}}
                   >
+                    Change Password
+                  </div>
+                  <div className="ms-auto badge bg-warning" style={{ margin: '3px' }} onClick={logouthandeler}>
                     Logout
                   </div>
                 </a>
@@ -257,6 +303,9 @@ export default function Header() {
           </div>
         </div>
       )}
+
+      {modalIsOpen && <ModalA setModalIsOpen ={setModalIsOpen}/>}
+      {/* </Modal> */}
     </>
   );
 }

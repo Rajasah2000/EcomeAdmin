@@ -1,9 +1,50 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Table from '../../Component/Table'
-
-
+import { reactLocalStorage } from 'reactjs-localstorage';
+import Helpers from '../../Utils/Helpers';
+import ContextProvider, { useContextProvider } from '../../Context/ContextProvider';
+import { Pie } from 'react-chartjs-2';
+import ReactApexChart from 'react-apexcharts';
 export default function Index() {
+    const apexOptions = {
+    // ApexCharts options
+    // Example options
+    chart: {
+      id: 'apex-chart',
+    },
+    series: [{
+      name: 'series-1',
+      data: [30, 40, 45, 50, 49, 60, 70, 91],
+    }],
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+    },
+  };
 
+ const pieData = {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.6)',
+        'rgba(54, 162, 235, 0.6)',
+        'rgba(255, 206, 86, 0.6)',
+        'rgba(75, 192, 192, 0.6)',
+        'rgba(153, 102, 255, 0.6)',
+        'rgba(255, 159, 64, 0.6)',
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+      ],
+      borderWidth: 1,
+    }],
+  };
 
   return (
     <>
@@ -134,6 +175,17 @@ export default function Index() {
 
       </div>
      {/* <Table /> */}
+
+       {/* <div style={{ display: 'flex' }}>
+      <div style={{ flex: 1, marginRight: '20px' }}>
+        <h2>Apex Chart</h2>
+        <ReactApexChart options={apexOptions} series={apexOptions.series} type="line" height={350} />
+      </div>
+      <div style={{ flex: 1 }}>
+        <h2>Pie Chart</h2>
+        <Pie data={pieData} />
+      </div>
+    </div> */}
 
     </>
 

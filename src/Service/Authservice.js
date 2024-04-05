@@ -1,22 +1,13 @@
-import HttpClientXml from "../Utils/HttpClientXml";
+import Helpers from '../Utils/Helpers';
 
-async function login(data){
-  const endpoind="login";
-  return HttpClientXml.post(endpoind,data);
+// Initialize the Helpers module
+const apiHelper = Helpers();
+
+async function login(data) {
+  const endpoint = 'login';
+  return apiHelper?.post(endpoint, data);
 }
 
-async function SignUp(data){
-  const endpoind="register";
-  return HttpClientXml.post(endpoind,data);
-}
-
-async function AdminProfile(){
-  const endpoind="view-Profile";
-  return HttpClientXml.get(endpoind);
-}
-
-  export default {
-    login,
-    SignUp,
-    AdminProfile
-  }
+export default {
+  login,
+};
