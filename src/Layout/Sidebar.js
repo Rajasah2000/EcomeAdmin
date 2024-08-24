@@ -20,7 +20,11 @@ export default function Sidebar() {
           <div className="metismenu vertical-nav-menu">
             <ul className="metismenu-container">
               <li className="metismenu-item">
-                <Link className="metismenu-link" to="/" style={{ fontWeight: '700', fontSize:"18px", fontSize: 'medium' }}>
+                <Link
+                  className="metismenu-link"
+                  to="/"
+                  style={{ fontWeight: '700', fontSize: '18px', fontSize: 'medium' }}
+                >
                   DASHBOARD
                 </Link>
               </li>
@@ -29,10 +33,41 @@ export default function Sidebar() {
 
           <div className="panel-group" id="accordionMenu" role="tablist" aria-multiselectable="true"></div>
 
-
+          {/* Banner Section   */}
 
           <div className="panel panel-default metismenu vertical-nav-menu">
-            <div className="panel-heading metismenu-container" role="tab" id="headingone">
+            <div className="panel-heading metismenu-container" role="tab" id="headingnine131">
+              <div className="panel-title metismenu-item">
+                <a
+                  className="collapsed metismenu-link"
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordionMenu"
+                  href="#collapse3113"
+                  aria-expanded="false"
+                  aria-controls="collapseTen"
+                  style={{ fontWeight: '700', fontSize: 'medium' }}
+                >
+                  Banner
+                </a>
+              </div>
+            </div>
+            <div id="collapse3113" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingnine131">
+              <div className="panel-body">
+                <ul className="metismenu-container">
+                  <li className="metismenu-item">
+                    <Link to="/add-and-manage-banner" className="metismenu-link">
+                      Add And Manage Banner
+                    </Link>
+                  
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="panel panel-default metismenu vertical-nav-menu">
+            {/* <div className="panel-heading metismenu-container" role="tab" id="headingone">
               <div className="panel-title metismenu-item">
                 <a
                   className="collapsed metismenu-link"
@@ -47,7 +82,7 @@ export default function Sidebar() {
                   E-Store
                 </a>
               </div>
-            </div>
+            </div> */}
             <div id="collapseEleven" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingone">
               <div className="panel-body">
                 <div className="panel panel-default metismenu vertical-nav-menu">
@@ -106,7 +141,7 @@ export default function Sidebar() {
                 <ul className="metismenu-container">
                   <li className="metismenu-item">
                     <Link to="/add-and-manage-category" className="metismenu-link">
-                     Add And Manage Category
+                      Add And Manage Category
                     </Link>
                   </li>
                 </ul>
@@ -114,7 +149,7 @@ export default function Sidebar() {
             </div>
           </div>
 
-           <div className="panel panel-default metismenu vertical-nav-menu">
+          <div className="panel panel-default metismenu vertical-nav-menu">
             <div className="panel-heading metismenu-container" role="tab" id="headingnine1">
               <div className="panel-title metismenu-item">
                 <a
@@ -136,10 +171,10 @@ export default function Sidebar() {
                 <ul className="metismenu-container">
                   <li className="metismenu-item">
                     <Link to="/add-product" className="metismenu-link">
-                     Add Product
+                      Add Product
                     </Link>
                     <Link to="/manage-product" className="metismenu-link">
-                     Manage Product
+                      Manage Product
                     </Link>
                   </li>
                 </ul>
@@ -147,7 +182,7 @@ export default function Sidebar() {
             </div>
           </div>
 
-           <div className="panel panel-default metismenu vertical-nav-menu">
+          {/* <div className="panel panel-default metismenu vertical-nav-menu">
             <div className="panel-heading metismenu-container" role="tab" id="headingnine2">
               <div className="panel-title metismenu-item">
                 <a
@@ -244,7 +279,7 @@ export default function Sidebar() {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

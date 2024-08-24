@@ -6,10 +6,11 @@ import DataTable from "react-data-table-component";
 import Swal from "sweetalert2";
 import PageLoader from "../../Loader/PageLoader";
 import Helpers from "../../Utils/Helpers";
+// import "../../App.css"
 
 const AddandManageCategory = () => {
   const [name, setName] = useState("");
-
+  const [image, setImage] = useState('');
   const [allState, setAllState] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -26,6 +27,7 @@ const AddandManageCategory = () => {
     setName(item?.name);
     setId(item?._id);
     setHide(false);
+    setImage(item?.image)
   };
 
   const onDelete = (id) => {
@@ -65,19 +67,45 @@ const AddandManageCategory = () => {
           // setLoader(false)
           console.log("Response",res?.data);
           let arr = res?.data?.map((item, index) => {
-            return{
+            return {
               sl: index + 1,
               Name: item?.name,
-
+              img: (
+                <>
+                  {item?.image? (
+                    <img
+                      style={{
+                        height: '15%',
+                        width: '15%',
+                        borderRadius: '9px',
+                        margin: '5px',
+                      }}
+                      src={item?.image}
+                    />
+                  ) : (
+                    <img
+                      style={{
+                        height: '51%',
+                        width: '51%',
+                        borderRadius: '9px',
+                        margin: '5px',
+                      }}
+                      src={
+                        'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'
+                      }
+                    />
+                  )}
+                </>
+              ),
               action: (
-                <div style={{ display: "flex", flexDirection: "coloum" }}>
+                <div style={{ display: 'flex', flexDirection: 'coloum' }}>
                   <svg
                     onClick={() => onEdit(item)}
                     style={{
-                      height: "20px",
-                      width: "20px",
-                      cursor: "pointer",
-                      marginRight: "20px",
+                      height: '20px',
+                      width: '20px',
+                      cursor: 'pointer',
+                      marginRight: '20px',
                     }}
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -95,10 +123,10 @@ const AddandManageCategory = () => {
                   <svg
                     onClick={() => onDelete(item?._id)}
                     style={{
-                      color: "red",
-                      height: "20px",
-                      cursor: "pointer",
-                      width: "20px",
+                      color: 'red',
+                      height: '20px',
+                      cursor: 'pointer',
+                      width: '20px',
                     }}
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -111,7 +139,7 @@ const AddandManageCategory = () => {
                   </svg>
                 </div>
               ),
-            }
+            };
           })
           setAllState(arr);
        }else{
@@ -126,15 +154,19 @@ const AddandManageCategory = () => {
   const AddCategory = async() => {
     let data = {
       name: name,
+      image:image
     };
 
-    if (name) {
+    if (name && image) {
       try {
           const res = await Helpers('http://localhost:3004/api/admin/add-category', 'POST',data);
        if(res && res?.status){
         toast.success(res.msg);
             fetchAllCategory();
             setName("");
+            setImage("");
+             let file = document.querySelector('#productImage');
+             file.value = '';
        }else{
          toast.error(res?.msg);
        }
@@ -142,62 +174,57 @@ const AddandManageCategory = () => {
         console.log(error);
       }
     } else {
-      toast.error("Category Name Field Is Required");
+      toast.error("Category & Image Name Field Is Required");
     }
   };
 
   const columns = [
     {
-      name: (
-        <div
-          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-        >
-          SL
-        </div>
-      ),
-      selector: (row) => row.sl,
+      name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>SL</div>,
+      selector: row => row.sl,
     },
     {
-      name: (
-        <div
-          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-        >
-          Category Name
-        </div>
-      ),
-      selector: (row) => row.Name,
+      name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>Category Name</div>,
+      selector: row => row.Name,
     },
-
+    {
+      name: <div style={{ fontSize: '14px', color: '#495057', fontWeight: 'bolder' }}>Category Icon</div>,
+      selector: row => row.img,
+    },
     {
       name: (
         <div
           style={{
-            fontSize: "14px",
-            color: "#495057",
-            marginLeft: "15px",
-            fontWeight: "bolder",
+            fontSize: '14px',
+            color: '#495057',
+            marginLeft: '15px',
+            fontWeight: 'bolder',
           }}
         >
           Action
         </div>
       ),
-      selector: (row) => row.action,
+      selector: row => row.action,
     },
   ];
 
   const UpdateCategory = async() => {
    let data = {
       name: name,
+      image:image
     };
 
-    if (name) {
+    if (name && image) {
       try {
           const res = await Helpers(`http://localhost:3004/api/admin/edit-category/${id}`, 'PUT',data);
        if(res && res?.status){
         toast.success(res.message);
             fetchAllCategory();
             setName("");
-            setHide(true)
+            setHide(true);
+            setImage("");
+             let file = document.querySelector('#productImage');
+             file.value = '';
        }else{
          toast.error(res?.message);
        }
@@ -205,22 +232,50 @@ const AddandManageCategory = () => {
         console.log(error);
       }
     } else {
-      toast.error("Category Name Field Is Required");
+      toast.error("Category & Image Name Field Is Required");
     }
   };
+
+   const ImageHandler = async e => {
+     const file = e.target.files[0];
+     const data = new FormData();
+     data.append('image', file);
+
+     try {
+       const response = await fetch('http://localhost:3004/api/admin/image-upload', {
+         method: 'POST',
+         body: data,
+       });
+       const responseData = await response.json();
+
+       if (responseData && responseData.status) {
+         setImage(responseData.url);
+       } else {
+         toast.error('Failed to upload image');
+       }
+     } catch (error) {
+       console.error('Error uploading image:', error);
+       toast.error('Failed to upload image');
+     }
+   };
   return (
     <>
       {loading ? (
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "80vh",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '80vh',
           }}
         >
           <PageLoader />
         </div>
+        // <>
+        //   <div class="loader"></div>
+        //   <div class="loader2"></div>
+        //   <div class="loader3"></div>
+        // </>
       ) : (
         <div component="div" className="TabsAnimation appear-done enter-done">
           <div className="main-card mb-3 card">
@@ -228,10 +283,10 @@ const AddandManageCategory = () => {
               {hide ? (
                 <div
                   style={{
-                    textAlign: "center",
-                    fontSize: "20px",
-                    color: "#868e96",
-                    margin: "35px",
+                    textAlign: 'center',
+                    fontSize: '20px',
+                    color: '#868e96',
+                    margin: '35px',
                   }}
                   className="card-title"
                 >
@@ -240,10 +295,10 @@ const AddandManageCategory = () => {
               ) : (
                 <div
                   style={{
-                    textAlign: "center",
-                    fontSize: "20px",
-                    color: "#868e96",
-                    margin: "35px",
+                    textAlign: 'center',
+                    fontSize: '20px',
+                    color: '#868e96',
+                    margin: '35px',
                   }}
                   className="card-title"
                 >
@@ -253,7 +308,7 @@ const AddandManageCategory = () => {
 
               <div class="form-group">
                 <label for="exampleInputEmail1">
-                  Category Name<span style={{ color: "red" }}>*</span> :
+                  Category Name<span style={{ color: 'red' }}>*</span> :
                 </label>
                 <input
                   type="text"
@@ -261,9 +316,16 @@ const AddandManageCategory = () => {
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                   placeholder="Enter category name..."
                 />
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">
+                  Image <span style={{ color: 'red' }}>*</span> :
+                </label>
+                <input type="file" class="form-control" name="image" id="imagefile" onChange={ImageHandler} />
+                {image && <img src={image} style={{ width: '5%', marginTop: '12px', borderRadius: '12px' }} />}
               </div>
 
               {hide ? (
@@ -278,10 +340,10 @@ const AddandManageCategory = () => {
 
               <div
                 style={{
-                  textAlign: "center",
-                  fontSize: "20px",
-                  color: "#868e96",
-                  margin: "35px",
+                  textAlign: 'center',
+                  fontSize: '20px',
+                  color: '#868e96',
+                  margin: '35px',
                 }}
                 className="card-title"
               >

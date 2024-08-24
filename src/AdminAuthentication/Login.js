@@ -77,7 +77,9 @@ const Login = () => {
           reactLocalStorage.set('Auth', res?.token);
           navigate('/');
         } else {
-          toast.error(res?.message);
+          toast.error(
+            "Server Error"
+          );
         }
         console.log('Sessionvdfsdf', res);
       } catch (error) {
